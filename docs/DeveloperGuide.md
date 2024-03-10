@@ -294,14 +294,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *` | busy student | quickly check my friends' schedules | find a suitable time to plan a meetup. |
 | `* * *` | NUS student who likes **---** | find who has similar hobbies/interests with me | know who might want to go to a **---** related activities with me.|
 | `* * *` | NUS student who prefers command line interface | have a GUI to include commands | add details with convenience |
-| `* * *` | NUS student working part time | utilise Moddie to store contact details for team members, advisor | optimise my time management with school and work. |
+| `* * *` | NUS student working part time | utilise moddie to store contact details for team members, advisor | optimise my time management with school and work. |
 | `* * *` | student project team leader | check my teammates' schedule | conduct meetings with convenience |
 | `* * *` | international NUS student | find local friends that share similar schedules as me to aid me in easing into the university | build meaningful connections, navigate campus life more smoothly. |
 | `* * *` | unmotivated student who needs to catch up on my studies|manage my timetable with my friends |easily arrange a study session with them |
 | `* * *` | lonely NUS Student| find contacts of people with similar interests as myself| get to know them better and make friends.|
 | `* * *` | NUS graduate|find my lecturer’s contact email and phone number | ask them to be a reference in my resume when applying for a job.|
 | `* * *` |NUS Student| save my friends’ interests in the contact book| plan outings with them.|
-| `* * *` |busy NUS student | easily add my schedule to Moddie|efficiently manage my academic, extracurricular, and personal commitments in one centralized platform.|
+| `* * *` |busy NUS student | easily add my schedule to moddie|efficiently manage my academic, extracurricular, and personal commitments in one centralized platform.|
 | `* * *` | NUS student| delete both my friends' and my own schedule details| maintain privacy and control over the information|
 | `* * *` | NUS student| view my friends' and their schedule details |easily coordinate plans, schedule meetings |
 | `* * *` | NUS student who gets confused with commands| have an interface to assist me|know what commands I can use |
@@ -322,7 +322,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `Moddie` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `moddie` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a person**
 
