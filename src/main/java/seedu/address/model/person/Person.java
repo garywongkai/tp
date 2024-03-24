@@ -31,7 +31,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Set<Tag> tags, ArrayList<Schedule> schedules) {
+    public Person(Name name, Phone phone, Email email, Set<? extends Tag> tags, ArrayList<Schedule> schedules) {
         requireAllNonNull(name, phone, email, tags);
         this.name = name;
         this.phone = phone;
@@ -48,7 +48,8 @@ public class Person {
     /**
      * Overloaded constructor to consider if Schedule is empty
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, ArrayList<Schedule> schedules) {
+    public Person(Name name, Phone phone, Email email, Address address,
+        Set<? extends Tag> tags, ArrayList<Schedule> schedules) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;

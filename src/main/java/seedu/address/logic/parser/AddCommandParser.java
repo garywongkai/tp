@@ -49,7 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = null;
 
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap
+        Set<? extends Tag> tagList = ParserUtil.parseTags(argMultimap
                 .getAllValues(PREFIX_TAG),
                 argMultimap
                         .getAllValues(PREFIX_INTEREST));
