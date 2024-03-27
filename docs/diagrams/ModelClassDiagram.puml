@@ -19,6 +19,7 @@ Class Email
 Class Name
 Class Phone
 Class Tag
+Class Schedule
 Class Interest
 
 Class I #FFFFFF
@@ -43,6 +44,7 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+Person *--> "*" Schedule
 Tag <|--  Interest
 
 Person -[hidden]up--> I
