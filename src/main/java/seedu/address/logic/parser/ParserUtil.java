@@ -167,15 +167,26 @@ public class ParserUtil {
      *         interests.
      * @throws ParseException If there is any error parsing the tags or interests.
      */
-    public static Set<Tag> parseTags(Collection<String> tags, Collection<String> interests) throws ParseException {
-        requireNonNull(tags);
+    public static Set<Tag> parseAllTags(Collection<String> tags, Collection<String> interests) throws ParseException {
+        final Set<Tag> tagSet = parseTags(tags);
+        tagSet.addAll(parseInterests(interests));
+        return tagSet;
+    }
+
+    public static Set<Tag> parseInterests(Collection<String> interests) throws ParseException {
         requireNonNull(interests);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String interestName : interests) {
+            tagSet.add(parseInterest(interestName));
+        }
+        return tagSet;
+    }
+
+    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
+        requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(parseTag(tagName));
-        }
-        for (String interestName : interests) {
-            tagSet.add(parseInterest(interestName));
         }
         return tagSet;
     }

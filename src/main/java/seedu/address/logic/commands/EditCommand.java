@@ -101,7 +101,7 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags()); //change here
         ArrayList<Schedule> updatedSchedules = personToEdit.getSchedules(); // schedules cannot be added here
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedSchedules);

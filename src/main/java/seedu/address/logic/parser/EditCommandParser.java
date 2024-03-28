@@ -80,15 +80,15 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags, Collection<String> interests)
             throws ParseException {
-        assert tags != null;
+        // removed assert tags != null;
 
-        if (tags.isEmpty()) {
+        if (tags.isEmpty() && interests.isEmpty()) {
             return Optional.empty();
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         Collection<String> interestSet = interests.size() == 1 && interests.contains("") ? Collections.emptySet()
                 : interests;
-        Set<Tag> parsedTags = ParserUtil.parseTags(tagSet, interestSet);
+        Set<Tag> parsedTags = ParserUtil.parseAllTags(tagSet, interestSet);
         return Optional.of(parsedTags);
     }
 }
