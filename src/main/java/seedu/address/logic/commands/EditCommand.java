@@ -302,8 +302,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("tags", tags)
-                    .add("interests", tags)
+                    .add("tags", allTags)
                     .toString();
         }
     }

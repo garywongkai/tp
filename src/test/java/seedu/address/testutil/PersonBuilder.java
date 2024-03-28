@@ -53,6 +53,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        interests = new HashSet<>(personToCopy.getInterest());
         tags = new HashSet<>(personToCopy.getTags());
         schedules = new ArrayList<>(personToCopy.getSchedules());
     }
