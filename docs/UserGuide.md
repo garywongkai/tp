@@ -88,7 +88,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
 * Phone number **must be a valid Singapore number** (i.e. 8 digits, starts with either 6, 8 or 9)
 * Email **must include @ character**
-* Address **must include and be ordered in street name, block number, and unit number (note: include # symbol)**, 
+* Address **must include and be ordered in street name, block number, and unit number (note: include # symbol)**,
 separated with comma
 * If multiple `tag` are added, separate with comma
 
@@ -146,7 +146,6 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
 * Adding a person's format for **phone number, email, and address** applies here as well.
-* 
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -175,13 +174,12 @@ Potential Errors:
 
 ### Locating persons by name : `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds persons whose names, phone number, email, address or tag contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
@@ -189,17 +187,21 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find 9123` returns the phone numbers `91236547` and `23912376`
+* `find gmail` returns the emails `alexY@gmail.com` and `davidL@gmail.com`
+* `find road` returns the address `Upper Thomson Road` and `Lower Kent Ridge Road`
+* `find friend` returns anyone with the tag `friend`
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 Expected success outcome:
 ```
-Contacts found:
+xx persons listed!
 ...
 ```
 
 Expected failure outcome:
 ```
-No contact found.
+0 persons listed!
 ```
 
 
@@ -238,7 +240,7 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-Expected success outcome: 
+Expected success outcome:
 ```
 History cleared
 ```
@@ -246,60 +248,6 @@ History cleared
 Expected failure outcome:
 ```
 History not cleared
-```
-
-### Adding interest tag : `interest`
-
-Adding an interest tag to a specified person from the address book
-
-Format: `interest INDEX INTEREST [MORE_INTEREST]`
-
-* Adds an interest to the person at the specified 'INDEX'
-* The index refers to the index number shown in the displayed person list
-* The index **must be a positive integer** 1, 2, 3, …​
-* The interest **must not have any special characters** e.g. !, @, #, $, …​
-
-Examples:
-* `interest 3 swimming` adds the interest tag `swimming` to the 3rd person in the address book
-* `interest 1 cooking cycling` adds the interest tags `cooking` and `cycling` to the 1st person in the address book
-
-Expected success outcome:
-```
-Tagged on contact 1
-```
-
-Expected failure outcome:
-```
-Contact not available
-```
-
-### Locating persons by interest : `findInterest`
-
-Find persons whose interest tag contains any of the given keywords
-
-Format: `findInterest INTEREST [MORE_INTEREST]`
-
-* The search is case-insensitive. e.g. `cooking` will match `Cooking`
-* The order of the keywords does not matter. e.g. `cycling bikes` will match `bikes cycling`
-* Only the interest tag is searched
-* Only full words will be matched e.g. `Cycle` will not match `Cycling`
-* Persons matching at least one keyword will be returned (i.e. `OR` search)
-  e.g. `Ice Skating` will return `Ice Sculpting`, `Rollor Skating`
-* The interest **must not have any special characters** e.g. !, @, #, $, …​
-
-Examples:
-* `findInterest swimming` returns `Joseph Schooling` and `Joscelin Yeo Wei Ling` with tags for `swimming`
-* `findInterest cooking cycling` returns `Lance Armstrong` for `cycling`, `Andre Chiang` for `cooking`
-
-Expected success outcome:
-```
-Interests found:
-...
-```
-
-Expected failure outcome:
-```
-Interests not found
 ```
 
 ### Adding persons to schedule : `addSched`
@@ -312,13 +260,13 @@ Format: `addSched INDEX [MORE_INDEX] SCHEDULE_NAME from/DATE_TIME to/TIME`
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The DATE_TIME must be in the format of ddmmyyyy HHmm in 24-hour time
 * The TIME must be in the format of HHmm, but **not before the time from DATE_TIME** e.g. 0000-2359
-* `find Betsy` followed by `addSched 1 Exam 05032024 1600 1800` adds the 1st person in 
+* `find Betsy` followed by `addSched 1 Exam 05032024 1600 1800` adds the 1st person in
 the results of the `find` command to the event stated.
 
 Examples:
-* `addSched 4 Exam 05032024 1600 1800` will add the 4th person in the address list to the `Exam` event which 
+* `addSched 4 Exam 05032024 1600 1800` will add the 4th person in the address list to the `Exam` event which
 would take place on 5th March 2024 from 4pm - 6pm
-* `addSched 1,2,3 CSMeeting 18032024 1500 1900` will add the 1st, 2nd and 3rd persons in the address list 
+* `addSched 1,2,3 CSMeeting 18032024 1500 1900` will add the 1st, 2nd and 3rd persons in the address list
 to the `CSMeeting` event which would take place on 18th March 2024 from 3pm - 7pm
 
 Expected success outcome:
@@ -387,7 +335,5 @@ Action     | Format, Examples
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Clear**  | `clear`
-**Interest Tagging**   | `interest INDEX INTEREST [MORE_INTERESTS]` <br> e.g. `interest 3 swimming cooking`
-**Find Interest**   | `findInterest INTEREST [MORE_INTEREST]` <br> e.g. `findInterest cooking music`
 **Add Schedule**   | `addSched INDEX [MORE_INDEX] SCHEDULE_NAME` <br> e.g. `addSched 1,2,3 CSMeeting 18032024 1500 1900`
 **Exit**   | `exit`

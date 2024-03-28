@@ -25,14 +25,14 @@ public class AddSchedCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a schedule to person(s) in address book. "
             + "Parameters: "
             + "INDEX(S) (must be positive integer) "
-            + PREFIX_SCHEDULE + "SCHEDULE "
-            + PREFIX_START + "START DATETIME (yyyy-MM-dd HH:mm)"
-            + PREFIX_END + "END DATETIME (yyyy-MM-dd HH:mm)"
+            + PREFIX_SCHEDULE + " SCHEDULE "
+            + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)"
+            + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)"
             + "Example: " + COMMAND_WORD + " "
             + "1, 2"
-            + PREFIX_SCHEDULE + "CS2103 weekly meeting "
-            + PREFIX_START + "24/02/2024 15:00"
-            + PREFIX_END + "24/02/2024 17:00";
+            + PREFIX_SCHEDULE + " CS2103 weekly meeting "
+            + PREFIX_START + " 2024-02-24 15:00"
+            + PREFIX_END + " 2024-02-24 17:00";
 
     public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";
 
@@ -54,7 +54,7 @@ public class AddSchedCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        ArrayList<Person> participants = new ArrayList<>();
+        ArrayList<Person> participants = new ArrayList<Person>();
         for (Index index : targetIndexes) {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -62,9 +62,9 @@ public class AddSchedCommand extends Command {
             participants.add(lastShownList.get(index.getZeroBased()));
         }
 
-        schedule.addParticipants(participants);
 
-        // !!!TO VERIFY WITH REST: is model implementation required for Schedule?
+        schedule.addParticipants(participants);
+        model.addSchedule(schedule, participants);
 
         return new CommandResult(generateSuccessMessage());
     }
@@ -101,6 +101,5 @@ public class AddSchedCommand extends Command {
     private String generateSuccessMessage() {
         return String.format(MESSAGE_SUCCESS, schedule);
     }
-
 }
 

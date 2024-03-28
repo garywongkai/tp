@@ -19,11 +19,8 @@ public class Schedule {
 
     public static final String MESSAGE_CONSTRAINTS = "Schedule names should be alphanumeric";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
-    public static final DateTimeFormatter CUSTOM_DATETIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private static int schedIdCounter = 0;
-    // !! to EDIT as a metadata for Json storage
-
-    private final int schedId;
+    public static final String DATETIME_STRING = "yyyy-MM-dd HH:mm";
+    public static final DateTimeFormatter CUSTOM_DATETIME = DateTimeFormatter.ofPattern(DATETIME_STRING);
     private final String schedName;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
@@ -40,14 +37,31 @@ public class Schedule {
     public Schedule(String schedName, LocalDateTime startTime,
                     LocalDateTime endTime) {
         requireNonNull(schedName);
-        checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
+        //checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
         checkArgument(isValidTiming(startTime, endTime));
-        this.schedId = schedIdCounter++;
-
         this.schedName = schedName;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.personList = new ArrayList<Person>();
+    }
 
+    /**
+     * Constructs a {@code Schedule}.
+     *
+     * @param schedName A valid schedule name
+     * @param startTime A valid start time
+     * @param endTime A valid end time
+     * @param personList A valid list of participants
+     */
+    public Schedule(String schedName, LocalDateTime startTime,
+                    LocalDateTime endTime, ArrayList<Person> personList) {
+        requireNonNull(schedName);
+        checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidTiming(startTime, endTime));
+        this.schedName = schedName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.personList = personList;
     }
 
     public String getSchedName() {
@@ -62,8 +76,28 @@ public class Schedule {
         return endTime;
     }
 
-    public ArrayList<Person> getParticipants() {
+    public void setPersonList(ArrayList<Person> newPersonList) {
+        personList = newPersonList;
+    }
+
+    public ArrayList<Person> getPersonList() {
         return personList;
+    }
+
+    public String getParticipantsName() {
+        StringBuilder participants = new StringBuilder();
+
+        for (int i = 0; i < personList.size(); i++) {
+            participants.append("(").append(i + 1).append(") ");
+            participants.append(personList.get(i).getName());
+            participants.append(", ");
+
+        }
+        String res = participants.toString();
+        if (!res.isEmpty()) {
+            return res.substring(0, res.length() - 2);
+        }
+        return res;
     }
 
     /**
@@ -71,15 +105,18 @@ public class Schedule {
      *
      * @param newParticipants
      */
-    public void addParticipants(ArrayList<Person> newParticipants) {
+    public ArrayList<Person> addParticipants(ArrayList<Person> newParticipants) {
+        ArrayList<Person> addedParticipants = new ArrayList<>();
         for (Person p: newParticipants) {
-            for (Person existingP: personList) {
-                if (p.isSamePerson(existingP)) {
-                    continue;
-                }
+            if (!personList.contains(p)) {
                 personList.add(p);
             }
         }
+        return addedParticipants;
+    }
+
+    public void removePerson(Person p) {
+        personList.remove(p);
     }
 
     /**
@@ -94,6 +131,19 @@ public class Schedule {
      */
     public static boolean isValidTiming(LocalDateTime startTime, LocalDateTime endTime) {
         return startTime.isBefore(endTime);
+    }
+
+    /**
+     * Returns true if both persons have the same name.
+     * This defines a weaker notion of equality between two persons.
+     */
+    public boolean isSameSchedule(Schedule otherSchedule) {
+        if (otherSchedule == this) {
+            return true;
+        }
+
+        return otherSchedule != null
+                && otherSchedule.getSchedName().equals(getSchedName());
     }
 
     /**
@@ -127,9 +177,23 @@ public class Schedule {
      * Format state as text for viewing.
      */
     public String toString() {
-        return schedName
-                + " start " + startTime.toString()
-                + " end " + endTime.toString();
+        return "Event: " + schedName + "\n"
+                + "   Time: " + "start:" + startTime.toString()
+                + ", end:" + endTime.toString() + "\n"
+                + "   Participants: " + getParticipantsName() + "\n";
     }
 
+    /**
+     * Returns ustom date time format used
+     */
+    public static DateTimeFormatter getScheduleDateTimeFormatter() {
+        return CUSTOM_DATETIME;
+    }
+
+    /**
+     * Returns custom date time format used in string
+     */
+    public static String getDateTimeStringFormat() {
+        return DATETIME_STRING;
+    }
 }

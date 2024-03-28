@@ -31,6 +31,7 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final ArrayList<Schedule> schedules = new ArrayList<>();
 
+
     /**
      * Every field must be present and not null.
      */
@@ -113,6 +114,14 @@ public class Person {
         return schedules;
     }
 
+    public void addSchedule(Schedule s) {
+        schedules.add(s);
+    }
+
+    public void deleteSchedule(Schedule s) {
+        schedules.remove(s);
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -154,6 +163,22 @@ public class Person {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, phone, email, address, tags);
+    }
+
+    private String schedulesToString() {
+        StringBuilder schedulesList = new StringBuilder();
+
+        for (int i = 0; i < schedules.size(); i++) {
+            schedulesList.append(i + 1).append(". ");
+            schedulesList.append(schedules.get(i).toString());
+            schedulesList.append("\n");
+
+        }
+        String res = schedulesList.toString();
+        if (!res.isEmpty()) {
+            return res.substring(0, res.length() - 2);
+        }
+        return res;
     }
 
     @Override

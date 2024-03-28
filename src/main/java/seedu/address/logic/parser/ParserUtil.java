@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Phone;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Interest;
@@ -52,15 +54,39 @@ public class ParserUtil {
      */
     public static ArrayList<Index> parseIndexArrayList(String oneBasedIndex) throws ParseException {
         String trimmedIndexes = oneBasedIndex.trim();
-        String[] indexArray = trimmedIndexes.split(",");
+        String[] indexArray = trimmedIndexes.split(", ");
         ArrayList<Index> indexArrayList = new ArrayList<>();
+
         for (String index : indexArray) {
+            System.out.println(index);
+
             if (!StringUtil.isNonZeroUnsignedInteger(index)) {
                 throw new ParseException(MESSAGE_INVALID_INDEX);
             }
             indexArrayList.add(Index.fromOneBased(Integer.parseInt(index)));
         }
         return indexArrayList;
+    }
+
+    /**
+     * Parses {@code personNames} into an {@code personNamePredicateArrayList} and returns it. Leading
+     * and trailing whitespaces will be
+     * trimmed.
+     */
+    public static ArrayList<NameContainsKeywordsPredicate> parseNamePredicateArrayList(String personNames)
+            throws ParseException {
+        String trimmedPersonNames = personNames.trim();
+        String[] personNameArray = trimmedPersonNames.split(", ");
+        ArrayList<NameContainsKeywordsPredicate> personNamePredicateArrayList = new ArrayList<>();
+
+        for (String personName : personNameArray) {
+            System.out.println(personName);
+            String[] nameString = {personName};
+
+            personNamePredicateArrayList.add(
+                    new NameContainsKeywordsPredicate(Arrays.asList(nameString)));
+        }
+        return personNamePredicateArrayList;
     }
 
     /**

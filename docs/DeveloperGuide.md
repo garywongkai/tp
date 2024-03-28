@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# Moddie Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -289,160 +289,181 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​ | So that I can…​ |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *` | busy student | quickly check my friends' schedules | find a suitable time to plan a meetup. |
-| `* * *` | NUS student | view my schedule | access my personalized schedule, manage my contacts, and utilize other features of the platform.|
-| `* * *` | NUS student who likes **---** | find who has similar hobbies/interests with me | know who might want to go to a **---** related activities with me.|
-| `* * *` | NUS student who prefers command line interface | have a GUI to include commands | add details with convenience |
-| `* * *` | NUS student working part time | utilise Moddie to store contact details for team members, advisor | optimise my time management with school and work. |
-| `* * *` | student project team leader | check my teammates' schedule | conduct meetings with convenience |
-| `* * *` | international NUS student | find local friends that share similar schedules as me to aid me in easing into the university | build meaningful connections, navigate campus life more smoothly. |
-| `* * *` | unmotivated student who needs to catch up on my studies|manage my timetable with my friends |easily arrange a study session with them |
-| `* * *` | lonely NUS Student| find contacts of people with similar interests as myself| get to know them better and make friends.|
-| `* * *` | NUS graduate|find my lecturer’s contact email and phone number | ask them to be a reference in my resume when applying for a job.|
-| `* * *` |NUS Student| save my friends’ interests in the contact book| plan outings with them.|
-| `* * *` |busy NUS student | easily add my schedule to Moddie|efficiently manage my academic, extracurricular, and personal commitments in one centralized platform.|
-| `* * *` | NUS student| delete both my friends' and my own schedule details| maintain privacy and control over the information|
-| `* * *` | NUS student| view my friends' and their schedule details |easily coordinate plans, schedule meetings |
-| `* * *` | NUS student who gets confused with commands| have an interface to assist me|know what commands I can use |
-| `* * *` |NUS student | exit the interface|properly close the application |
-| `* * *` |NUS student|clear my commands |clear command messages that I do not need anymore |
-| `* *` | NUS graduate| save the contacts of my Lecturer and Tutor| stay in touch with them after graduation.|
-| `* *` | NUS student who makes errors|have an interface to prompt me | prevent myself from typing the wrong command.|
-| `* *` |NUS student who wants to join extracurricular activities |have a place to store my CCA events |easily make time for them. |
-| `* *` |NUS student who would like timetable suggestions|see other people's schedules to see who is taking the same modules as me |see what other modules they are also planning to take in the semester. |
-| `* *` |NUS student pursuing an internship | coordinate networking events and informational interviews with local professionals and industry experts|expand my professional network and efficiently manage my academic commitments. |
-| `* *` | course coordinator at NUS|communicate announcements, updates, and assignment deadlines to my students | provide a convenient channel for information dissemination and student engagement.|
-| `* *` |Lecturer | arrange the contacts of the TAs using a module tag| send the correct instructions for the module.|
-| `* *` |NUS student |edit my schedule, in case of any changes | ensure that my calendar remains accurate and reflective of my current commitments and availability.|
-| `*` |NUS Student | see the schedule and interest of my classmates to know who would share the same interest as me|meet them for outings/lunch. |
-| `*` | project leader|have an interface to see the timetable of my group mates | synchronise meetings best fitted for everyone’s schedule.|
-| `*` | international student| know my groupmates’ schedules to better arrange my flights (to avoid missing any meeting)| successfully accommodate my travel plans.|
-| `*` |introverted NUS student|arrange meetings with my new groupmates without interacting with them| comfortably initiate group collaboration and fulfil project requirements.|
+| Priority | As a …​                                                 | I want to …​ | So that I can…​                                                                                    |
+|---------|---------------------------------------------------------|------------------------------|----------------------------------------------------------------------------------------------------|
+| `* * *` | busy student                                            | view my friends' schedules | find a suitable time to plan a meetup.                                                             |
+| `* * *` | NUS student                                             | view my schedule | know what is my plan for the day.                                                                  |
+| `* * *` | NUS student                                             | categorize my friends by interests  | quickly identify individuals who share similar hobbies or preferences.                             |
+| `* * *` | NUS student who likes **---**                           | find who has similar hobbies/interests with me | know who might want to go to a **---** related activities with me.                                 |
+| `* * *` | NUS student who prefers command line interface          | have a GUI to include commands | add details with convenience                                                                       |
+| `* * *` | NUS student working part time                           | utilise Moddie to store contact details for team members, advisor | optimise my time for admin matters and focus on school and work.                                   |
+| `* * *` | student project team leader in NUS                      | check my teammates' schedule | plan an available time for meetings with convenience                                               |
+| `* * *` | international NUS student                               | find local friends that share similar schedules as me to aid me in easing into the university | build meaningful connections, navigate campus life more smoothly.                                  |
+| `* * *` | unmotivated student who needs to catch up on my studies |manage my timetable with my friends | easily arrange a study session with them                                                           |
+| `* * *` | freshman in NUS                                  | find contacts of people with similar interests as myself| get to know them better and make friends.                                                          |
+| `* * *` | NUS graduate                                            |find my lecturer’s contact email and phone number | ask them to be a reference in my resume when applying for a job.                                   |
+| `* * *` | NUS Student                                             | save my friends tagged interest| easily reference and remember their hobbies and preferences.                                       |
+| `* * *` | NUS Student                                             | edit my tagged interests| keep my profile updated with my current interests and preferences                                  |
+| `* * *` | busy NUS student                                        | easily add my schedule to Moddie| efficiently manage my academic, extracurricular, and personal commitments in one centralized platform. |
+| `* * *` | NUS student                                             | delete both my friends' and my own schedule details| maintain privacy and control over the information                                                  |
+| `* * *` | NUS student                                             | view my friends' and their schedule details | easily coordinate plans, schedule meetings                                                         |
+| `* * *` | NUS student who gets confused with commands             | have an interface to assist me| know what commands I can use                                                                       |
+| `* * *` | NUS student                                             | exit the interface| properly close the application                                                                     |
+| `* * *` | NUS student                                             |clear my commands | clear command messages that I do not need anymore                                                  |
+| `* *` | NUS graduate                                            | save the contacts of my Lecturer and Tutor| stay in touch with them after graduation.                                                          |
+| `* *` | NUS student who makes errors                            |have an interface to prompt me | prevent myself from typing the wrong command.                                                      |
+| `* *` | NUS student who wants to join extracurricular activities |have a place to store my CCA events | easily make time for them.                                                                         |
+| `* *` | NUS student who would like timetable suggestions        |see other people's schedules to see who is taking the same modules as me | see what other modules they are also planning to take in the semester.                             |
+| `* *` | NUS student pursuing an internship                      | coordinate networking events and informational interviews with local professionals and industry experts| expand my professional network and efficiently manage my academic commitments.                     |
+| `* *` | course coordinator at NUS                               |communicate announcements, updates, and assignment deadlines to my students | provide a convenient channel for information dissemination and student engagement.                 |
+| `* *` | NUS student                                             |edit my schedule, in case of any changes | ensure that my calendar remains accurate and reflective of my current commitments and availability. |
+| `* ` | Lecturer                                                | arrange the contacts of the TAs using a module tag| send the correct instructions for the module.                                                      |
+| `*` | NUS Student                                             | see the schedule and interest of my classmates to know who would share the same interest as me| meet them for outings/lunch.                                                                       |
+| `*` | project leader                                          |have an interface to see the timetable of my group mates | synchronise meetings best fitted for everyone’s schedule.                                          |
+| `*` | international student                                   | know my groupmates’ schedules to better arrange my flights (to avoid missing any meeting)| successfully accommodate my travel plans.                                                          |
+| `*` | introverted NUS student                                 |arrange meetings with my new groupmates without interacting with them| comfortably initiate group collaboration and fulfil project requirements.                          |
 
 ### Use cases
 
 (For all use cases below, the **System** is the `Moddie` and the **Actor** is the `user`, unless specified otherwise)
 
-#### **Use case: Add a person**
+**Use case: UC01 - Add a contact**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to add a specific person in the list
-4.  AddressBook adds the person
+1.  User requests to add a contact to the address book.
+2.  AddressBook adds the contact.
 
     Use case ends.
 
 **Extensions**
 
-* 3a. The given information of person is invalid.
+* 1a. Format of the entered contact is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 1a1. AddressBook shows an error message: Values not accepted.
 
       Use case ends.
 
-#### **Use case: Delete a person**
+
+#### **Use case: UC02 - Delete a contact**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to delete a contact in the address book.
+2.  AddressBook deletes the contact.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. The given index is invalid.
 
-  Use case ends.
+    * 1a1. AddressBook shows an error message: Contact not found in address book.
 
-* 3a. The given index is invalid.
+      Use case ends.
 
-    * 3a1. AddressBook shows an error message.
 
-      Use case resumes at step 2.
-
-#### **Use case: Edit contact of a person**
+**Use case: UC03 - Edit a contact**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to edit contact information of a specific person in the list
-4.  AddressBook edits contact information of the specific person as required by user
+1.  User requests to edit contact of a specific person in the address book.
+2.  AddressBook edits contact information of the specific person.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. The given index is invalid.
 
-  Use case ends.
+    * 1a1. AddressBook shows an error message: Contact not found in address book.
 
-* 3a. The given index is invalid.
+      Use case ends.
 
-    * 3a1. AddressBook shows an error message.
+* 1b. Format of the entered new contact is invalid.
 
-      Use case resumes at step 2.
+    * 1b1. AddressBook shows an error message: Update values not accepted.
 
-* 3b. The given contact information is invalid.
+      Use case ends.
 
-    * 3b1. AddressBook shows an error message.
 
-      Use case resumes at step 2.
-
-#### **Use case: List all contacts**
+**Use case: UC04 - List all contacts**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
+1.  User requests to list contacts in the address book.
+2.  AddressBook shows the list of all contacts.
+
+    Use case ends.
+
+
+**Use case: UC05 - Find contacts of a specific person**
+
+**MSS**
+
+1.  User requests to find a person with the enetred keyword in name.
+2.  AddressBook shows founded persons.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. The entered keyword is invalid.
 
-  Use case ends.
+    * 1a1. AddressBook shows an error message: Values not accepted.
 
-#### **Use case: Find contacts of a specific person**
+    Use case ends.
+
+* 2a. There is no matched result
+
+    * 2a1. AddressBook shows a message: Contacts not found.
+
+    Use case ends.
+
+
+**Use case: UC06 - Help**
 
 **MSS**
 
-1.  User requests to find a person
-2.  AddressBook shows persons with the keyword
+1.  User requests to read guidance.
+2.  AddressBook shows guidance page.
+
+    Use case ends.
+
+
+**Use case: UC07 - Exit**
+
+**MSS**
+
+1.  User requests to exit the programme.
+2.  AddressBook exits.
+
+    Use case ends.
+
+
+**Use case: UC08 - Add schedule**
+
+**MSS**
+
+1.  User requests to add an event with contact from specified date with time.
+2.  AddressBook adds the event to the specific contact.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. There is no matching result
+* 1a. The entered datetime format is invalid
 
-  AddressBook shows a message of no person found in contact list.
+    * 1a1. AddressBook shows an error message: The date format provided is invalid. Format: yyyy-MM-dd HH:mm
 
-#### **Use case: Find contacts of a specific person**
+      Use case ends.
 
-**MSS**
+* 1b. The entered index is invalid
 
-1.  User requests to find a person
-2.  AddressBook shows persons with the keyword
+    * 1b1. AddressBook shows a message: The person index provided is invalid
 
-    Use case ends.
+      Use case ends.
 
-**Extensions**
-
-* 2a. There is no matching result
-
-  AddressBook shows a message of no person found in contact list.
-
-
-*{More to be added}*
 
 ### Non-Functional Requirements
 
