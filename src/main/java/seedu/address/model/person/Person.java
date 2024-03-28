@@ -10,6 +10,7 @@ import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,13 +26,16 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Set<Tag> allTags = new HashSet<>();
+    private final Set<Interest> interests = new HashSet<>();
     private final Set<Tag> tags = new HashSet<>();
     private final ArrayList<Schedule> schedules = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Set<? extends Tag> tags, ArrayList<Schedule> schedules) {
+    public Person(Name name, Phone phone, Email email, Set<Tag> tags, Set<Interest> interests,
+        ArrayList<Schedule> schedules) {
         requireAllNonNull(name, phone, email, tags);
         this.name = name;
         this.phone = phone;
@@ -39,6 +43,11 @@ public class Person {
         this.address = new Address("");
         if (!tags.isEmpty()) {
             this.tags.addAll(tags);
+            this.allTags.addAll(tags);
+        }
+        if (!interests.isEmpty()) {
+            this.interests.addAll(interests);
+            this.allTags.addAll(interests);
         }
         if (!schedules.isEmpty()) {
             this.schedules.addAll(schedules);
@@ -49,7 +58,7 @@ public class Person {
      * Overloaded constructor to consider if Schedule is empty
      */
     public Person(Name name, Phone phone, Email email, Address address,
-        Set<? extends Tag> tags, ArrayList<Schedule> schedules) {
+        Set<Tag> tags, Set<Interest> interests, ArrayList<Schedule> schedules) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -57,6 +66,11 @@ public class Person {
         this.address = address;
         if (!tags.isEmpty()) {
             this.tags.addAll(tags);
+            this.allTags.addAll(tags);
+        }
+        if (!interests.isEmpty()) {
+            this.interests.addAll(interests);
+            this.allTags.addAll(interests);
         }
         if (!schedules.isEmpty()) {
             this.schedules.addAll(schedules);
@@ -84,7 +98,15 @@ public class Person {
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(allTags);
+    }
+
+    public Set<Tag> getTag() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Set<Interest> getInterest() {
+        return Collections.unmodifiableSet(interests);
     }
 
     public ArrayList<Schedule> getSchedules() {

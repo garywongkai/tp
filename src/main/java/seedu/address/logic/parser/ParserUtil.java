@@ -20,7 +20,6 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 
-
 /**
  * Contains utility methods used for parsing strings in the various *Parser
  * classes.
@@ -67,7 +66,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      * @throws ParseException if the given {@code name} is invalid.
      */
     public static Name parseName(String name) throws ParseException {
@@ -82,7 +80,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      * @throws ParseException if the given {@code phone} is invalid.
      */
     public static Phone parsePhone(String phone) throws ParseException {
@@ -97,7 +94,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      * @throws ParseException if the given {@code address} is invalid.
      */
     public static Address parseAddress(String address) throws ParseException {
@@ -116,7 +112,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      * @throws ParseException if the given {@code email} is invalid.
      */
     public static Email parseEmail(String email) throws ParseException {
@@ -131,7 +126,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      * @throws ParseException if the given {@code tag} is invalid.
      */
     public static Tag parseTag(String tag) throws ParseException {
@@ -146,10 +140,9 @@ public class ParserUtil {
     /**
      * Parses a {@code String interest} into a {@code Interest}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      * @throws ParseException if the given {@code interest} is invalid.
      */
-    public static Tag parseInterest(String interest) throws ParseException {
+    public static Interest parseInterest(String interest) throws ParseException {
         requireNonNull(interest);
         String trimmedTag = interest.trim();
         if (!Interest.isValidTagName(trimmedTag)) {
@@ -173,15 +166,27 @@ public class ParserUtil {
         return tagSet;
     }
 
-    public static Set<Tag> parseInterests(Collection<String> interests) throws ParseException {
+    /**
+     * Parses the given collection of strings into a set of interests.
+     * @param interests A collection of strings representing interests.
+     * @return A set of {@code Interest} objects representing the parsed interests.
+     * @throws ParseException If there is any error parsing the interests.
+     */
+    public static Set<Interest> parseInterests(Collection<String> interests) throws ParseException {
         requireNonNull(interests);
-        final Set<Tag> tagSet = new HashSet<>();
+        final Set<Interest> tagSet = new HashSet<>();
         for (String interestName : interests) {
             tagSet.add(parseInterest(interestName));
         }
         return tagSet;
     }
 
+    /**
+     * Parses the given collection of strings into a set of tags.
+     * @param tags A collection of strings representing tags.
+     * @return A set of {@code Tag} objects representing the parsed tags.
+     * @throws ParseException If there is any error parsing the tags.
+     */
     public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();

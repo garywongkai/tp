@@ -21,6 +21,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -49,19 +50,19 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = null;
 
-        Set<? extends Tag> tagList = ParserUtil.parseAllTags(argMultimap
-                .getAllValues(PREFIX_TAG),
-                argMultimap
-                        .getAllValues(PREFIX_INTEREST));
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap
+                .getAllValues(PREFIX_TAG));
+        Set<Interest> interestList = ParserUtil.parseInterests(argMultimap
+                .getAllValues(PREFIX_INTEREST));
         ArrayList<Schedule> scheduleList = ParserUtil
                 .parseSchedules(argMultimap
                         .getAllValues(PREFIX_SCHEDULE)); // schedules cannot be assigned when person is just added
         if (arePrefixesPresent(argMultimap, PREFIX_ADDRESS)) {
             address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-            Person person = new Person(name, phone, email, address, tagList, scheduleList);
+            Person person = new Person(name, phone, email, address, tagList, interestList, scheduleList);
             return new AddCommand(person);
         } else {
-            Person person = new Person(name, phone, email, tagList, scheduleList);
+            Person person = new Person(name, phone, email, tagList, interestList, scheduleList);
             return new AddCommand(person);
         }
     }

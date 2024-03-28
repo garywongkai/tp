@@ -16,6 +16,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +30,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final List<JsonAdaptedInterest> interests = new ArrayList<>();
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<JsonAdaptedSchedule> schedules = new ArrayList<>();
 
@@ -38,7 +40,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("interest") List<JsonAdaptedTag> interests,
             @JsonProperty("schedule") List<JsonAdaptedSchedule> schedules) {
         this.name = name;
         this.phone = phone;
@@ -82,9 +84,10 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * Converts this Jackson-friendly adapted person object into the model's
+     * {@code Person} object.
+     * @throws IllegalValueException if there were any data constraints violated in
+     *                               the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
@@ -92,6 +95,10 @@ class JsonAdaptedPerson {
             personTags.add(tag.toModelType());
         }
 
+        final List<Interest> personInterest = new ArrayList<>();
+        for (JsonAdaptedInterest interest : interests) {
+            personInterest.add(interest.toModelType());
+        }
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -117,10 +124,10 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        //if (address == null) {
-        //      throw new IllegalValueException(
-        //      String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        //}
+        // if (address == null) {
+        // throw new IllegalValueException(
+        // String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        // }
         if (!Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
@@ -128,14 +135,16 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
+        final Set<Interest> modelInterests = new HashSet<>(personInterest);
         final ArrayList<Schedule> modelSchedules = new ArrayList<>();
         for (JsonAdaptedSchedule schedule : schedules) {
             modelSchedules.add(schedule.toModelType());
         }
         if (address.isEmpty()) {
-            return new Person(modelName, modelPhone, modelEmail, modelTags, modelSchedules);
+            return new Person(modelName, modelPhone, modelEmail, modelTags, modelInterests, modelSchedules);
         } else {
-            return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelSchedules);
+            return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelInterests,
+                    modelSchedules);
         }
     }
 
