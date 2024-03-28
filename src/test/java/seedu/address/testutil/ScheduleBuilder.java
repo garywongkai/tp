@@ -1,15 +1,18 @@
 package seedu.address.testutil;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-
+/**
+ * A utility class to help with building Schedule objects.
+ */
 public class ScheduleBuilder {
     public static final String DEFAULT_SCHEDNAME = "CS2103 Meeting";
-    public static final DateTimeFormatter dateTimeFormatter = Schedule.getScheduleDateTimeFormatter();
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = Schedule.getScheduleDateTimeFormatter();
     public static final LocalDateTime DEFAULT_START = LocalDateTime.now();
     public static final LocalDateTime DEFAULT_END = LocalDateTime.now().plusHours(1);
     public static final ArrayList<Person> DEFAULT_PERSON_LIST = new ArrayList<>();
