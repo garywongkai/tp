@@ -2,7 +2,12 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_PARTICIPANTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMOVE_PARTICIPANTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_PARTICIPANTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
 import java.time.LocalDateTime;
 
@@ -25,7 +30,7 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
      */
     public EditSchedCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SPECIFIC_SCHEDULE_INDEX, PREFIX_START,
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_START,
                 PREFIX_END, PREFIX_ADD_PARTICIPANTS, PREFIX_REMOVE_PARTICIPANTS, PREFIX_SPECIFIC_PARTICIPANTS);
 
         Index index;
