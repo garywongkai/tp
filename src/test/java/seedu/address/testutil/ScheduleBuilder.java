@@ -2,16 +2,10 @@ package seedu.address.testutil;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
-import seedu.address.model.schedule.ScheduleTest;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class ScheduleBuilder {
     public static final String DEFAULT_SCHEDNAME = "CS2103 Meeting";
@@ -69,12 +63,17 @@ public class ScheduleBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code personList} of the {@code Schedule} that we are building.
+     */
     public ScheduleBuilder withParticipants(ArrayList<Person> personList) {
         this.personList = personList;
         return this;
     }
 
-
+    /**
+     * Builds and returns {@code Schedule} object
+     */
     public Schedule build() {
         return new Schedule(schedName, start, end, personList);
     }
