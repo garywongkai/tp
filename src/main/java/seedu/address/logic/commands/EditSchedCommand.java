@@ -75,7 +75,7 @@ public class EditSchedCommand extends Command {
         }
 
         Schedule scheduleToEdit = lastShownList.get(targetIndex.getZeroBased());
-        model.deleteSchedule(scheduleToEdit, scheduleToEdit.getPersonList());
+        //model.deleteSchedule(scheduleToEdit, scheduleToEdit.getPersonList());
         Schedule editedSchedule = createEditedSchedule(model, scheduleToEdit, editScheduleDescriptor);
 
         if (!scheduleToEdit.isSameSchedule(editedSchedule) && model.hasSchedule(editedSchedule)) {

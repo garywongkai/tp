@@ -12,7 +12,6 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -30,25 +29,18 @@ public class DeleteSchedCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "The schedule deleted: %1$s";
 
-    private final Index targetIndex;
+    private final Index deletePersonIndex;
 
-    private final ArrayList<Index> deletedPersonIndexArrayList;
+    private final Index deleteScheduleIndex;
 
 
-    /**
-     * Creates an DeleteCommand to delete the specified {@code Schedule}
-     */
-    public DeleteSchedCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
-        this.deletedPersonIndexArrayList = new ArrayList<Index>();
-    }
 
     /**
      * Creates an DeleteCommand to delete the specified {@code Schedule}
      */
-    public DeleteSchedCommand(Index targetIndex, ArrayList<Index> deletedPersonIndexArrayList) {
-        this.targetIndex = targetIndex;
-        this.deletedPersonIndexArrayList = deletedPersonIndexArrayList;
+    public DeleteSchedCommand(Index deletePersonIndex, Index deleteScheduleIndex) {
+        this.deletePersonIndex = deletePersonIndex;
+        this.deleteScheduleIndex = deleteScheduleIndex;
     }
 
     /**
@@ -59,55 +51,35 @@ public class DeleteSchedCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Schedule> scheduleList = model.getFilteredScheduleList();
+        List<Person> personList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= scheduleList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_SCHEDULE_DISPLAYED_INDEX);
+        if (deleteScheduleIndex.getZeroBased() >= personList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        Schedule scheduleToDelete = scheduleList.get(targetIndex.getZeroBased());
+        Person personToDelete = personList.get(deletePersonIndex.getZeroBased());
 
-        ArrayList<Person> allParticipants = scheduleToDelete.getPersonList();
-        UniquePersonList toDeleteParticipants = new UniquePersonList();
-        for (Index index : deletedPersonIndexArrayList) {
-            if (index.getZeroBased() >= allParticipants.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-            toDeleteParticipants.add(allParticipants.get(index.getZeroBased()));
-        }
-        if (deletedPersonIndexArrayList.isEmpty()) {
-            deleteSchedForAll(model, scheduleToDelete);
-            scheduleToDelete.setPersonList(new ArrayList<Person>());
-        } else {
-            deleteSchedForSpecificPersons(model, scheduleToDelete, toDeleteParticipants);
-        }
+        Schedule scheduleToDelete = personToDelete.getSchedules().get(deleteScheduleIndex.getZeroBased());
+
+        deleteSchedForSpecificPersons(model, scheduleToDelete, personToDelete);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(scheduleToDelete)));
     }
 
-    /**
-     * Deletes a {@code Schedule} for all involved participants
-     *
-     * @param model model used
-     * @param scheduleToDelete the schedule to delete
-     */
-    private void deleteSchedForAll(Model model, Schedule scheduleToDelete) {
-        model.deleteSchedule(scheduleToDelete, scheduleToDelete.getPersonList());
-    }
 
     /**
      * Deletes a {@code Schedule} for specific participants
      *
      * @param model model used
      * @param scheduleToDelete the schedule to delete
-     * @param toDeleteParticipants specified participants to delete schedule from
+     * @param personToDelete specified participant to delete schedule from
      */
     private void deleteSchedForSpecificPersons(Model model, Schedule scheduleToDelete,
-                                               UniquePersonList toDeleteParticipants) {
+                                               Person personToDelete) {
         Schedule scheduleToAdd = scheduleToDelete;
-        model.deleteSchedule(scheduleToDelete, scheduleToDelete.getPersonList());
+        model.deleteSchedule(personToDelete, scheduleToDelete);
         ArrayList<Person> remainParticipants = new ArrayList<Person>();
         for (Person p: scheduleToDelete.getPersonList()) {
-            if (!toDeleteParticipants.contains(p)) {
+            if (!p.isSamePerson(personToDelete)) {
                 p.deleteSchedule(scheduleToDelete);
                 remainParticipants.add(p);
             }
@@ -130,13 +102,14 @@ public class DeleteSchedCommand extends Command {
         }
 
         DeleteSchedCommand dsc = (DeleteSchedCommand) other;
-        return targetIndex.equals(dsc.targetIndex);
+        return deletePersonIndex.equals(dsc.deletePersonIndex) || deleteScheduleIndex.equals(dsc.deleteScheduleIndex);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("Schedule index", targetIndex)
+                .add("Person index", deletePersonIndex)
+                .add("Schedule index", deleteScheduleIndex)
                 .toString();
     }
 }

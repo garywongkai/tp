@@ -116,8 +116,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteSchedule(Schedule target, ArrayList<Person> toDeleteParticipants) {
-        addressBook.removeSchedule(target, toDeleteParticipants);
+    public void deleteSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule) {
+        addressBook.removeSchedule(toDeleteParticipant, toDeleteSchedule);
     }
 
     @Override

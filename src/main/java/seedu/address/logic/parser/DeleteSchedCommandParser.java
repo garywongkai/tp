@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_PARTICIPANTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -23,34 +23,34 @@ public class DeleteSchedCommandParser implements Parser<DeleteSchedCommand> {
      */
     public DeleteSchedCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                PREFIX_SPECIFIC_PARTICIPANTS);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SPECIFIC_SCHEDULE_INDEX);
 
-        Index index;
+        Index deletePersonIndex;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            deletePersonIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteSchedCommand.MESSAGE_USAGE), pe);
         }
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_SPECIFIC_PARTICIPANTS)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_SPECIFIC_SCHEDULE_INDEX)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteSchedCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_SPECIFIC_PARTICIPANTS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_SPECIFIC_SCHEDULE_INDEX);
 
-        ArrayList<Index> deletePersonIndexArrayList;
+        if (argMultimap.getValue(PREFIX_SPECIFIC_SCHEDULE_INDEX).isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteSchedCommand.MESSAGE_USAGE));
+        }
+
         try {
-            deletePersonIndexArrayList = ParserUtil.parseIndexArrayList(
-                    argMultimap.getValue(PREFIX_SPECIFIC_PARTICIPANTS).get());
-            return new DeleteSchedCommand(index, deletePersonIndexArrayList);
+            Index deleteScheduleIndex = ParserUtil.parseIndex(
+                    argMultimap.getValue(PREFIX_SPECIFIC_SCHEDULE_INDEX).get());
+            return new DeleteSchedCommand(deletePersonIndex, deleteScheduleIndex);
         } catch (ParseException pe) {
-            if (argMultimap.getValue(PREFIX_SPECIFIC_PARTICIPANTS).get().equals("all")) {
-                return new DeleteSchedCommand(index);
-            }
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteSchedCommand.MESSAGE_USAGE), pe);
         }

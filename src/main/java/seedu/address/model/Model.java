@@ -79,7 +79,7 @@ public interface Model {
      * Deletes the given schedule.
      * The schedule must exist in the address book.
      */
-    void deleteSchedule(Schedule target, ArrayList<Person> toDeleteParticipants);
+    void deleteSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule);
 
     /**
      * Adds the given schedule.

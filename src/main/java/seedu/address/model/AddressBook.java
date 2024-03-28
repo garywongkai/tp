@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -143,13 +144,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
      */
-    public void removeSchedule(Schedule key, ArrayList<Person> toDeleteParticipants) {
-        schedules.remove(key);
-        for (Person p: toDeleteParticipants) {
-            Person personDeletedSched = p;
-            p.deleteSchedule(key);
-            setPerson(p, personDeletedSched);
-        }
+    public void removeSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule) {
+        schedules.remove(toDeleteSchedule);
+        Person personDeletedSched = toDeleteParticipant;
+        toDeleteParticipant.deleteSchedule(toDeleteSchedule);
+        setPerson(toDeleteParticipant, personDeletedSched);
     }
 
     //// util methods
