@@ -91,13 +91,20 @@ public class Schedule {
             participants.append("(").append(i + 1).append(") ");
             participants.append(personList.get(i).getName());
             participants.append(", ");
-
         }
         String res = participants.toString();
         if (!res.isEmpty()) {
             return res.substring(0, res.length() - 2);
         }
         return res;
+    }
+
+    public ArrayList<String> getPartcipantsName() {
+        ArrayList<String> personString = new ArrayList<>();
+        for (Person i : personList) {
+            personString.add(i.getName().toString());
+        }
+        return  personString;
     }
 
     /**
@@ -112,6 +119,7 @@ public class Schedule {
                 personList.add(p);
             }
         }
+        System.out.println(addedParticipants);
         return addedParticipants;
     }
 

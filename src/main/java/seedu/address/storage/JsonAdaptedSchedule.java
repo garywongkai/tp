@@ -1,12 +1,15 @@
 package seedu.address.storage;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -20,6 +23,8 @@ public class JsonAdaptedSchedule {
     private final String moduleName;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
+    private final ArrayList<String> participants;
+
 
     /**
      * Constructs a {@code JsonAdaptedSlot} with the given {@code pet},
@@ -27,10 +32,11 @@ public class JsonAdaptedSchedule {
      */
     @JsonCreator
     public JsonAdaptedSchedule(@JsonProperty("moduleName") String name, @JsonProperty("startTime") String startTime,
-                               @JsonProperty("endTime") String endTime) {
+                               @JsonProperty("endTime") String endTime, @JsonProperty("participants") ArrayList<String> participants) {
         this.moduleName = name;
         this.startTime = LocalDateTime.parse(startTime);
         this.endTime = LocalDateTime.parse(endTime);
+        this.participants = participants;
     }
 
     /**
@@ -40,6 +46,7 @@ public class JsonAdaptedSchedule {
         moduleName = schedule.getSchedName();
         startTime = schedule.getStartTime();
         endTime = schedule.getEndTime();
+        participants = schedule.getPartcipantsName();
     }
 
     /**
@@ -52,7 +59,7 @@ public class JsonAdaptedSchedule {
         if (moduleName == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
-        return new Schedule(moduleName, startTime, endTime);
+        return new Schedule(moduleName, startTime, endTime, participants);
     }
 }
 
