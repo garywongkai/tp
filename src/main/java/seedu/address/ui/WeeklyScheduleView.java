@@ -1,12 +1,8 @@
 package seedu.address.ui;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import com.sun.prism.paint.Color;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -92,7 +88,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
                 } else {
                     int startTime = item.getStartTime().getMinute();
                     int endTime = item.getEndTime().getMinute();
-                    setStyle("-fx-background-color: white");
+                    setStyle("-fx-background-color: grey");
                     tooltip.setFont(Font.font("Gill Sans"));
                     tooltip.setText("Time: " + item.getStartTime().getHour() + ":"
                             + (startTime < 10 ? '0' : "") + startTime + " to "
