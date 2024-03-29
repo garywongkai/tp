@@ -10,6 +10,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -27,6 +28,7 @@ public class PersonBuilder {
     private Phone phone;
     private Email email;
     private Address address;
+    private Set<Interest> interests;
     private Set<Tag> tags;
     private ArrayList<Schedule> schedules;
 
@@ -38,6 +40,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        interests = new HashSet<>();
         tags = new HashSet<>();
         schedules = new ArrayList<>();
     }
@@ -50,6 +53,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        interests = new HashSet<>(personToCopy.getInterest());
         tags = new HashSet<>(personToCopy.getTags());
         schedules = new ArrayList<>(personToCopy.getSchedules());
     }
@@ -67,6 +71,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withInterests(String ... interests) {
+        this.interests = SampleDataUtil.getInterestSet(interests);
         return this;
     }
 
@@ -95,7 +107,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, schedules);
+        return new Person(name, phone, email, address, tags, interests, schedules);
     }
 
 }

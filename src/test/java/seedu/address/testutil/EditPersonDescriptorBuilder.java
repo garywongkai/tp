@@ -10,6 +10,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -78,6 +79,16 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Parses the {@code interest} into a {@code Set<Interest>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withInterests(String... interests) {
+        Set<Interest> interestSet = Stream.of(interests).map(Interest::new).collect(Collectors.toSet());
+        descriptor.setInterests(interestSet);
         return this;
     }
 
