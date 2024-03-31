@@ -18,6 +18,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -60,8 +61,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG), argMultimap.getAllValues(PREFIX_INTEREST))
-                .ifPresent(editPersonDescriptor::setTags);
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+        parseInterestsForEdit(argMultimap.getAllValues(PREFIX_INTEREST)).ifPresent(editPersonDescriptor::setInterests);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
@@ -78,17 +79,26 @@ public class EditCommandParser implements Parser<EditCommand> {
      * parsed into a
      * {@code Set<Tag>} containing zero tags.
      */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags, Collection<String> interests)
-            throws ParseException {
+    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
         assert tags != null;
 
         if (tags.isEmpty()) {
             return Optional.empty();
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        Set<Tag> parsedTags = ParserUtil.parseTags(tagSet);
+        return Optional.of(parsedTags);
+    }
+
+    private Optional<Set<Interest>> parseInterestsForEdit(Collection<String> interests) throws ParseException {
+        assert interests != null;
+
+        if (interests.isEmpty()) {
+            return Optional.empty();
+        }
         Collection<String> interestSet = interests.size() == 1 && interests.contains("") ? Collections.emptySet()
                 : interests;
-        Set<Tag> parsedTags = ParserUtil.parseTags(tagSet, interestSet);
-        return Optional.of(parsedTags);
+        Set<Interest> parsedInterests = ParserUtil.parseInterests(interestSet);
+        return Optional.of(parsedInterests);
     }
 }

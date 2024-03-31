@@ -28,6 +28,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -58,7 +59,7 @@ public class EditCommand extends Command {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -101,10 +102,12 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = editPersonDescriptor.getTag().orElse(personToEdit.getTag()); // change here
+        Set<Interest> updatedInterests = editPersonDescriptor.getInterest().orElse(personToEdit.getInterest());
         ArrayList<Schedule> updatedSchedules = personToEdit.getSchedules(); // schedules cannot be added here
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedSchedules);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedInterests,
+                updatedSchedules);
     }
 
     @Override
@@ -132,7 +135,8 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
+     * Stores the details to edit the person with. Each non-empty field value will
+     * replace the
      * corresponding field value of the person.
      */
     public static class EditPersonDescriptor {
@@ -140,9 +144,12 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private Set<Tag> allTags;
         private Set<Tag> tags;
+        private Set<Interest> interests;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -153,14 +160,16 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setAllTags(toCopy.tags, toCopy.interests);
             setTags(toCopy.tags);
+            setInterests(toCopy.interests);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, interests);
         }
 
         public void setName(Name name) {
@@ -196,6 +205,29 @@ public class EditCommand extends Command {
         }
 
         /**
+         * Sets the complete set of tags for this object, including both regular tags
+         * and interests.
+         * If {@code tags} and {@code interests} are both non-null, both sets are
+         * combined.
+         * A defensive copy of the sets is used internally.
+         * If both sets are null, sets {@code allTags} to null.
+         * @param tags      The set of regular tags to be set.
+         * @param interests The set of interests to be set.
+         */
+        public void setAllTags(Set<Tag> tags, Set<Interest> interests) {
+            if (tags != null && interests != null) {
+                this.allTags = new HashSet<>(tags);
+                allTags.addAll(interests);
+            } else if (tags != null && interests == null) {
+                this.allTags = new HashSet<>(tags);
+            } else if (tags == null && interests != null) {
+                this.allTags = new HashSet<>(interests);
+            } else {
+                this.allTags = null;
+            }
+        }
+
+        /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
          */
@@ -204,12 +236,43 @@ public class EditCommand extends Command {
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * Sets the interests for this object.
+         * A defensive copy of {@code interests} is used internally.
+         * @param interests The set of interests to be set.
+         */
+        public void setInterests(Set<Interest> interests) {
+            this.interests = (interests != null) ? new HashSet<>(interests) : null;
+        }
+
+        /**
+         * Returns an optional containing an unmodifiable set of all tags associated
+         * with this object,
+         * including both regular tags and interests.
+         * Returns {@code Optional#empty()} if {@code allTags} is null.
+         * @return An optional containing an unmodifiable set of all tags.
          */
         public Optional<Set<Tag>> getTags() {
+            return (allTags != null) ? Optional.of(Collections.unmodifiableSet(allTags)) : Optional.empty();
+        }
+
+        /**
+         * Returns an optional containing an unmodifiable set of regular tags associated
+         * with this object.
+         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * @return An optional containing an unmodifiable set of regular tags.
+         */
+        public Optional<Set<Tag>> getTag() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        /**
+         * Returns an optional containing an unmodifiable set of interests associated
+         * with this object.
+         * Returns {@code Optional#empty()} if {@code interests} is null.
+         * @return An optional containing an unmodifiable set of interests.
+         */
+        public Optional<Set<Interest>> getInterest() {
+            return (interests != null) ? Optional.of(Collections.unmodifiableSet(interests)) : Optional.empty();
         }
 
         @Override
@@ -228,7 +291,8 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(interests, otherEditPersonDescriptor.interests);
         }
 
         @Override
@@ -238,7 +302,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("tags", tags)
+                    .add("tags", allTags)
                     .toString();
         }
     }
