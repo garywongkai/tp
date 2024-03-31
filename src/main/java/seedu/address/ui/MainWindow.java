@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -74,6 +75,7 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private WeeklyScheduleView weeklyScheduleView;
+
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -166,9 +168,7 @@ public class MainWindow extends UiPart<Stage> {
     private void populatePersonNameComboBox() {
         // Example class names, replace with actual data retrieval logic
         ObservableList<Person> persons = logic.getFilteredPersonList();
-
         personComboBox.setItems(persons);
-
         // Use a cell factory to display the names of the Person objects
         personComboBox.setCellFactory(comboBox -> new ListCell<Person>() {
             @Override
@@ -207,6 +207,7 @@ public class MainWindow extends UiPart<Stage> {
                 System.out.println("Current List of person: ");
                 populatedPerson.forEach(person -> System.out.println(person.getName()));
             }
+            Platform.runLater(() -> personComboBox.getSelectionModel().clearSelection());
         });
 
         persons.addListener((ListChangeListener.Change<? extends Person> change) -> {
@@ -219,7 +220,7 @@ public class MainWindow extends UiPart<Stage> {
                         System.out.println("Current List of person: ");
                         populatedPerson.forEach(person -> System.out.print(person.getName()));
                         updateTableView(populatedPerson);
-
+                        populatePersonNameComboBox();
                     }
                 }
             }
@@ -293,7 +294,7 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Executes the command and returns the result.
      *
-     * @see seedu.address.logic.Logic#execute(String)
+     * @see Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
