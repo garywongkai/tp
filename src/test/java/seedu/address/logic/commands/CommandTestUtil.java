@@ -8,6 +8,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -39,6 +43,14 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_INTEREST_DANCE = "dance";
     public static final String VALID_INTEREST_GOLF = "golf";
+    
+    public static final String VALID_SCHEDULE_MEETING = "CS2103 weekly meeting";
+    public static final String VALID_SCHEDULE_DISCUSSION = "Discussion";
+    public static final String VALID_START_3PM = "2024-02-24 15:00";
+    public static final String VALID_END_5PM = "2024-02-24 17:00";
+    public static final String VALID_START_10AM = "2024-02-24 10:00";
+    public static final String VALID_END_8PM = "2024-02-24 20:00";
+    
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -53,12 +65,24 @@ public class CommandTestUtil {
     public static final String INTEREST_DESC_DANCE = " " + PREFIX_INTEREST + VALID_INTEREST_DANCE;
     public static final String INTEREST_DESC_GOLF = " " + PREFIX_INTEREST + VALID_INTEREST_GOLF;
 
+    public static final String SCHEDULE_DESC_MEETING = " " + PREFIX_SCHEDULE + VALID_SCHEDULE_MEETING;
+    public static final String SCHEDULE_DESC_DISCUSSION = " " + PREFIX_SCHEDULE + VALID_SCHEDULE_DISCUSSION;
+    public static final String START_DESC_3PM = " " + PREFIX_START + VALID_START_3PM;
+    public static final String START_DESC_10AM = " " + PREFIX_START + VALID_START_10AM;
+    public static final String END_DESC_5PM = " " + PREFIX_END + VALID_END_5PM;
+    public static final String END_DESC_8PM = " " + PREFIX_END + VALID_END_8PM;
+
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_INTEREST_DESC = " " + PREFIX_INTEREST + "dance*"; // '*' not allowed in tags
+    public static final String INVALID_INTEREST_DESC = " " + PREFIX_INTEREST + "dance*"; // '*' not allowed in interest
+
+    public static final String INVALID_SCHEDULE_MEETING = " " + PREFIX_SCHEDULE + "CS2103 weekly meeting*";
+    public static final String INVALID_START_3PM = " " + PREFIX_START + "1Apr2024 15:00"; // not in correct format
+    public static final String INVALID_END_5PM = " " + PREFIX_END + VALID_END_5PM;
+    public static final String INVALID_END_8PM = " " + PREFIX_END + VALID_END_8PM;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
