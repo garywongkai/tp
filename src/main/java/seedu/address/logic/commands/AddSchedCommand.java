@@ -24,15 +24,16 @@ public class AddSchedCommand extends Command {
     public static final String COMMAND_WORD = "addSched";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a schedule to person(s) in address book. "
             + "Parameters: "
-            + "INDEX(S) (must be positive integer) "
-            + PREFIX_SCHEDULE + " SCHEDULE "
-            + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)"
-            + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)"
+            + "PERSON INDEX(S) (must be positive integer) "
+            + PREFIX_SCHEDULE + "SCHEDULE "
+            + PREFIX_START + "START_DATETIME (yyyy-MM-dd HH:mm) "
+            + PREFIX_END + "END_DATETIME (yyyy-MM-dd HH:mm) "
+            + "(START_DATETIME and END_DATETIME must be between 08:00 and 21:00)\n"
             + "Example: " + COMMAND_WORD + " "
-            + "1, 2"
-            + PREFIX_SCHEDULE + " CS2103 weekly meeting "
-            + PREFIX_START + " 2024-02-24 15:00"
-            + PREFIX_END + " 2024-02-24 17:00";
+            + "1, 2 "
+            + PREFIX_SCHEDULE + "CS2103 weekly meeting "
+            + PREFIX_START + "2024-02-24 09:00 "
+            + PREFIX_END + "2024-02-24 17:00";
 
     public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";
 
