@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.time.LocalDateTime;
@@ -29,21 +27,25 @@ public class EditSchedCommand extends Command {
     public static final String COMMAND_WORD = "editSched";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edit a schedule in address book. "
             + "Parameters: "
-            + "TASK INDEX(S) (must be positive integer) "
-            + "[" + PREFIX_SCHEDULE + " SCHEDULE] "
+            + "PERSON INDEX(S) (must be positive integer) "
+            + PREFIX_TASK + "TASK INDEX(S) (must be positive integer) "
+            + "[" + PREFIX_SCHEDULE + " SCHEDULE NAME] "
             + "[" + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)] "
             + "[" + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)] "
             + "Example: " + COMMAND_WORD + " " + "1 "
+            + PREFIX_TASK + " 1, 2 "
             + "[" + PREFIX_SCHEDULE + " CS2103 weekly meeting] "
             + "[" + PREFIX_START + " 2024-02-24 15:00] "
             + "[" + PREFIX_END + " 2024-02-24 17:00] ";
 
     public static final String MESSAGE_EDIT_SCHEDULE_SUCCESS = "Edited Schedule: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_TASK_NOT_SPECIFIED = "No task index has been specified.";
     public static final String MESSAGE_DUPLICATE_SCHEDULE =
             "This schedule already exists in the address book.";
 
-    private final Index targetIndex;
+    private final Index personIndex;
+    private final Index schedulIndex;
 
     private final EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor;
 
@@ -51,29 +53,36 @@ public class EditSchedCommand extends Command {
     /**
      * Creates EditSchedCommand object
      *
-     * @param targetIndex index of schedule to edit
+     * @param personIndex index of person to edit
+     * @param schedulIndex index of schedule to edit
      * @param editScheduleDescriptor to create edited schedule
      */
-    public EditSchedCommand(Index targetIndex,
+    public EditSchedCommand(Index personIndex, Index schedulIndex,
                             EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor) {
-        requireNonNull(targetIndex);
+        assert personIndex != null;
+        assert schedulIndex != null;
+        assert editScheduleDescriptor != null;
+        requireNonNull(personIndex);
         requireNonNull(editScheduleDescriptor);
 
-        this.targetIndex = targetIndex;
+        this.personIndex = personIndex;
+        this.schedulIndex = schedulIndex;
         this.editScheduleDescriptor =
                 new EditSchedCommand.EditScheduleDescriptor(editScheduleDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        assert model != null;
         requireNonNull(model);
-        List<Schedule> lastShownList = model.getFilteredScheduleList();
+        List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (personIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Schedule scheduleToEdit = lastShownList.get(targetIndex.getZeroBased());
+        Person personToEdit = lastShownList.get(personIndex.getZeroBased());
+        Schedule scheduleToEdit = personToEdit.getSchedules().get(schedulIndex.getZeroBased());
         model.deleteSchedule(scheduleToEdit, scheduleToEdit.getPersonList());
         Schedule editedSchedule = createEditedSchedule(model, scheduleToEdit, editScheduleDescriptor);
 
@@ -138,14 +147,14 @@ public class EditSchedCommand extends Command {
         }
 
         EditSchedCommand otherEditSchedCommand = (EditSchedCommand) other;
-        return targetIndex.equals(otherEditSchedCommand.targetIndex)
+        return personIndex.equals(otherEditSchedCommand.personIndex)
                 && editScheduleDescriptor.equals(otherEditSchedCommand.editScheduleDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
+                .add("personIndex", personIndex)
                 .add("editScheduleDescriptor", editScheduleDescriptor)
                 .toString();
     }
@@ -155,6 +164,7 @@ public class EditSchedCommand extends Command {
      * corresponding field value of the person.
      */
     public static class EditScheduleDescriptor {
+        private Index schedtaskIndex;
         private String schedName;
         private LocalDateTime startTime;
         private LocalDateTime endTime;
@@ -170,6 +180,7 @@ public class EditSchedCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditScheduleDescriptor(EditSchedCommand.EditScheduleDescriptor toCopy) {
+            setSchedTask(toCopy.schedtaskIndex);
             setSchedName(toCopy.schedName);
             setStartTime(toCopy.startTime);
             setEndTime(toCopy.endTime);
@@ -185,6 +196,12 @@ public class EditSchedCommand extends Command {
             return CollectionUtil.isAnyNonNull(schedName, startTime, endTime, newParticipantList);
         }
 
+        public void setSchedTask(Index schedtaskIndex) {
+            this.schedtaskIndex = schedtaskIndex;
+        }
+        public Optional<Index> getSchedTask() {
+            return Optional.ofNullable(schedtaskIndex);
+        }
         public void setSchedName(String schedName) {
             this.schedName = schedName;
         }
