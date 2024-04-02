@@ -8,8 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -77,15 +79,23 @@ public class WeeklyScheduleView extends UiPart<Region> {
         listView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Schedule item, boolean empty) {
+                final Tooltip tooltip = new Tooltip();
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                     setGraphic(null);
                     //System.out.println("Cell is empty or item is null");
                 } else {
-                    setText(item.getSchedName() + " - " + item.getStartTime().getHour()
-                            + item.getStartTime().getMinute() + " to "
-                            + item.getEndTime().getHour() + item.getEndTime().getMinute());
+                    int startTime = item.getStartTime().getMinute();
+                    int endTime = item.getEndTime().getMinute();
+                    setStyle("-fx-background-color: grey");
+                    tooltip.setFont(Font.font("Gill Sans"));
+                    tooltip.setText("Time: " + item.getStartTime().getHour() + ":"
+                            + (startTime < 10 ? '0' : "") + startTime + " to "
+                            + item.getEndTime().getHour() + ":"
+                            + (endTime < 10 ? '0' : "") + item.getEndTime().getMinute());
+                    setTooltip(tooltip);
+                    setText(item.getSchedName());
                     //System.out.println("Cell content updated");
                 }
             }
