@@ -1,17 +1,23 @@
 package seedu.address.ui;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -20,35 +26,22 @@ import seedu.address.model.schedule.Schedule;
 public class WeeklyScheduleView extends UiPart<Region> {
 
     private static final String FXML = "WeeklyScheduleView.fxml";
-    @FXML
-    private GridPane gridPane;
+    private final LocalDateTime START_TIME = LocalDateTime.of(LocalDate.parse("2024-04-01"), LocalTime.of(8, 0));
+    private final LocalDateTime END_TIME = LocalDateTime.of(LocalDate.now(), LocalTime.of(21, 0));
+    private final int NUM_DAYS = 7; // Assuming a typical workweek from Monday to Sunday
+    private final int TIME_INTERVAL_MINUTES = 30;
 
     @FXML
-    private ListView<Schedule> mondayListView;
-
+    private VBox timeTableBox;
     @FXML
-    private ListView<Schedule> tuesdayListView;
-
-    @FXML
-    private ListView<Schedule> wednesdayListView;
-
-    @FXML
-    private ListView<Schedule> thursdayListView;
-
-    @FXML
-    private ListView<Schedule> fridayListView;
-
-    @FXML
-    private ListView<Schedule> saturdayListView;
-
-    @FXML
-    private ListView<Schedule> sundayListView;
+    private GridPane timetableGrid;
 
     /**
      * Constructor method to initialize class
      */
     public WeeklyScheduleView() {
         super(FXML);
+        initializeTimetable();
     }
 
     /**
@@ -56,103 +49,121 @@ public class WeeklyScheduleView extends UiPart<Region> {
      */
 
     public void initialize() {
-        // Customize the appearance of items in each ListView
-        customizeListView(mondayListView);
-        customizeListView(tuesdayListView);
-        customizeListView(wednesdayListView);
-        customizeListView(thursdayListView);
-        customizeListView(fridayListView);
-        customizeListView(saturdayListView);
-        customizeListView(sundayListView);
-        // Initialize the ListView elements
-        mondayListView.setItems(FXCollections.observableArrayList());
-        tuesdayListView.setItems(FXCollections.observableArrayList());
-        wednesdayListView.setItems(FXCollections.observableArrayList());
-        thursdayListView.setItems(FXCollections.observableArrayList());
-        fridayListView.setItems(FXCollections.observableArrayList());
-        saturdayListView.setItems(FXCollections.observableArrayList());
-        sundayListView.setItems(FXCollections.observableArrayList());
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHgrow(Priority.ALWAYS);
+
+        // Apply the column constraint to the gridpane
+        timetableGrid.getColumnConstraints().add(columnConstraints);
+        VBox.setVgrow(timetableGrid, javafx.scene.layout.Priority.ALWAYS);
+        timetableGrid.setMaxWidth(Double.MAX_VALUE);
+        timetableGrid.setHgap(10);
         System.out.println("I've been set-up!");
     }
 
-    private void customizeListView(ListView<Schedule> listView) {
-        listView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Schedule item, boolean empty) {
-                final Tooltip tooltip = new Tooltip();
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                    //System.out.println("Cell is empty or item is null");
-                } else {
-                    int startTime = item.getStartTime().getMinute();
-                    int endTime = item.getEndTime().getMinute();
-                    setStyle("-fx-background-color: grey");
-                    tooltip.setFont(Font.font("Gill Sans"));
-                    tooltip.setText("Time: " + item.getStartTime().getHour() + ":"
-                            + (startTime < 10 ? '0' : "") + startTime + " to "
-                            + item.getEndTime().getHour() + ":"
-                            + (endTime < 10 ? '0' : "") + item.getEndTime().getMinute());
-                    setTooltip(tooltip);
-                    setText(item.getSchedName());
-                    //System.out.println("Cell content updated");
+    private void initializeTimetable() {
+        for (int j = 0; j < 27; j++) {
+            LocalTime time = LocalTime.from(START_TIME.plusMinutes(j * 30));
+            Label timeLabel = new Label(time.toString());
+            timeLabel.setStyle("-fx-padding: 0 10 0 10;");
+            timeLabel.setTextAlignment(TextAlignment.CENTER);
+            timetableGrid.add(timeLabel, j + 1, 0);
+        }
+
+        // Add day labels to the first row
+        String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        for (int i = 0; i < NUM_DAYS; i++) {
+            Label dayLabel = new Label(daysOfWeek[i]);
+            if (i == 0) {
+                // Set the preferred width of the first day label
+                dayLabel.setMinWidth(60); // Adjust the width as needed
+            }
+            dayLabel.setTextAlignment(TextAlignment.CENTER);
+            timetableGrid.add(dayLabel, 0, i + 1);
+        }
+        timetableGrid.setStyle("-fx-padding: 0 10 0 10;");
+    }
+
+    public void populateTimetable(ArrayList<Schedule> schedules) {
+        // Clear the timetable before populating it
+        clear();
+
+        // Populate the timetable grid
+        for (Schedule schedule : schedules) {
+            populateCellsForSchedule(schedule);
+        }
+    }
+
+    private void populateCellsForSchedule(Schedule schedule) {
+        // Calculate the row index for the start time of the schedule
+        LocalDateTime startTime = schedule.getStartTime();
+        int startRowIndex = calculateRowIndex(startTime);
+
+        // Calculate the row index for the end time of the schedule
+        LocalDateTime endTime = schedule.getEndTime();
+        int endRowIndex = calculateRowIndex(endTime);
+
+        // Calculate the column index for the day of the schedule
+        DayOfWeek dayOfWeek = startTime.getDayOfWeek();
+        int columnIndex = dayOfWeek.getValue(); // Adjust for 0-based indexing
+
+        // Populate the cells for the schedule
+        for (int rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
+            timetableGrid.add(createScheduleCell(schedule), rowIndex + 1, columnIndex);
+        }
+    }
+
+    public void removeSchedule(Schedule schedule) {
+        ArrayList<Node> nodesToRemove = new ArrayList<>();
+        for (Node node : timetableGrid.getChildren()) {
+            if (node instanceof StackPane) {
+                StackPane cell = (StackPane) node;
+
+                // Check if the cell contains a label with the schedule description
+                for (Node cellContent : cell.getChildren()) {
+                    if (cellContent instanceof Label) {
+                        Label label = (Label) cellContent;
+
+                        // Compare the label text with the schedule description
+                        if (label.getText().equals(schedule.getSchedName())) {
+                            // Add the cell to the list of nodes to be removed
+                            nodesToRemove.add(cell);
+                        }
+                    }
                 }
             }
-        });
-    }
-
-    private ObservableList<Schedule> filterSchedulesForDay(ArrayList<Schedule> schedules, DayOfWeek day) {
-        //System.out.println("I got called to filter by day Schedules!");
-        ObservableList<Schedule> filteredSchedules = FXCollections.observableArrayList(schedules);
-        ObservableList<Schedule> filteredSchedulesDay = FXCollections.observableArrayList();
-        for (Schedule schedule : filteredSchedules) {
-
-            if (schedule.getStartTime().getDayOfWeek() == day) {
-                filteredSchedulesDay.add(schedule);
-            }
         }
-        return filteredSchedulesDay;
+
+        // Remove all the cells corresponding to the schedule from the grid
+        timetableGrid.getChildren().removeAll(nodesToRemove);
     }
 
-    // Method to populate ListView for a specific day
-    private void populateListViewForDay(ArrayList<Schedule> schedules, ListView<Schedule> listView, DayOfWeek day) {
-        //System.out.println("I got called to populateView!");
-        ObservableList<Schedule> daySchedules = filterSchedulesForDay(schedules, day);
-        for (Schedule schedule : daySchedules) {
-            if (!listView.getItems().contains(schedule)) {
-                assert (schedule != null);
-                listView.getItems().add(schedule);
-            }
-        }
-        //System.out.println("Schedules for " + day + ": " + daySchedules);
-        //System.out.println("Current Calender for : "+ day + ": " + listView.getItems());
+    private int calculateRowIndex(LocalDateTime time) {
+        int minutesFromStart = (int) START_TIME.until(time, java.time.temporal.ChronoUnit.MINUTES);
+        return minutesFromStart / TIME_INTERVAL_MINUTES;
     }
 
-    /**
-     * Method to be called to update Calender with list of current week Schedules
-     * @param schedules Array of Schedules for current week to be populated
-     */
-    public void populateWeeklySchedule(ArrayList<Schedule> schedules) {
-        System.out.println("I got called to populateWeeklySchedule!");
-        populateListViewForDay(schedules, mondayListView, DayOfWeek.MONDAY);
-        populateListViewForDay(schedules, tuesdayListView, DayOfWeek.TUESDAY);
-        populateListViewForDay(schedules, wednesdayListView, DayOfWeek.WEDNESDAY);
-        populateListViewForDay(schedules, thursdayListView, DayOfWeek.THURSDAY);
-        populateListViewForDay(schedules, fridayListView, DayOfWeek.FRIDAY);
-        populateListViewForDay(schedules, saturdayListView, DayOfWeek.SATURDAY);
-        populateListViewForDay(schedules, sundayListView, DayOfWeek.SUNDAY);
+    private Node createScheduleCell(Schedule schedule) {
+        // Create a StackPane to hold the content of the schedule cell
+        StackPane cellPane = new StackPane();
+
+        // Set the style of the cell
+        cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 1px;");
+
+        // Create a label to display the schedule information
+        Label label = new Label(schedule.getSchedName());
+
+        // Add the label to the cell pane
+        cellPane.getChildren().add(label);
+
+        // Set the alignment of the label within the cell pane
+        StackPane.setAlignment(label, Pos.CENTER);
+
+        // Return the cell pane
+        return cellPane;
     }
 
-    // Method to filter schedules for a specific day
-
-    void clear() {
-        mondayListView.getItems().clear();
-        tuesdayListView.getItems().clear();
-        wednesdayListView.getItems().clear();
-        thursdayListView.getItems().clear();
-        fridayListView.getItems().clear();
-        saturdayListView.getItems().clear();
-        sundayListView.getItems().clear();
+    public void clear() {
+        timetableGrid.getChildren().clear();
+        initializeTimetable();
     }
 }

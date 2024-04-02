@@ -193,6 +193,9 @@ public class MainWindow extends UiPart<Stage> {
                 if (populatedPerson.contains(newValue)) {
                     populatedPerson.remove(newValue);
                     System.out.println("Removed person: " + newValue.getName());
+                    for (Schedule schedule : newValue.getSchedules()) {
+                        weeklyScheduleView.removeSchedule(schedule);
+                    }
                     updateTableView(populatedPerson);
                 } else {
                     if (populatedPerson.size() == 5) {
@@ -235,7 +238,7 @@ public class MainWindow extends UiPart<Stage> {
     public void updateTableView(ArrayList<Person> selectedPersons) {
         // Clear the table view
         scheduleTable.getItems().clear();
-        weeklyScheduleView.clear();
+        //weeklyScheduleView.clear();
         // Loop through each selected person
         for (Person person : selectedPersons) {
             // Extract the schedules from the selected person
@@ -255,7 +258,7 @@ public class MainWindow extends UiPart<Stage> {
             }
             // Add each schedule to the table view
             scheduleTable.getItems().addAll(filteredSchedules);
-            weeklyScheduleView.populateWeeklySchedule(filteredSchedules);
+            weeklyScheduleView.populateTimetable(filteredSchedules);
         }
     }
 
