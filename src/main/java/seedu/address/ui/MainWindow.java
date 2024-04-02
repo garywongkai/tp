@@ -240,13 +240,13 @@ public class MainWindow extends UiPart<Stage> {
         scheduleTable.getItems().clear();
         weeklyScheduleView.clear();
         // Loop through each selected person
+        ArrayList<Schedule> filteredSchedules = new ArrayList<>();
         for (Person person : selectedPersons) {
             // Extract the schedules from the selected person
             LocalDate now = LocalDate.now();
             LocalDate startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
             LocalDate endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).plusDays(1); // End of Sunday
             ArrayList<Schedule> schedules = person.getSchedules();
-            ArrayList<Schedule> filteredSchedules = new ArrayList<>();
             for (Schedule sched : schedules) {
                 LocalDateTime startTime = sched.getStartTime();
                 LocalDateTime endTime = sched.getEndTime();
@@ -255,10 +255,10 @@ public class MainWindow extends UiPart<Stage> {
                     filteredSchedules.add(sched);
                 }
             }
-            // Add each schedule to the table view
-            scheduleTable.getItems().addAll(filteredSchedules);
-            weeklyScheduleView.populateTimetable(filteredSchedules);
         }
+        // Add each schedule to the table view
+        scheduleTable.getItems().addAll(filteredSchedules);
+        weeklyScheduleView.populateTimetable(filteredSchedules);
     }
 
     /**
