@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -19,6 +20,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import seedu.address.model.schedule.Schedule;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 /**
  * WeeklyScheduleView class to assist with population of Calender
@@ -102,14 +105,18 @@ public class WeeklyScheduleView extends UiPart<Region> {
         LocalDateTime endTime = schedule.getEndTime();
         int endRowIndex = calculateRowIndex(endTime);
 
+        // Determine the rowSpan for the schedule based on its duration
+        int rowSpan = endRowIndex - startRowIndex + 1;
+
         // Calculate the column index for the day of the schedule
         DayOfWeek dayOfWeek = startTime.getDayOfWeek();
         int columnIndex = dayOfWeek.getValue(); // Adjust for 0-based indexing
 
-        // Populate the cells for the schedule
-        for (int rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
-            timetableGrid.add(createScheduleCell(schedule), rowIndex + 1, columnIndex);
+        Node scheduleNode = createScheduleCell(schedule);
+        if (rowSpan > 2) {
+            GridPane.setColumnSpan(scheduleNode, rowSpan);
         }
+        timetableGrid.add(scheduleNode, startRowIndex + 1, columnIndex);
     }
 
     public void removeSchedule(Schedule schedule) {
@@ -138,7 +145,9 @@ public class WeeklyScheduleView extends UiPart<Region> {
     }
 
     private int calculateRowIndex(LocalDateTime time) {
-        int minutesFromStart = (int) START_TIME.until(time, java.time.temporal.ChronoUnit.MINUTES);
+        LocalDateTime startTimeOfDay = time.toLocalDate().atStartOfDay().plusHours(8);
+        int minutesFromStart = (int) startTimeOfDay.until(time, java.time.temporal.ChronoUnit.MINUTES);
+        System.out.println(minutesFromStart / TIME_INTERVAL_MINUTES);
         return minutesFromStart / TIME_INTERVAL_MINUTES;
     }
 
@@ -147,17 +156,23 @@ public class WeeklyScheduleView extends UiPart<Region> {
         StackPane cellPane = new StackPane();
 
         // Set the style of the cell
-        cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 1px;");
-
+        cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
         // Create a label to display the schedule information
         Label label = new Label(schedule.getSchedName());
-
+        label.setWrapText(true);
+        label.setAlignment(Pos.CENTER);
+        label.setMaxWidth(Double.MAX_VALUE);
+        label.setMaxHeight(Double.MAX_VALUE);
         // Add the label to the cell pane
         cellPane.getChildren().add(label);
 
         // Set the alignment of the label within the cell pane
         StackPane.setAlignment(label, Pos.CENTER);
+//        StackPane.setMargin(label, new Insets(5)); // Add margin to the label
 
+        // Set the preferred size of the cell
+        cellPane.setPrefWidth(Region.USE_PREF_SIZE);
+        cellPane.setPrefHeight(Region.USE_PREF_SIZE);
         // Return the cell pane
         return cellPane;
     }
