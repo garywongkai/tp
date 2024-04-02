@@ -18,7 +18,7 @@ import seedu.address.model.person.Person;
 public class Schedule {
 
     public static final String MESSAGE_CONSTRAINTS = "Schedule names should be alphanumeric";
-    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String VALIDATION_REGEX = "\\s?\\p{Alnum}+[\\s?\\p{Alnum}*]*";
     public static final String DATETIME_STRING = "yyyy-MM-dd HH:mm";
     public static final DateTimeFormatter CUSTOM_DATETIME = DateTimeFormatter.ofPattern(DATETIME_STRING);
     private final String schedName;

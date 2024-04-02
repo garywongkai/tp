@@ -30,11 +30,10 @@ public class EditSchedCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edit a schedule in address book. "
             + "Parameters: "
             + "TASK INDEX(S) (must be positive integer) "
-            + PREFIX_SCHEDULE + " TO DELETE PERSON "
             + "[" + PREFIX_SCHEDULE + " SCHEDULE] "
             + "[" + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)] "
             + "[" + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)] "
-            + "Example: " + COMMAND_WORD + " " + "1"
+            + "Example: " + COMMAND_WORD + " " + "1 "
             + "[" + PREFIX_SCHEDULE + " CS2103 weekly meeting] "
             + "[" + PREFIX_START + " 2024-02-24 15:00] "
             + "[" + PREFIX_END + " 2024-02-24 17:00] ";
