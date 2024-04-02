@@ -48,7 +48,7 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TASK, PREFIX_SCHEDULE, PREFIX_START,
                 PREFIX_END, PREFIX_ADD_PARTICIPANTS, PREFIX_REMOVE_PARTICIPANTS, PREFIX_SPECIFIC_PARTICIPANTS);
 
-        if (argMultimap.getValue(PREFIX_TASK).isEmpty()){ 
+        if (argMultimap.getValue(PREFIX_TASK).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditSchedCommand.MESSAGE_TASK_NOT_SPECIFIED
                             + EditSchedCommand.MESSAGE_USAGE));
