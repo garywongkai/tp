@@ -56,7 +56,6 @@ public class WeeklyScheduleView extends UiPart<Region> {
         VBox.setVgrow(timetableGrid, javafx.scene.layout.Priority.ALWAYS);
         timetableGrid.setMaxWidth(Double.MAX_VALUE);
         timetableGrid.setHgap(10);
-        System.out.println("I've been set-up!");
     }
 
     private void initializeTimetable() {
