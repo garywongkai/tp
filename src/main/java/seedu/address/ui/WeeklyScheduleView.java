@@ -158,7 +158,6 @@ public class WeeklyScheduleView extends UiPart<Region> {
     private int calculateRowIndex(LocalDateTime time) {
         LocalDateTime startTimeOfDay = time.toLocalDate().atStartOfDay().plusHours(8);
         int minutesFromStart = (int) startTimeOfDay.until(time, java.time.temporal.ChronoUnit.MINUTES);
-        System.out.println(minutesFromStart / timeInterval);
         return minutesFromStart / timeInterval;
     }
 
