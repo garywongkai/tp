@@ -238,7 +238,7 @@ public class MainWindow extends UiPart<Stage> {
     public void updateTableView(ArrayList<Person> selectedPersons) {
         // Clear the table view
         scheduleTable.getItems().clear();
-        //weeklyScheduleView.clear();
+        weeklyScheduleView.clear();
         // Loop through each selected person
         for (Person person : selectedPersons) {
             // Extract the schedules from the selected person
@@ -246,7 +246,6 @@ public class MainWindow extends UiPart<Stage> {
             LocalDate startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
             LocalDate endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).plusDays(1); // End of Sunday
             ArrayList<Schedule> schedules = person.getSchedules();
-            System.out.print("Got the deets!");
             ArrayList<Schedule> filteredSchedules = new ArrayList<>();
             for (Schedule sched : schedules) {
                 LocalDateTime startTime = sched.getStartTime();

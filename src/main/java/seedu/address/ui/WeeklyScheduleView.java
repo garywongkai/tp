@@ -6,22 +6,19 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.*;
-import javafx.scene.text.Font;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import seedu.address.model.schedule.Schedule;
 
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 /**
  * WeeklyScheduleView class to assist with population of Calender
@@ -29,10 +26,9 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 public class WeeklyScheduleView extends UiPart<Region> {
 
     private static final String FXML = "WeeklyScheduleView.fxml";
-    private final LocalDateTime START_TIME = LocalDateTime.of(LocalDate.parse("2024-04-01"), LocalTime.of(8, 0));
-    private final LocalDateTime END_TIME = LocalDateTime.of(LocalDate.now(), LocalTime.of(21, 0));
-    private final int NUM_DAYS = 7; // Assuming a typical workweek from Monday to Sunday
-    private final int TIME_INTERVAL_MINUTES = 30;
+    private final LocalDateTime startTime = LocalDateTime.of(LocalDate.parse("2024-04-01"), LocalTime.of(8, 0));
+    private final int numDays = 7; // Assuming a typical workweek from Monday to Sunday
+    private final int timeInterval = 30;
 
     @FXML
     private VBox timeTableBox;
@@ -65,7 +61,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     private void initializeTimetable() {
         for (int j = 0; j < 27; j++) {
-            LocalTime time = LocalTime.from(START_TIME.plusMinutes(j * 30));
+            LocalTime time = LocalTime.from(startTime.plusMinutes(j * 30));
             Label timeLabel = new Label(time.toString());
             timeLabel.setStyle("-fx-padding: 0 10 0 10;");
             timeLabel.setTextAlignment(TextAlignment.CENTER);
@@ -74,7 +70,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
         // Add day labels to the first row
         String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        for (int i = 0; i < NUM_DAYS; i++) {
+        for (int i = 0; i < numDays; i++) {
             Label dayLabel = new Label(daysOfWeek[i]);
             if (i == 0) {
                 // Set the preferred width of the first day label
@@ -86,6 +82,11 @@ public class WeeklyScheduleView extends UiPart<Region> {
         timetableGrid.setStyle("-fx-padding: 0 10 0 10;");
     }
 
+    /**
+     * Function to insert all Schedules into the Timetable
+     * @param schedules ArrayList of Schedules
+     */
+
     public void populateTimetable(ArrayList<Schedule> schedules) {
         // Clear the timetable before populating it
         clear();
@@ -95,6 +96,11 @@ public class WeeklyScheduleView extends UiPart<Region> {
             populateCellsForSchedule(schedule);
         }
     }
+
+    /**
+     * Function to create cells for a Schedule into the Timetable
+     * @param schedule Schedule
+     */
 
     private void populateCellsForSchedule(Schedule schedule) {
         // Calculate the row index for the start time of the schedule
@@ -118,6 +124,11 @@ public class WeeklyScheduleView extends UiPart<Region> {
         }
         timetableGrid.add(scheduleNode, startRowIndex + 1, columnIndex);
     }
+
+    /**
+     * Function to remove specific Schedule from the timetable
+     * @param schedule Schedule to be removed
+     */
 
     public void removeSchedule(Schedule schedule) {
         ArrayList<Node> nodesToRemove = new ArrayList<>();
@@ -147,8 +158,8 @@ public class WeeklyScheduleView extends UiPart<Region> {
     private int calculateRowIndex(LocalDateTime time) {
         LocalDateTime startTimeOfDay = time.toLocalDate().atStartOfDay().plusHours(8);
         int minutesFromStart = (int) startTimeOfDay.until(time, java.time.temporal.ChronoUnit.MINUTES);
-        System.out.println(minutesFromStart / TIME_INTERVAL_MINUTES);
-        return minutesFromStart / TIME_INTERVAL_MINUTES;
+        System.out.println(minutesFromStart / timeInterval);
+        return minutesFromStart / timeInterval;
     }
 
     private Node createScheduleCell(Schedule schedule) {
@@ -168,7 +179,6 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
         // Set the alignment of the label within the cell pane
         StackPane.setAlignment(label, Pos.CENTER);
-//        StackPane.setMargin(label, new Insets(5)); // Add margin to the label
 
         // Set the preferred size of the cell
         cellPane.setPrefWidth(Region.USE_PREF_SIZE);
@@ -177,6 +187,9 @@ public class WeeklyScheduleView extends UiPart<Region> {
         return cellPane;
     }
 
+    /**
+     * Function to clear all Schedule from timetable
+     */
     public void clear() {
         timetableGrid.getChildren().clear();
         initializeTimetable();
