@@ -112,11 +112,6 @@ public class WeeklyScheduleView extends UiPart<Region> {
             }
         }
         nonOverlappingSchedules.removeAll(toRemove);
-
-        for (Schedule schedule : overlappingSchedules) {
-            System.out.println("Overlapped:" + schedule);
-        }
-        System.out.println("I managed to reach here");
         populateCellsForSchedule(overlappingSchedules, nonOverlappingSchedules);
     }
 

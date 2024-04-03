@@ -214,4 +214,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         return persons.hashCode();
     }
+
+    public Schedule getSameSchedule(Schedule schedule) {
+        for (Schedule matching : schedules) {
+            if (matching.isSameSchedule(schedule)) {
+                return matching;
+            }
+        }
+        return null;
+    }
 }

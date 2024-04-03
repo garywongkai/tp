@@ -126,6 +126,21 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void addSchedule(Schedule schedule, String personName) {
+        if (addressBook.hasSchedule(schedule)) {
+            Schedule toEdit = addressBook.getSameSchedule(schedule);
+            if (toEdit != null) {
+                toEdit.getPersonList().add(personName);
+            } else {
+                throw new IllegalArgumentException("No such schedule found!");
+            }
+        } else {
+            addressBook.addSchedule(schedule);
+            updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        }
+    }
+
+    @Override
     public void addSchedule(Schedule schedule) {
         addressBook.addSchedule(schedule);
         updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
