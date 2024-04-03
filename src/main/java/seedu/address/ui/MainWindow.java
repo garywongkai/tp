@@ -193,13 +193,10 @@ public class MainWindow extends UiPart<Stage> {
                 if (populatedPerson.contains(newValue)) {
                     populatedPerson.remove(newValue);
                     //System.out.println("Removed person: " + newValue.getName());
-                    for (Schedule schedule : newValue.getSchedules()) {
-                        weeklyScheduleView.removeSchedule(schedule);
-                    }
                     updateTableView(populatedPerson);
                 } else {
                     if (populatedPerson.size() == 5) {
-                        //System.out.println("5 People have already been selected!");
+                        System.out.println("5 People have already been selected!");
                     } else {
                         populatedPerson.add(newValue);
                         //System.out.println("Added person: " + newValue.getName());
@@ -238,7 +235,6 @@ public class MainWindow extends UiPart<Stage> {
     public void updateTableView(ArrayList<Person> selectedPersons) {
         // Clear the table view
         scheduleTable.getItems().clear();
-        weeklyScheduleView.clear();
         // Loop through each selected person
         ArrayList<Schedule> filteredSchedules = new ArrayList<>();
         for (Person person : selectedPersons) {

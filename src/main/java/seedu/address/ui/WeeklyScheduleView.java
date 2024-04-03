@@ -117,7 +117,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
         for (Schedule schedule : overlappingSchedules) {
             System.out.println("Overlapped:" + schedule);
         }
-
+        System.out.println("I managed to reach here");
         populateCellsForSchedule(overlappingSchedules, nonOverlappingSchedules);
     }
 
@@ -165,18 +165,19 @@ public class WeeklyScheduleView extends UiPart<Region> {
             ArrayList<Schedule> currentOverlaps = new ArrayList<>();
             currentOverlaps.add(overlap); // Add the current overlap to the list
             ArrayList<Schedule> schedulesToRemove = new ArrayList<>(); // New list to collect schedules to remove
+            schedulesToRemove.add(overlap);
             iterator.remove(); // Remove the current overlap from the list
-            while (!overlappingSchedules.isEmpty()) {
-                for (Schedule schedule : overlappingSchedules) {
-                    if (overlap.getStartTime().isBefore(schedule.getEndTime()) &&
-                            overlap.getEndTime().isAfter(schedule.getStartTime())) {
-                        schedulesToRemove.add(schedule); // Add the overlapping schedule to the list
-                        currentOverlaps.add(schedule);
-                    }
+            iterator = overlappingSchedules.iterator();
+            while (iterator.hasNext()) {
+                Schedule schedule = iterator.next();
+                if (overlap.getStartTime().isBefore(schedule.getEndTime()) &&
+                        overlap.getEndTime().isAfter(schedule.getStartTime())) {
+                    schedulesToRemove.add(schedule); // Add the overlapping schedule to the list
+                    currentOverlaps.add(schedule);
                 }
-                // Remove the schedules after the inner loop completes
-                overlappingSchedules.removeAll(schedulesToRemove);
             }
+            // Remove the schedules after the loop completes
+            overlappingSchedules.removeAll(schedulesToRemove);
             LocalDateTime earliestStartTime = overlap.getStartTime();
             LocalDateTime latestEndTime = overlap.getEndTime();
             DayOfWeek dayOfWeek = earliestStartTime.getDayOfWeek();
@@ -226,38 +227,6 @@ public class WeeklyScheduleView extends UiPart<Region> {
         cellPane.setPrefHeight(Region.USE_PREF_SIZE);
 
         return cellPane;
-    }
-
-
-
-    /**
-     * Function to remove specific Schedule from the timetable
-     * @param schedule Schedule to be removed
-     */
-
-    public void removeSchedule(Schedule schedule) {
-        ArrayList<Node> nodesToRemove = new ArrayList<>();
-        for (Node node : timetableGrid.getChildren()) {
-            if (node instanceof StackPane) {
-                StackPane cell = (StackPane) node;
-
-                // Check if the cell contains a label with the schedule description
-                for (Node cellContent : cell.getChildren()) {
-                    if (cellContent instanceof Label) {
-                        Label label = (Label) cellContent;
-
-                        // Compare the label text with the schedule description
-                        if (label.getText().equals(schedule.getSchedName())) {
-                            // Add the cell to the list of nodes to be removed
-                            nodesToRemove.add(cell);
-                        }
-                    }
-                }
-            }
-        }
-
-        // Remove all the cells corresponding to the schedule from the grid
-        timetableGrid.getChildren().removeAll(nodesToRemove);
     }
 
     private int calculateRowIndex(LocalDateTime time) {
