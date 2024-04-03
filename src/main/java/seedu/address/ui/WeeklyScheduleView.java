@@ -104,15 +104,14 @@ public class WeeklyScheduleView extends UiPart<Region> {
                 nonOverlappingSchedules.add(schedule);
             }
         }
-
+        ArrayList<Schedule> toRemove = new ArrayList<>();
         for (Schedule schedule : nonOverlappingSchedules) {
             if (hasOverlap(schedule, overlappingSchedules)) {
-                nonOverlappingSchedules.remove(schedule); //Cross-check overlaps
+                toRemove.add(schedule); //Cross-check overlaps
                 overlappingSchedules.add(schedule);
-            } else {
-                System.out.println("Non-Overlapped:" + schedule);
             }
         }
+        nonOverlappingSchedules.removeAll(toRemove);
 
         for (Schedule schedule : overlappingSchedules) {
             System.out.println("Overlapped:" + schedule);
@@ -123,6 +122,10 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     private boolean hasOverlap(Schedule schedule, ArrayList<Schedule> schedules) {
         for (Schedule existingSchedule : schedules) {
+            if (schedule.getStartTime().isBefore(existingSchedule.getStartTime()) &&
+                    (schedule.getEndTime().isBefore(existingSchedule.getEndTime()) || schedule.getEndTime().isAfter(existingSchedule.getEndTime()))) {
+                return true;
+            }
             if (schedule.getStartTime().isBefore(existingSchedule.getEndTime()) &&
                     schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
                 return true;
@@ -188,7 +191,6 @@ public class WeeklyScheduleView extends UiPart<Region> {
                 GridPane.setColumnSpan(scheduleNode, rowSpan);
             }
             timetableGrid.add(scheduleNode, calculateRowIndex(earliestStartTime) + 1, columnIndex);
-            // Remove the schedules after the loop completes
         }
     }
 
