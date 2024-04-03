@@ -11,7 +11,7 @@
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow = "ALWAYS">
     <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="80"/>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="80" maxWidth="120"/>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
@@ -22,7 +22,7 @@
       <padding>
         <Insets topRightBottomLeft="8"/>
       </padding>
-      <Label fx:id="id" styleClass="cell_small_label" text="Index No."/>
+      <Label fx:id="id" styleClass="cell_small_label" text="Index No." wrapText="true"/>
     </VBox>
 
     <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
@@ -50,7 +50,7 @@
       <padding>
         <Insets topRightBottomLeft="8"/>
       </padding>
-      <Label fx:id="address" styleClass="cell_small_label" text="Address"/>
+      <Label fx:id="address" styleClass="cell_small_label" text="Address" />
     </VBox>
   </GridPane>
   <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
