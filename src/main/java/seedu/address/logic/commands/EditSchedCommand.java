@@ -64,7 +64,7 @@ public class EditSchedCommand extends Command {
     public EditSchedCommand(Index personIndex, Index scheduleIndex,
                             EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor) {
         assert personIndex != null;
-        assert schedulIndex != null;
+        assert scheduleIndex != null;
         assert editScheduleDescriptor != null;
         requireNonNull(personIndex);
         requireNonNull(scheduleIndex);
