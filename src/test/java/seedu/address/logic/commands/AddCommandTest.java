@@ -144,6 +144,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addSchedulePeople(Schedule schedule, ArrayList<String> participants) {
+            String s;
+        }
+
+        @Override
         public void setAddressBook(ReadOnlyAddressBook newData) {
             throw new AssertionError("This method should not be called.");
         }

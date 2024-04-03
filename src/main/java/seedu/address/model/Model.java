@@ -87,6 +87,9 @@ public interface Model {
      */
     void deleteSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule);
 
+    void addSchedulePeople(Schedule schedule, ArrayList<String> personName);
+
+
     /**
      * Adds the given schedule.
      * {@code schedule} must not already exist in the address book.

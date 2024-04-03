@@ -94,11 +94,9 @@ public class EditSchedCommand extends Command {
         Schedule scheduleToEdit = personScheduleList.get(scheduleIndex.getZeroBased());
 
         deleteSchedForSpecificPerson(model, scheduleToEdit, personToChange);
-
         Schedule editedSchedule = createEditedSchedule(scheduleToEdit, editScheduleDescriptor);
 
-        Person personChanged = personToChange;
-        personChanged.addSchedule(editedSchedule);
+        personToChange.addSchedule(editedSchedule);
 
         model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         return new CommandResult(String.format(MESSAGE_EDIT_SCHEDULE_SUCCESS,
@@ -109,14 +107,16 @@ public class EditSchedCommand extends Command {
                                               Person personToDelete) {
         model.deleteSchedule(personToDelete, scheduleToDelete);
         scheduleToDelete.removePerson(personToDelete.getName().toString());
+        ArrayList<Person> changedPerson = new ArrayList<>();
+        changedPerson.add(personToDelete);
         if (!scheduleToDelete.getPersonList().isEmpty()) {
-            model.addSchedule(scheduleToDelete);
+            model.addSchedule(scheduleToDelete, changedPerson);
         }
         for (Person p: model.getFilteredPersonList()) {
             if (!p.getSchedules().contains(scheduleToDelete)) {
                 continue;
             }
-            p.deleteSchedule(scheduleToDelete);
+            //p.deleteSchedule(scheduleToDelete);
             if (!p.equals(personToDelete)) {
                 p.addSchedule(scheduleToDelete);
             }
@@ -136,7 +136,6 @@ public class EditSchedCommand extends Command {
         String updatedSchedName = editScheduleDescriptor.getSchedName().orElse(scheduleToEdit.getSchedName());
         LocalDateTime updatedStartTime = editScheduleDescriptor.getStartTime().orElse(scheduleToEdit.getStartTime());
         LocalDateTime updatedEndTime = editScheduleDescriptor.getEndTime().orElse(scheduleToEdit.getEndTime());
-
         return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime);
     }
 
