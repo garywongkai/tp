@@ -84,19 +84,20 @@ Help not available. Please try again.
 
 Adds a person to the address book with their information.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [i/INTEREST]…​`
 
 * Phone number **must be a valid Singapore number** (i.e. 8 digits, starts with either 6, 8 or 9)
 * Email **must include @ character**
 * Address **must include and be ordered in street name, block number, and unit number (note: include # symbol)**,
 separated with comma
 * If multiple `tag` are added, separate with comma
+* if multiple `interest` are added, separate with comma
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A person can have any number of tags or interests (including 0)
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal i/hunting`
 
 Expected success outcome:
 ```
@@ -137,18 +138,23 @@ No contacts added yet.
 
 Edits an existing person's information in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [i/INTEREST]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When editing interests, the existing interests of the person will be removed 
+  i.e adding of interests is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
+* * You can remove all the person’s tags by typing `i/` without
+    specifying any interests after it.
 * Adding a person's format for **phone number, email, and address** applies here as well.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 1 p/91234567 e/johndoe@example.com i/Bird Watching` Edits the phone number, email address and interest of the 
+* 1st person to be `91234567`, `johndoe@example.com` and `Bird Watching` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 Expected success outcome:
@@ -254,19 +260,20 @@ History not cleared
 
 Adds an event with contact from specified date with time
 
-Format: `addSched INDEX [MORE_INDEX] SCHEDULE_NAME from/DATE_TIME to/TIME`
+Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME`
 
-* The INDEX **must be a positive integer** 1, 2, 3, …​
+* The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the
+    number of people in the address book
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
-* The DATE_TIME must be in the format of ddmmyyyy HHmm in 24-hour time
-* The TIME must be in the format of HHmm, but **not before the time from DATE_TIME** e.g. 0000-2359
-* `find Betsy` followed by `addSched 1 Exam 05032024 1600 1800` adds the 1st person in
-the results of the `find` command to the event stated.
+* The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
+* The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
+* `find Betsy` followed by `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
+   the results of the `find` command to the event stated.
 
 Examples:
-* `addSched 4 Exam 05032024 1600 1800` will add the 4th person in the address list to the `Exam` event which
+* `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
 would take place on 5th March 2024 from 4pm - 6pm
-* `addSched 1,2,3 CSMeeting 18032024 1500 1900` will add the 1st, 2nd and 3rd persons in the address list
+* `addSched 1,2,3 s/CSMeeting start/2024-03-18 13:00 end/2024-03-18 19:00` will add the 1st, 2nd and 3rd persons in the address list
 to the `CSMeeting` event which would take place on 18th March 2024 from 3pm - 7pm
 
 Expected success outcome:
@@ -283,6 +290,82 @@ Potential Errors:
 * Time format is wrong!
 * Date format is wrong
 * Contact not found in address book
+
+### Deleting a schedule: `deleteSched`
+
+Deletes a schedule that associated with a person
+
+Format: `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX`
+
+* The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the 
+   number of people in the address book.
+* The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in 
+   the schedule list for the person from PERSON_INDEX.
+* `find Betsy` followed by `deleteSched 1 schedule/2` deletes the 2nd schedule from the 1st person in
+   the results of the `find` command.
+
+Examples:
+* `deleteSched 1 schedule/2` will delete the 2nd schedule from the 1st person in the address list
+
+Expected success outcome:
+```
+Delete schedule from ...
+```
+
+Expected failure outcome:
+```
+Schedule failed to be deleted.
+```
+
+Potential Errors:
+* Contact not found in address book
+* Schedule not found in schedule list of person
+
+### Editing a schedule: `editSched`
+
+Edit a schedule that associated with a person with new information
+
+Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]`
+
+* The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the
+  number of people in the address book.
+* The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in
+  the schedule list for the person from PERSON_INDEX.
+* The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
+* The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
+* The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
+* There must be at least 1 input for SCHEDULE_NAME, START_DATETIME or END_DATETIME, 
+   or the command would not be accepted.
+* `find Betsy` followed by `editSched 1 schedule/2 s/CCA meeting` edits the 2nd schedule from the 1st person in
+  the results of the `find` command with the new schedule name `CCA meeting`.
+
+Examples:
+* `editSched 1 schedule/2 s/CS1101S meeting start/ 2024-02-03 12:00 end/ 2024-02-03 15:00` will 
+   edit the 2nd schedule from the 1st person in the address list with the new name `CS1101S meeting` on the 
+   new timing from 3rd February 2024 12pm to 3rd February 2024 3pm.
+* `editSched 1 schedule/2 s/CS2040S class` will edit the 2nd schedule from the 1st person 
+   in the address list with the new name `CS2040S class`.
+* `editSched 1 schedule/2 start/ 2024-03-05 11:00 ` will edit the 2nd schedule from the 1st person 
+   in the address list with the new starting date time of 5th March 2024 11am.
+* `editSched 1 schedule/2 end/ 2024-06-12 20:00` will edit the 2nd schedule from the 1st person 
+   in the address list with the new ending date time of 12th June 2024 8pm.
+
+Expected success outcome:
+```
+Edit schedule from ...
+```
+
+Expected failure outcome:
+```
+Schedule failed to be edited.
+```
+
+Potential Errors:
+* [if applicable] Time format is wrong!
+* [if applicable] Date format is wrong!
+* Contact not found in address book
+* Schedule not found in schedule list of person
+* There is no input for the SCHEDULE_NAME, START_DATETIME and END_DATETIME
 
 ### Exiting the program : `exit`
 
@@ -335,5 +418,10 @@ Action     | Format, Examples
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Clear**  | `clear`
-**Add Schedule**   | `addSched INDEX [MORE_INDEX] SCHEDULE_NAME` <br> e.g. `addSched 1,2,3 CSMeeting 18032024 1500 1900`
+**Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. 
+`addSched 1,2,3 s/CSMeeting start/2024-02-24 09:00 end/2024-02-24 17:00`
+**Delete Schedule**   | `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX` <br> e.g. `deleteSched 1 schedule/2`
+**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME]
+[start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 s/CS1101S meeting 
+start/ 2024-02-03 12:00 end/ 2024-02-03 15:00`
 **Exit**   | `exit`
