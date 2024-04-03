@@ -192,19 +192,22 @@ public class MainWindow extends UiPart<Stage> {
             if (newValue != null) {
                 if (populatedPerson.contains(newValue)) {
                     populatedPerson.remove(newValue);
-                    System.out.println("Removed person: " + newValue.getName());
+                    //System.out.println("Removed person: " + newValue.getName());
+                    for (Schedule schedule : newValue.getSchedules()) {
+                        weeklyScheduleView.removeSchedule(schedule);
+                    }
                     updateTableView(populatedPerson);
                 } else {
                     if (populatedPerson.size() == 5) {
-                        System.out.println("5 People have already been selected!");
+                        //System.out.println("5 People have already been selected!");
                     } else {
                         populatedPerson.add(newValue);
-                        System.out.println("Added person: " + newValue.getName());
+                        //System.out.println("Added person: " + newValue.getName());
                         updateTableView(populatedPerson);
                     }
                 }
                 // Call method to update UI based on selected person
-                System.out.println("Current List of person: ");
+                //System.out.println("Current List of person: ");
                 populatedPerson.forEach(person -> System.out.println(person.getName()));
             }
             Platform.runLater(() -> personComboBox.getSelectionModel().clearSelection());
@@ -215,10 +218,10 @@ public class MainWindow extends UiPart<Stage> {
                 if (change.wasRemoved()) {
                     List<? extends Person> removedPersons = change.getRemoved();
                     for (Person removedPerson : removedPersons) {
-                        System.out.println("Removed person cause deleted: " + removedPerson.getName());
+                        //System.out.println("Removed person cause deleted: " + removedPerson.getName());
                         populatedPerson.remove(removedPerson);
-                        System.out.println("Current List of person: ");
-                        populatedPerson.forEach(person -> System.out.print(person.getName()));
+                        //System.out.println("Current List of person: ");
+                        //populatedPerson.forEach(person -> System.out.print(person.getName()));
                         updateTableView(populatedPerson);
                         populatePersonNameComboBox();
                     }
@@ -237,14 +240,13 @@ public class MainWindow extends UiPart<Stage> {
         scheduleTable.getItems().clear();
         weeklyScheduleView.clear();
         // Loop through each selected person
+        ArrayList<Schedule> filteredSchedules = new ArrayList<>();
         for (Person person : selectedPersons) {
             // Extract the schedules from the selected person
             LocalDate now = LocalDate.now();
             LocalDate startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
             LocalDate endOfWeek = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).plusDays(1); // End of Sunday
             ArrayList<Schedule> schedules = person.getSchedules();
-            System.out.print("Got the deets!");
-            ArrayList<Schedule> filteredSchedules = new ArrayList<>();
             for (Schedule sched : schedules) {
                 LocalDateTime startTime = sched.getStartTime();
                 LocalDateTime endTime = sched.getEndTime();
@@ -253,10 +255,10 @@ public class MainWindow extends UiPart<Stage> {
                     filteredSchedules.add(sched);
                 }
             }
-            // Add each schedule to the table view
-            scheduleTable.getItems().addAll(filteredSchedules);
-            weeklyScheduleView.populateWeeklySchedule(filteredSchedules);
         }
+        // Add each schedule to the table view
+        scheduleTable.getItems().addAll(filteredSchedules);
+        weeklyScheduleView.populateTimetable(filteredSchedules);
     }
 
     /**
