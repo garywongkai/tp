@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
@@ -30,7 +31,7 @@ public class EditSchedCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edit a schedule in address book. "
             + "Parameters: "
             + "PERSON INDEX(S) (must be positive integer) "
-            + PREFIX_SCHEDULE + "TASK INDEX(S) (must be positive integer) "
+            + PREFIX_SPECIFIC_SCHEDULE_INDEX + "TASK INDEX(S) (must be positive integer) "
             + "[" + PREFIX_SCHEDULE + " SCHEDULE NAME] "
             + "[" + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)] "
             + "[" + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)] "
@@ -77,6 +78,7 @@ public class EditSchedCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        assert model != null;
         requireNonNull(model);
 
         List<Person> lastShownList = model.getFilteredPersonList();
