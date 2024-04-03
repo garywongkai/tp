@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
 
 /**
