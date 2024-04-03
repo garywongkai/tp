@@ -77,11 +77,9 @@ public class EditSchedCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        assert model != null;
         requireNonNull(model);
 
         List<Person> lastShownList = model.getFilteredPersonList();
-
         if (personIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -173,7 +171,6 @@ public class EditSchedCommand extends Command {
      * corresponding field value of the person.
      */
     public static class EditScheduleDescriptor {
-        private Index schedtaskIndex;
         private String schedName;
         private LocalDateTime startTime;
         private LocalDateTime endTime;
@@ -185,7 +182,6 @@ public class EditSchedCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditScheduleDescriptor(EditSchedCommand.EditScheduleDescriptor toCopy) {
-            setSchedTask(toCopy.schedtaskIndex);
             setSchedName(toCopy.schedName);
             setStartTime(toCopy.startTime);
             setEndTime(toCopy.endTime);
@@ -198,12 +194,6 @@ public class EditSchedCommand extends Command {
             return CollectionUtil.isAnyNonNull(schedName, startTime, endTime);
         }
 
-        public void setSchedTask(Index schedtaskIndex) {
-            this.schedtaskIndex = schedtaskIndex;
-        }
-        public Optional<Index> getSchedTask() {
-            return Optional.ofNullable(schedtaskIndex);
-        }
         public void setSchedName(String schedName) {
             this.schedName = schedName;
         }
@@ -249,9 +239,9 @@ public class EditSchedCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("name", schedName)
-                    .add("phone", startTime)
-                    .add("email", endTime)
+                    .add("schedName", schedName)
+                    .add("startTime", startTime)
+                    .add("endTime", endTime)
                     .toString();
         }
     }
