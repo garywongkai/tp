@@ -24,7 +24,7 @@ public class Schedule {
     private final String schedName;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
-    private ArrayList<Person> personList;
+    private ArrayList<String> personList;
 
     /**
      * Constructs a {@code Schedule}.
@@ -42,7 +42,7 @@ public class Schedule {
         this.schedName = schedName;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.personList = new ArrayList<Person>();
+        this.personList = new ArrayList<String>();
     }
 
     /**
@@ -54,7 +54,7 @@ public class Schedule {
      * @param personList A valid list of participants
      */
     public Schedule(String schedName, LocalDateTime startTime,
-                    LocalDateTime endTime, ArrayList<Person> personList) {
+                    LocalDateTime endTime, ArrayList<String> personList) {
         requireNonNull(schedName);
         checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
         checkArgument(isValidTiming(startTime, endTime));
@@ -76,11 +76,11 @@ public class Schedule {
         return endTime;
     }
 
-    public void setPersonList(ArrayList<Person> newPersonList) {
+    public void setPersonList(ArrayList<String> newPersonList) {
         personList = newPersonList;
     }
 
-    public ArrayList<Person> getPersonList() {
+    public ArrayList<String> getPersonList() {
         return personList;
     }
 
@@ -89,7 +89,7 @@ public class Schedule {
 
         for (int i = 0; i < personList.size(); i++) {
             participants.append("(").append(i + 1).append(") ");
-            participants.append(personList.get(i).getName());
+            participants.append(personList.get(i));
             participants.append(", ");
 
         }
@@ -105,18 +105,16 @@ public class Schedule {
      *
      * @param newParticipants
      */
-    public ArrayList<Person> addParticipants(ArrayList<Person> newParticipants) {
-        ArrayList<Person> addedParticipants = new ArrayList<>();
-        for (Person p: newParticipants) {
+    public void addParticipants(ArrayList<String> newParticipants) {
+        for (String p: newParticipants) {
             if (!personList.contains(p)) {
                 personList.add(p);
             }
         }
-        return addedParticipants;
     }
 
-    public void removePerson(Person p) {
-        personList.remove(p);
+    public void removePerson(String name) {
+        personList.remove(name);
     }
 
     /**

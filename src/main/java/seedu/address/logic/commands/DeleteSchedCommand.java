@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +23,11 @@ public class DeleteSchedCommand extends Command {
     public static final String COMMAND_WORD = "deleteSched";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a schedule in address book. "
             + "Parameters: "
-            + "TASK INDEX(S) (must be positive integer) "
-            + PREFIX_SCHEDULE + "TO DELETE PERSON "
-            + "Example: " + COMMAND_WORD + " " + "1"
-            + PREFIX_SCHEDULE + " 1, 2";
+            + "Person INDEX(S) (must be positive integer) "
+            + "Schedule INDEX(S) (must be positive integer) "
+            + "TO DELETE PERSON " + PREFIX_SPECIFIC_SCHEDULE_INDEX + "TO DELETE SCHEDULE\n"
+            + "Example: " + COMMAND_WORD + " 1"
+            + PREFIX_SCHEDULE + " 1";
 
     public static final String MESSAGE_SUCCESS = "The schedule deleted: %1$s";
 
@@ -77,14 +79,13 @@ public class DeleteSchedCommand extends Command {
                                                Person personToDelete) {
         Schedule scheduleToAdd = scheduleToDelete;
         model.deleteSchedule(personToDelete, scheduleToDelete);
+        scheduleToAdd.removePerson(personToDelete.getName().toString());
         ArrayList<Person> remainParticipants = new ArrayList<Person>();
-        for (Person p: scheduleToDelete.getPersonList()) {
-            if (!p.isSamePerson(personToDelete)) {
-                p.deleteSchedule(scheduleToDelete);
+        for (Person p: model.getFilteredPersonList()) {
+            if (scheduleToAdd.getPersonList().contains(p.getName().toString())) {
                 remainParticipants.add(p);
             }
         }
-        scheduleToAdd.setPersonList(remainParticipants);
         if (!remainParticipants.isEmpty()) {
             model.addSchedule(scheduleToAdd, remainParticipants);
         }

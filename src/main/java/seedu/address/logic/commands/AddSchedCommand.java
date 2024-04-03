@@ -56,15 +56,17 @@ public class AddSchedCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         ArrayList<Person> participants = new ArrayList<Person>();
+        ArrayList<String> participantsNames = new ArrayList<String>();
         for (Index index : targetIndexes) {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
             participants.add(lastShownList.get(index.getZeroBased()));
+            participantsNames.add(lastShownList.get(index.getZeroBased()).getName().toString());
         }
 
 
-        schedule.addParticipants(participants);
+        schedule.addParticipants(participantsNames);
         model.addSchedule(schedule, participants);
 
         return new CommandResult(generateSuccessMessage());
