@@ -234,8 +234,6 @@ public class MainWindow extends UiPart<Stage> {
      */
 
     public void updateTableView(ArrayList<Person> selectedPersons) {
-        // Clear the table view
-        scheduleTable.getItems().clear();
         // Loop through each selected person
         ArrayList<Schedule> filteredSchedules = new ArrayList<>();
         for (Person person : selectedPersons) {
@@ -254,7 +252,6 @@ public class MainWindow extends UiPart<Stage> {
             }
         }
         // Add each schedule to the table view
-        scheduleTable.getItems().addAll(filteredSchedules);
         weeklyScheduleView.populateTimetable(filteredSchedules);
     }
 
