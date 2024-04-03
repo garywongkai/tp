@@ -16,6 +16,7 @@
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
 
     <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0">
@@ -51,6 +52,13 @@
         <Insets topRightBottomLeft="8"/>
       </padding>
       <Label fx:id="address" styleClass="cell_small_label" text="Address" />
+    </VBox>
+
+    <VBox alignment="CENTER_LEFT" GridPane.columnIndex="5">
+      <padding>
+        <Insets topRightBottomLeft="8"/>
+      </padding>
+      <Label fx:id="schedules" styleClass="cell_small_label" text="Schedules" />
     </VBox>
   </GridPane>
   <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />

@@ -16,46 +16,54 @@
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
 
-    <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0">
+    <VBox GridPane.columnIndex="0">
       <padding>
         <Insets topRightBottomLeft="8"/>
       </padding>
       <Label fx:id="id" styleClass="cell_small_label" text="\$id" wrapText="true"/>
     </VBox>
 
-    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+    <HBox GridPane.columnIndex="1">
       <padding>
         <Insets topRightBottomLeft="8"/>
       </padding>
-      <VBox alignment="CENTER_LEFT">
-        <HBox alignment="CENTER_LEFT">
+      <VBox>
+        <HBox >
           <Label fx:id="name" text="\$first" styleClass="cell_small_label" wrapText="true" />
         </HBox>
         <FlowPane fx:id="tags"/>
       </VBox>
     </HBox>
 
-    <VBox alignment="CENTER_LEFT" GridPane.columnIndex="2">
+    <VBox GridPane.columnIndex="2">
       <padding>
         <Insets topRightBottomLeft="8"/>
       </padding>
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" wrapText="true"/>
     </VBox>
 
-    <VBox alignment="CENTER_LEFT" GridPane.columnIndex="3">
+    <VBox GridPane.columnIndex="3">
       <padding>
         <Insets topRightBottomLeft="8"/>
       </padding>
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" wrapText="true"/>
     </VBox>
 
-    <VBox alignment="CENTER_LEFT" GridPane.columnIndex="4">
+    <VBox GridPane.columnIndex="4">
       <padding>
         <Insets topRightBottomLeft="8"/>
       </padding>
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" wrapText="true"/>
+    </VBox>
+
+    <VBox GridPane.columnIndex="5">
+      <padding>
+        <Insets topRightBottomLeft="8"/>
+      </padding>
+      <Label fx:id="schedules" styleClass="cell_small_label" text="\$schedules" wrapText="true"/>
     </VBox>
 
   </GridPane>

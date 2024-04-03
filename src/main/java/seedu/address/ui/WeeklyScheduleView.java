@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -58,7 +59,8 @@ public class WeeklyScheduleView extends UiPart<Region> {
         // Apply the column constraint to the gridpane
         timetableGrid.getColumnConstraints().add(columnConstraints);
         VBox.setVgrow(timetableGrid, Priority.ALWAYS);
-        timetableGrid.setMaxWidth(Double.MAX_VALUE);
+//        timetableGrid.setMaxWidth(Double.MAX_VALUE);
+        timetableGrid.setMinWidth(1200);
         timetableGrid.setHgap(10);
     }
 
@@ -68,6 +70,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
             Label timeLabel = new Label(time.toString());
             timeLabel.setStyle("-fx-padding: 0 10 0 10;");
             timeLabel.setTextAlignment(TextAlignment.CENTER);
+            timeLabel.setId("timeLabel");
             timetableGrid.add(timeLabel, j + 1, 0);
         }
 
@@ -77,9 +80,10 @@ public class WeeklyScheduleView extends UiPart<Region> {
             Label dayLabel = new Label(daysOfWeek[i]);
             if (i == 0) {
                 // Set the preferred width of the first day label
-                dayLabel.setMinWidth(60); // Adjust the width as needed
+                dayLabel.setMinWidth(80); // Adjust the width as needed
             }
             dayLabel.setTextAlignment(TextAlignment.CENTER);
+            dayLabel.setId("dayLabel");
             timetableGrid.add(dayLabel, 0, i + 1);
         }
         timetableGrid.setStyle("-fx-padding: 0 10 0 10;");
