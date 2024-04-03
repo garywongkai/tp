@@ -4,12 +4,16 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -53,7 +57,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
         // Apply the column constraint to the gridpane
         timetableGrid.getColumnConstraints().add(columnConstraints);
-        VBox.setVgrow(timetableGrid, javafx.scene.layout.Priority.ALWAYS);
+        VBox.setVgrow(timetableGrid, Priority.ALWAYS);
         timetableGrid.setMaxWidth(Double.MAX_VALUE);
         timetableGrid.setHgap(10);
     }
@@ -89,40 +93,142 @@ public class WeeklyScheduleView extends UiPart<Region> {
     public void populateTimetable(ArrayList<Schedule> schedules) {
         // Clear the timetable before populating it
         clear();
+        schedules.sort(Comparator.comparing(Schedule::getStartTime));
+        ArrayList<Schedule> overlappingSchedules = new ArrayList<>();
+        ArrayList<Schedule> nonOverlappingSchedules = new ArrayList<>();
 
-        // Populate the timetable grid
         for (Schedule schedule : schedules) {
-            populateCellsForSchedule(schedule);
+            if (hasOverlap(schedule, nonOverlappingSchedules)) {
+                overlappingSchedules.add(schedule);
+            } else {
+                nonOverlappingSchedules.add(schedule);
+            }
         }
+
+        for (Schedule schedule : nonOverlappingSchedules) {
+            if (hasOverlap(schedule, overlappingSchedules)) {
+                nonOverlappingSchedules.remove(schedule); //Cross-check overlaps
+                overlappingSchedules.add(schedule);
+            } else {
+                System.out.println("Non-Overlapped:" + schedule);
+            }
+        }
+
+        for (Schedule schedule : overlappingSchedules) {
+            System.out.println("Overlapped:" + schedule);
+        }
+
+        populateCellsForSchedule(overlappingSchedules, nonOverlappingSchedules);
+    }
+
+    private boolean hasOverlap(Schedule schedule, ArrayList<Schedule> schedules) {
+        for (Schedule existingSchedule : schedules) {
+            if (schedule.getStartTime().isBefore(existingSchedule.getEndTime()) &&
+                    schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Function to create cells for a Schedule into the Timetable
-     * @param schedule Schedule
+     * @param overlappingSchedules Schedules that overlaps
      */
 
-    private void populateCellsForSchedule(Schedule schedule) {
-        // Calculate the row index for the start time of the schedule
-        LocalDateTime startTime = schedule.getStartTime();
-        int startRowIndex = calculateRowIndex(startTime);
+    private void populateCellsForSchedule(ArrayList<Schedule> overlappingSchedules, ArrayList<Schedule> nonOverlappingSchedules) {
+        for (Schedule nonOverlap : nonOverlappingSchedules) {
+            // Calculate the row index for the start time of the schedule
+            LocalDateTime startTime = nonOverlap.getStartTime();
+            int startRowIndex = calculateRowIndex(startTime);
 
-        // Calculate the row index for the end time of the schedule
-        LocalDateTime endTime = schedule.getEndTime();
-        int endRowIndex = calculateRowIndex(endTime);
+            // Calculate the row index for the end time of the schedule
+            LocalDateTime endTime = nonOverlap.getEndTime();
+            int endRowIndex = calculateRowIndex(endTime);
 
-        // Determine the rowSpan for the schedule based on its duration
-        int rowSpan = endRowIndex - startRowIndex + 1;
+            // Determine the rowSpan for the schedule based on its duration
+            int rowSpan = endRowIndex - startRowIndex + 1;
 
-        // Calculate the column index for the day of the schedule
-        DayOfWeek dayOfWeek = startTime.getDayOfWeek();
-        int columnIndex = dayOfWeek.getValue(); // Adjust for 0-based indexing
-
-        Node scheduleNode = createScheduleCell(schedule);
-        if (rowSpan > 2) {
-            GridPane.setColumnSpan(scheduleNode, rowSpan);
+            // Calculate the column index for the day of the schedule
+            DayOfWeek dayOfWeek = startTime.getDayOfWeek();
+            int columnIndex = dayOfWeek.getValue(); // Adjust for 0-based indexing
+            Node scheduleNode = createScheduleCell(nonOverlap);
+            if (rowSpan > 2) {
+                GridPane.setColumnSpan(scheduleNode, rowSpan);
+            }
+            timetableGrid.add(scheduleNode, startRowIndex + 1, columnIndex);
         }
-        timetableGrid.add(scheduleNode, startRowIndex + 1, columnIndex);
+        overlappingSchedules.sort(Comparator.comparing(Schedule::getStartTime));
+        Iterator<Schedule> iterator = overlappingSchedules.iterator();
+        while (iterator.hasNext()) {
+            Schedule overlap = iterator.next();
+            ArrayList<Schedule> currentOverlaps = new ArrayList<>();
+            currentOverlaps.add(overlap); // Add the current overlap to the list
+            ArrayList<Schedule> schedulesToRemove = new ArrayList<>(); // New list to collect schedules to remove
+            iterator.remove(); // Remove the current overlap from the list
+            while (!overlappingSchedules.isEmpty()) {
+                for (Schedule schedule : overlappingSchedules) {
+                    if (overlap.getStartTime().isBefore(schedule.getEndTime()) &&
+                            overlap.getEndTime().isAfter(schedule.getStartTime())) {
+                        schedulesToRemove.add(schedule); // Add the overlapping schedule to the list
+                        currentOverlaps.add(schedule);
+                    }
+                }
+                // Remove the schedules after the inner loop completes
+                overlappingSchedules.removeAll(schedulesToRemove);
+            }
+            LocalDateTime earliestStartTime = overlap.getStartTime();
+            LocalDateTime latestEndTime = overlap.getEndTime();
+            DayOfWeek dayOfWeek = earliestStartTime.getDayOfWeek();
+            int columnIndex = dayOfWeek.getValue();
+            for (Schedule schedule : currentOverlaps) {
+                earliestStartTime = earliestStartTime.isBefore(schedule.getStartTime()) ?
+                        earliestStartTime : schedule.getStartTime();
+                latestEndTime = latestEndTime.isAfter(schedule.getEndTime()) ?
+                        latestEndTime : schedule.getEndTime();
+            }
+            Node scheduleNode = createOverlapScheduleCell(currentOverlaps);
+            int rowSpan = calculateRowIndex(latestEndTime) - calculateRowIndex(earliestStartTime) + 1;
+            if (rowSpan > 2) {
+                GridPane.setColumnSpan(scheduleNode, rowSpan);
+            }
+            timetableGrid.add(scheduleNode, calculateRowIndex(earliestStartTime) + 1, columnIndex);
+        }
     }
+
+    private Node createOverlapScheduleCell(ArrayList<Schedule> overlappingSchedules) {
+        StackPane cellPane = new StackPane();
+        cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
+
+        // Create a label to display the overlapped schedule information
+        Label label = new Label("Overlapping Schedules");
+        label.setWrapText(true);
+        label.setAlignment(Pos.CENTER);
+        label.setMaxWidth(Double.MAX_VALUE);
+        label.setMaxHeight(Double.MAX_VALUE);
+
+        // Create a tooltip to show the overlapped schedule names
+        StringBuilder tooltipText = new StringBuilder("Overlapping Schedules:\n");
+        for (Schedule overlappingSchedule : overlappingSchedules) {
+            tooltipText.append(overlappingSchedule.getSchedName()).append("\n");
+        }
+        Tooltip tooltip = new Tooltip(tooltipText.toString());
+        label.setTooltip(tooltip);
+
+        // Add the label to the cell pane
+        cellPane.getChildren().add(label);
+
+        // Set the alignment of the label within the cell pane
+        StackPane.setAlignment(label, Pos.CENTER);
+
+        // Set the preferred size of the cell
+        cellPane.setPrefWidth(Region.USE_PREF_SIZE);
+        cellPane.setPrefHeight(Region.USE_PREF_SIZE);
+
+        return cellPane;
+    }
+
+
 
     /**
      * Function to remove specific Schedule from the timetable
@@ -156,7 +262,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     private int calculateRowIndex(LocalDateTime time) {
         LocalDateTime startTimeOfDay = time.toLocalDate().atStartOfDay().plusHours(8);
-        int minutesFromStart = (int) startTimeOfDay.until(time, java.time.temporal.ChronoUnit.MINUTES);
+        int minutesFromStart = (int) startTimeOfDay.until(time, ChronoUnit.MINUTES);
         return minutesFromStart / timeInterval;
     }
 
