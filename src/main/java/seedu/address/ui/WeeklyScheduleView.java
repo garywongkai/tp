@@ -122,12 +122,13 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     private boolean hasOverlap(Schedule schedule, ArrayList<Schedule> schedules) {
         for (Schedule existingSchedule : schedules) {
-            if (schedule.getStartTime().isBefore(existingSchedule.getStartTime()) &&
-                    (schedule.getEndTime().isBefore(existingSchedule.getEndTime()) || schedule.getEndTime().isAfter(existingSchedule.getEndTime()))) {
+            if (schedule.getStartTime().isBefore(existingSchedule.getStartTime())
+                    && (schedule.getEndTime().isBefore(existingSchedule.getEndTime())
+                    || schedule.getEndTime().isAfter(existingSchedule.getEndTime()))) {
                 return true;
             }
-            if (schedule.getStartTime().isBefore(existingSchedule.getEndTime()) &&
-                    schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
+            if (schedule.getStartTime().isBefore(existingSchedule.getEndTime())
+                    && schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
                 return true;
             }
         }
@@ -139,7 +140,8 @@ public class WeeklyScheduleView extends UiPart<Region> {
      * @param overlappingSchedules Schedules that overlaps
      */
 
-    private void populateCellsForSchedule(ArrayList<Schedule> overlappingSchedules, ArrayList<Schedule> nonOverlappingSchedules) {
+    private void populateCellsForSchedule(ArrayList<Schedule> overlappingSchedules,
+                                          ArrayList<Schedule> nonOverlappingSchedules) {
         for (Schedule nonOverlap : nonOverlappingSchedules) {
             // Calculate the row index for the start time of the schedule
             LocalDateTime startTime = nonOverlap.getStartTime();
@@ -169,8 +171,8 @@ public class WeeklyScheduleView extends UiPart<Region> {
             Iterator<Schedule> iterator = overlappingSchedules.iterator();
             while (iterator.hasNext()) {
                 Schedule schedule = iterator.next();
-                if (overlap.getStartTime().isBefore(schedule.getEndTime()) &&
-                        overlap.getEndTime().isAfter(schedule.getStartTime())) {
+                if (overlap.getStartTime().isBefore(schedule.getEndTime())
+                        && overlap.getEndTime().isAfter(schedule.getStartTime())) {
                     iterator.remove(); // Remove the overlapping schedule from the list
                     currentOverlaps.add(schedule);
                 }
@@ -180,10 +182,10 @@ public class WeeklyScheduleView extends UiPart<Region> {
             DayOfWeek dayOfWeek = earliestStartTime.getDayOfWeek();
             int columnIndex = dayOfWeek.getValue();
             for (Schedule schedule : currentOverlaps) {
-                earliestStartTime = earliestStartTime.isBefore(schedule.getStartTime()) ?
-                        earliestStartTime : schedule.getStartTime();
-                latestEndTime = latestEndTime.isAfter(schedule.getEndTime()) ?
-                        latestEndTime : schedule.getEndTime();
+                earliestStartTime = earliestStartTime.isBefore(schedule.getStartTime())
+                        ? earliestStartTime : schedule.getStartTime();
+                latestEndTime = latestEndTime.isAfter(schedule.getEndTime())
+                        ? latestEndTime : schedule.getEndTime();
             }
             Node scheduleNode = createOverlapScheduleCell(currentOverlaps);
             int rowSpan = calculateRowIndex(latestEndTime) - calculateRowIndex(earliestStartTime) + 1;
