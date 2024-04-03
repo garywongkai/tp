@@ -135,6 +135,10 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addSchedule(Schedule schedule, String name) {
+            String s;
+        }
+        @Override
         public void addSchedule(Schedule schedule) {
             String s;
         }
