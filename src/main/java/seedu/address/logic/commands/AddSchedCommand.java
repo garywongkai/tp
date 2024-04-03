@@ -65,11 +65,12 @@ public class AddSchedCommand extends Command {
             participants.add(lastShownList.get(index.getZeroBased()));
             participantsNames.add(lastShownList.get(index.getZeroBased()).getName().toString());
         }
-
-
-        schedule.addParticipants(participantsNames);
-        model.addSchedule(schedule, participants);
-
+        if (model.hasSchedule(schedule)) {
+            model.addSchedulePeople(schedule, participantsNames);
+        } else {
+            schedule.addParticipants(participantsNames);
+            model.addSchedule(schedule, participants);
+        }
         return new CommandResult(generateSuccessMessage());
     }
 

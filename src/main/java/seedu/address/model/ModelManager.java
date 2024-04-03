@@ -126,11 +126,11 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addSchedule(Schedule schedule, String personName) {
+    public void addSchedulePeople(Schedule schedule, ArrayList<String> personName) {
         if (addressBook.hasSchedule(schedule)) {
             Schedule toEdit = addressBook.getSameSchedule(schedule);
             if (toEdit != null) {
-                toEdit.getPersonList().add(personName);
+                toEdit.getPersonList().addAll(personName);
             } else {
                 throw new IllegalArgumentException("No such schedule found!");
             }

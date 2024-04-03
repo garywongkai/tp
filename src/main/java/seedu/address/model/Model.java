@@ -87,7 +87,8 @@ public interface Model {
      */
     void deleteSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule);
 
-    void addSchedule(Schedule schedule, String personName);
+    void addSchedulePeople(Schedule schedule, ArrayList<String> personName);
+
 
     /**
      * Adds the given schedule.

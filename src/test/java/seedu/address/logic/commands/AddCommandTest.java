@@ -135,15 +135,16 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addSchedule(Schedule schedule, String name) {
-            String s;
-        }
-        @Override
         public void addSchedule(Schedule schedule) {
             String s;
         }
         @Override
         public void addSchedule(Schedule schedule, ArrayList<Person> participantsList) {
+            String s;
+        }
+
+        @Override
+        public void addSchedulePeople(Schedule schedule, ArrayList<String> participants) {
             String s;
         }
 
