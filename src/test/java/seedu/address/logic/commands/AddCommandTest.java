@@ -125,10 +125,19 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteSchedule(Schedule toDeleteSchedule) {
+            String s;
+        }
+
+        @Override
         public void deleteSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule) {
             String s;
         }
 
+        @Override
+        public void addSchedule(Schedule schedule) {
+            String s;
+        }
         @Override
         public void addSchedule(Schedule schedule, ArrayList<Person> participantsList) {
             String s;
