@@ -19,7 +19,7 @@ public class Schedule {
     public static final String VALIDATION_REGEX = "\\s?\\p{Alnum}+[\\s?\\p{Alnum}*]*";
     public static final String DATETIME_STRING = "yyyy-MM-dd HH:mm";
     public static final DateTimeFormatter CUSTOM_DATETIME = DateTimeFormatter.ofPattern(DATETIME_STRING);
-    public static DateTimeFormatter DATETIME_SHOW = DateTimeFormatter.ofPattern("dd MMM yyyy hh:mma");
+    public static final DateTimeFormatter DATETIME_SHOW = DateTimeFormatter.ofPattern("dd MMM yyyy hh:mma");
     private final String schedName;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
@@ -176,17 +176,17 @@ public class Schedule {
     public String toString() {
         return schedName + "\n"
                 + "\tstart: " + startTime.format(DATETIME_SHOW) + "\n"
-                + "\tend: " + endTime.format(DATETIME_SHOW) + "\n";
+                + "\tend: " + endTime.format(DATETIME_SHOW) + "\n"
+                + "\tParticipants: " + getParticipantsName() + "\n";
     }
 
     /**
      * Format state as text for viewing with participants list.
      */
-    public String toStringWithParticipants() {
+    public String toStringWithoutParticipants() {
         return schedName + "\n"
                 + "\tstart: " + startTime.format(DATETIME_SHOW) + "\n"
-                + "\tend: " + endTime.format(DATETIME_SHOW) + "\n"
-                + "\tParticipants: " + getParticipantsName() + "\n";
+                + "\tend: " + endTime.format(DATETIME_SHOW) + "\n";
     }
 
     /**

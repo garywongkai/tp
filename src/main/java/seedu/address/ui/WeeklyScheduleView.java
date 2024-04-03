@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -59,7 +58,6 @@ public class WeeklyScheduleView extends UiPart<Region> {
         // Apply the column constraint to the gridpane
         timetableGrid.getColumnConstraints().add(columnConstraints);
         VBox.setVgrow(timetableGrid, Priority.ALWAYS);
-//        timetableGrid.setMaxWidth(Double.MAX_VALUE);
         timetableGrid.setMinWidth(1200);
         timetableGrid.setHgap(10);
     }
