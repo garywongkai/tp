@@ -19,7 +19,6 @@ import seedu.address.model.schedule.Schedule;
  * Parses input arguments and creates a new EditCommand object
  */
 public class EditSchedCommandParser implements Parser<EditSchedCommand> {
-
     /**
      * Parses the given {@code String} of arguments in the context of the
      * EditCommand
@@ -27,9 +26,7 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditSchedCommand parse(String args) throws ParseException {
-        assert args != null;
         requireNonNull(args);
-
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SPECIFIC_SCHEDULE_INDEX,
                 PREFIX_SCHEDULE, PREFIX_START, PREFIX_END);
 
@@ -71,7 +68,6 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
             editScheduleDescriptor.setEndTime(LocalDateTime.parse(argMultimap.getValue(PREFIX_END).get(),
                     Schedule.CUSTOM_DATETIME));
         }
-
         if (!editScheduleDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
@@ -79,4 +75,3 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
         return new EditSchedCommand(personIndex, scheduleIndex, editScheduleDescriptor);
     }
 }
-
