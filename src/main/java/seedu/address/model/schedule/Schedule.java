@@ -8,8 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import seedu.address.model.person.Person;
-
 /**
  * Represents a Schedule in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidSchedName(String)},
