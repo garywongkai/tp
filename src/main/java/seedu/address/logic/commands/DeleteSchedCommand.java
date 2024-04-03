@@ -55,7 +55,7 @@ public class DeleteSchedCommand extends Command {
         requireNonNull(model);
         List<Person> personList = model.getFilteredPersonList();
 
-        if (deleteScheduleIndex.getZeroBased() >= personList.size()) {
+        if (deletePersonIndex.getZeroBased() >= personList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         Person personToDelete = personList.get(deletePersonIndex.getZeroBased());
