@@ -63,7 +63,6 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
                     Schedule.CUSTOM_DATETIME);
             Schedule schedule = new Schedule(schedName, startTime, endTime);
 
-
             boolean sameDay = (startTime.getYear() == endTime.getYear())
                     && (startTime.getMonth() == endTime.getMonth())
                     && (startTime.getDayOfMonth() == endTime.getDayOfMonth());

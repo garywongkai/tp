@@ -68,7 +68,7 @@ public class DeleteSchedCommand extends Command {
         }
         Schedule scheduleToDelete = personToDelete.getSchedules().get(deleteScheduleIndex.getZeroBased());
 
-        deleteSchedForSpecificPersons(model, scheduleToDelete, personToDelete);
+        deleteSchedForSpecificPerson(model, scheduleToDelete, personToDelete);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(scheduleToDelete)));
     }
@@ -81,7 +81,7 @@ public class DeleteSchedCommand extends Command {
      * @param scheduleToDelete the schedule to delete
      * @param personToDelete specified participant to delete schedule from
      */
-    private void deleteSchedForSpecificPersons(Model model, Schedule scheduleToDelete,
+    private void deleteSchedForSpecificPerson(Model model, Schedule scheduleToDelete,
                                                Person personToDelete) {
         model.deleteSchedule(scheduleToDelete);
         Schedule scheduleToAdd = scheduleToDelete;

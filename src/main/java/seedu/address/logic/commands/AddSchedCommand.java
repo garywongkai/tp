@@ -53,6 +53,7 @@ public class AddSchedCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         ArrayList<Person> participants = new ArrayList<Person>();
