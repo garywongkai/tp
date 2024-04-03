@@ -50,18 +50,6 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
         EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor =
                 new EditSchedCommand.EditScheduleDescriptor();
 
-        if (argMultimap.getValue(PREFIX_SPECIFIC_PARTICIPANTS).isPresent()) {
-            try {
-                scheduleIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SPECIFIC_PARTICIPANTS).get());
-            } catch (ParseException pe) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        EditSchedCommand.MESSAGE_USAGE), pe);
-            }
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditSchedCommand.MESSAGE_USAGE));
-        }
-
         if (argMultimap.getValue(PREFIX_SCHEDULE).isPresent()) {
             editScheduleDescriptor.setSchedName(argMultimap.getValue(PREFIX_SCHEDULE).get());
         }
