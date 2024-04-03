@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -89,7 +91,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
     public void populateTimetable(ArrayList<Schedule> schedules) {
         // Clear the timetable before populating it
         clear();
-
+        schedules.sort(Comparator.comparing(Schedule::getStartTime));
         // Populate the timetable grid
         for (Schedule schedule : schedules) {
             populateCellsForSchedule(schedule);

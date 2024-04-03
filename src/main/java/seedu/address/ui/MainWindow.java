@@ -208,7 +208,7 @@ public class MainWindow extends UiPart<Stage> {
                 }
                 // Call method to update UI based on selected person
                 //System.out.println("Current List of person: ");
-                populatedPerson.forEach(person -> System.out.println(person.getName()));
+                //populatedPerson.forEach(person -> System.out.println(person.getName()));
             }
             Platform.runLater(() -> personComboBox.getSelectionModel().clearSelection());
         });
