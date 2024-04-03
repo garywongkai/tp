@@ -13,7 +13,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
@@ -70,7 +69,7 @@ public class TypicalPersons {
         return ab;
     }
 
-    public static List<Person> getTypicalPersons() {
+    public static ArrayList<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }

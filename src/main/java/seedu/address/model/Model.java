@@ -79,7 +79,19 @@ public interface Model {
      * Deletes the given schedule.
      * The schedule must exist in the address book.
      */
-    void deleteSchedule(Schedule target, ArrayList<Person> toDeleteParticipants);
+    void deleteSchedule(Schedule toDeleteSchedule);
+
+    /**
+     * Deletes the given schedule.
+     * The schedule must exist in the address book.
+     */
+    void deleteSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule);
+
+    /**
+     * Adds the given schedule.
+     * {@code schedule} must not already exist in the address book.
+     */
+    void addSchedule(Schedule schedule);
 
     /**
      * Adds the given schedule.

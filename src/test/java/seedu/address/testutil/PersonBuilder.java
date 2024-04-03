@@ -75,6 +75,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the schedules of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSchedules(ArrayList<Schedule> schedules) {
+        this.schedules = new ArrayList<>(schedules);
+        return this;
+    }
+
+    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
     public PersonBuilder withInterests(String ... interests) {

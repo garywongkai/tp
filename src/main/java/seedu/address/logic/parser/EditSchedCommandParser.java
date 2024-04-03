@@ -33,6 +33,7 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
         assert args != null;
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_SCHEDULE, PREFIX_START,
+
                 PREFIX_END, PREFIX_ADD_PARTICIPANTS, PREFIX_REMOVE_PARTICIPANTS, PREFIX_SPECIFIC_PARTICIPANTS);
 
         Index index;

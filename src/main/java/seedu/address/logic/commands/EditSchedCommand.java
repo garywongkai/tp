@@ -87,6 +87,7 @@ public class EditSchedCommand extends Command {
         Person personToEdit = lastShownList.get(personIndex.getZeroBased());
         Schedule scheduleToEdit = personToEdit.getSchedules().get(schedulIndex.getZeroBased());
         model.deleteSchedule(scheduleToEdit, scheduleToEdit.getPersonList());
+
         Schedule editedSchedule = createEditedSchedule(model, scheduleToEdit, editScheduleDescriptor);
 
         if (!scheduleToEdit.isSameSchedule(editedSchedule) && model.hasSchedule(editedSchedule)) {
@@ -118,24 +119,25 @@ public class EditSchedCommand extends Command {
                 Person p = model.getAddressBook().getPersonList().get(index.getZeroBased());
                 updatedPersonList.add(p);
             }
-            return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime, updatedPersonList);
+            //return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime, updatedPersonList);
         }
 
-        ArrayList<Person> originalParticipantsList = scheduleToEdit.getPersonList();
-        updatedPersonList = scheduleToEdit.getPersonList();
-        if (editScheduleDescriptor.getToRemoveParticipantList().isPresent()) {
-            for (Index index: editScheduleDescriptor.getToRemoveParticipantList().get()) {
-                Person p = originalParticipantsList.get(index.getZeroBased());
-                updatedPersonList.remove(p);
-            }
-        }
-        if (editScheduleDescriptor.getToAddParticipantList().isPresent()) {
-            for (Index index: editScheduleDescriptor.getToAddParticipantList().get()) {
-                Person p = model.getAddressBook().getPersonList().get(index.getZeroBased());
-                updatedPersonList.add(p);
-            }
-        }
-        return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime, updatedPersonList);
+        //ArrayList<Person> originalParticipantsList = scheduleToEdit.getPersonList();
+        //updatedPersonList = scheduleToEdit.getPersonList();
+        //if (editScheduleDescriptor.getToRemoveParticipantList().isPresent()) {
+        //    for (Index index: editScheduleDescriptor.getToRemoveParticipantList().get()) {
+        //        Person p = originalParticipantsList.get(index.getZeroBased());
+        //        updatedPersonList.remove(p);
+        //    }
+        //}
+        //if (editScheduleDescriptor.getToAddParticipantList().isPresent()) {
+        //    for (Index index: editScheduleDescriptor.getToAddParticipantList().get()) {
+        //        Person p = model.getAddressBook().getPersonList().get(index.getZeroBased());
+        //        updatedPersonList.add(p);
+        //    }
+        //}
+        //return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime, updatedPersonList);
+        return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime);
     }
 
     @Override
