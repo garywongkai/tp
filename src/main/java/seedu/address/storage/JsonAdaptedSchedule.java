@@ -29,7 +29,8 @@ public class JsonAdaptedSchedule {
      */
     @JsonCreator
     public JsonAdaptedSchedule(@JsonProperty("moduleName") String name, @JsonProperty("startTime") String startTime,
-                               @JsonProperty("endTime") String endTime, @JsonProperty("participants") ArrayList<String> participants) {
+                               @JsonProperty("endTime") String endTime,
+                               @JsonProperty("participants") ArrayList<String> participants) {
         this.moduleName = name;
         this.startTime = LocalDateTime.parse(startTime);
         this.endTime = LocalDateTime.parse(endTime);
