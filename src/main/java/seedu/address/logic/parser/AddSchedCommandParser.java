@@ -3,12 +3,14 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -21,6 +23,9 @@ import seedu.address.model.schedule.Schedule;
  * Parses input arguments and creates a new AddSchedCommandParser object
  */
 public class AddSchedCommandParser implements Parser<AddSchedCommand> {
+
+    private static final LocalTime earliestTime = LocalTime.of(8, 0);
+    private static final LocalTime latestTime = LocalTime.of(21, 0);
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddSchedCommand
@@ -45,6 +50,12 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_SCHEDULE, PREFIX_START, PREFIX_END);
+
+        if (argMultimap.getValue(PREFIX_SCHEDULE).isEmpty()
+                || argMultimap.getValue(PREFIX_START).isEmpty() || argMultimap.getValue(PREFIX_END).isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSchedCommand.MESSAGE_USAGE));
+        }
+
         String schedName = argMultimap.getValue(PREFIX_SCHEDULE).get();
         try {
             LocalDateTime startTime = LocalDateTime.parse(argMultimap.getValue(PREFIX_START).get(),
@@ -53,7 +64,11 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
                     Schedule.CUSTOM_DATETIME);
             Schedule schedule = new Schedule(schedName, startTime, endTime);
 
-            return new AddSchedCommand(indexArrayList, schedule);
+            if (startTime.toLocalTime().isBefore(earliestTime) || endTime.toLocalTime().isAfter(latestTime)) {
+                throw new ParseException(String.format(MESSAGE_OUT_SCOPE_DATETIME, AddSchedCommand.MESSAGE_USAGE));
+            } else {
+                return new AddSchedCommand(indexArrayList, schedule);
+            }
         } catch (DateTimeException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_DATETIME_FORMAT, AddSchedCommand.MESSAGE_USAGE));
         }

@@ -30,7 +30,7 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
      */
     public EditSchedCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SCHEDULE, PREFIX_START,
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_START,
                 PREFIX_END, PREFIX_ADD_PARTICIPANTS, PREFIX_REMOVE_PARTICIPANTS, PREFIX_SPECIFIC_PARTICIPANTS);
 
         Index index;

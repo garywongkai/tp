@@ -26,6 +26,9 @@ public class Messages {
     public static final String MESSAGE_INVALID_DATETIME_FORMAT = "The date format provided is invalid. "
             + "Format: " + getDateTimeStringFormat();
 
+    public static final String MESSAGE_OUT_SCOPE_DATETIME = "The schedule time should be between 8:00 to 21:00. "
+            + "Format: " + getDateTimeStringFormat();
+
 
     /**
      * Returns an error message indicating the duplicate prefixes.
