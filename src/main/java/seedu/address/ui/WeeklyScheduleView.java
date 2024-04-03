@@ -159,25 +159,19 @@ public class WeeklyScheduleView extends UiPart<Region> {
             timetableGrid.add(scheduleNode, startRowIndex + 1, columnIndex);
         }
         overlappingSchedules.sort(Comparator.comparing(Schedule::getStartTime));
-        Iterator<Schedule> iterator = overlappingSchedules.iterator();
-        while (iterator.hasNext()) {
-            Schedule overlap = iterator.next();
+        while (!overlappingSchedules.isEmpty()) {
+            Schedule overlap = overlappingSchedules.remove(0);
             ArrayList<Schedule> currentOverlaps = new ArrayList<>();
-            currentOverlaps.add(overlap); // Add the current overlap to the list
-            ArrayList<Schedule> schedulesToRemove = new ArrayList<>(); // New list to collect schedules to remove
-            schedulesToRemove.add(overlap);
-            iterator.remove(); // Remove the current overlap from the list
-            iterator = overlappingSchedules.iterator();
+            currentOverlaps.add(overlap); // Add the earliest overlapped schedule to the list
+            Iterator<Schedule> iterator = overlappingSchedules.iterator();
             while (iterator.hasNext()) {
                 Schedule schedule = iterator.next();
                 if (overlap.getStartTime().isBefore(schedule.getEndTime()) &&
                         overlap.getEndTime().isAfter(schedule.getStartTime())) {
-                    schedulesToRemove.add(schedule); // Add the overlapping schedule to the list
+                    iterator.remove(); // Remove the overlapping schedule from the list
                     currentOverlaps.add(schedule);
                 }
             }
-            // Remove the schedules after the loop completes
-            overlappingSchedules.removeAll(schedulesToRemove);
             LocalDateTime earliestStartTime = overlap.getStartTime();
             LocalDateTime latestEndTime = overlap.getEndTime();
             DayOfWeek dayOfWeek = earliestStartTime.getDayOfWeek();
@@ -194,6 +188,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
                 GridPane.setColumnSpan(scheduleNode, rowSpan);
             }
             timetableGrid.add(scheduleNode, calculateRowIndex(earliestStartTime) + 1, columnIndex);
+            // Remove the schedules after the loop completes
         }
     }
 
