@@ -2,7 +2,11 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +28,9 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditSchedCommand parse(String args) throws ParseException {
+        assert args != null;
         requireNonNull(args);
+
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SPECIFIC_SCHEDULE_INDEX,
                 PREFIX_SCHEDULE, PREFIX_START, PREFIX_END);
 
@@ -41,7 +47,6 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_SPECIFIC_SCHEDULE_INDEX,
                 PREFIX_SCHEDULE, PREFIX_START, PREFIX_END);
 
-
         EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor =
                 new EditSchedCommand.EditScheduleDescriptor();
 
@@ -56,6 +61,7 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditSchedCommand.MESSAGE_USAGE));
         }
+
         if (argMultimap.getValue(PREFIX_SCHEDULE).isPresent()) {
             editScheduleDescriptor.setSchedName(argMultimap.getValue(PREFIX_SCHEDULE).get());
         }
