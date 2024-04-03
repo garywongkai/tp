@@ -15,12 +15,12 @@ public class ScheduleBuilder {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = Schedule.getScheduleDateTimeFormatter();
     public static final LocalDateTime DEFAULT_START = LocalDateTime.now();
     public static final LocalDateTime DEFAULT_END = LocalDateTime.now().plusHours(1);
-    public static final ArrayList<Person> DEFAULT_PERSON_LIST = new ArrayList<>();
+    public static final ArrayList<String> DEFAULT_PERSON_LIST = new ArrayList<>();
 
     private String schedName;
     private LocalDateTime start;
     private LocalDateTime end;
-    private ArrayList<Person> personList;
+    private ArrayList<String> personList;
 
     /**
      * Creates a {@code ScheduleBuilder} with the default details.
@@ -69,7 +69,7 @@ public class ScheduleBuilder {
     /**
      * Sets the {@code personList} of the {@code Schedule} that we are building.
      */
-    public ScheduleBuilder withParticipants(ArrayList<Person> personList) {
+    public ScheduleBuilder withParticipants(ArrayList<String> personList) {
         this.personList = personList;
         return this;
     }
