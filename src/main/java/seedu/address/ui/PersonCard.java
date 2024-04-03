@@ -54,11 +54,11 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
-        id.setText(displayedIndex + ". ");
+        id.setText(String.valueOf(displayedIndex));
         name.setText(person.getName().fullName);
-        phone.setText("Phone Number: " + person.getPhone().value);
-        address.setText("Address: " + person.getAddress().value);
-        email.setText("Email: " + person.getEmail().value);
+        phone.setText(person.getPhone().value);
+        address.setText(person.getAddress().value);
+        email.setText(person.getEmail().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> {
@@ -70,12 +70,5 @@ public class PersonCard extends UiPart<Region> {
                     }
                     tags.getChildren().add(tagLabel);
                 });
-        StringBuilder sb = new StringBuilder();
-        sb.append("Schedules: \n");
-        for (int i = 0; i < person.getSchedules().size(); i++) {
-            sb.append(i + 1).append(". ").append(person.getSchedules().get(i).toString());
-        }
-        sb.append(" ");
-        schedules.setText(sb.toString());
     }
 }
