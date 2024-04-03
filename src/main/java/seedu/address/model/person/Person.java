@@ -123,6 +123,19 @@ public class Person {
     }
 
     /**
+     * Removes the Person from the participants' list by their Person Name
+     * @param s Schedule to remove participant from
+     * @param name Name of participant
+     */
+    public void removePersonfromSchedule(Schedule s, String name) {
+        schedules.forEach(schedule -> {
+            if (schedule.isSameSchedule(s)) {
+                schedule.removePerson(name);
+            }
+        });
+    }
+
+    /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */

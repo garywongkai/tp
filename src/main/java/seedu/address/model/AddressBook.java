@@ -67,6 +67,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setSchedule(newData.getScheduleList());
     }
 
     //// person-level operations
@@ -100,20 +101,26 @@ public class AddressBook implements ReadOnlyAddressBook {
      * The schedule must not already exist in the address book.
      */
     public void addSchedule(Schedule newSchedule) {
-        schedules.add(newSchedule);
+        if (schedules.contains(newSchedule)) {
+            System.out.println(schedules + " already added!");
+        } else {
+            schedules.add(newSchedule);
+        }
     }
-
 
     /**
      * Adds a schedule to the address book.
      * The schedule must not already exist in the address book.
      */
     public void addSchedule(Schedule newSchedule, ArrayList<Person> participantsList) {
-        schedules.add(newSchedule);
-        for (Person toEditPerson: participantsList) {
-            Person edittedPerson = toEditPerson;
-            edittedPerson.addSchedule(newSchedule);
-            setPerson(toEditPerson, edittedPerson);
+        if (schedules.contains(newSchedule)) {
+            System.out.println(schedules + " already added!");
+        } else {
+            schedules.add(newSchedule);
+            for (Person toEditPerson: participantsList) {
+                toEditPerson.addSchedule(newSchedule);
+                setPerson(toEditPerson, toEditPerson);
+            }
         }
     }
 
@@ -139,6 +146,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         schedules.setSchedule(target, editedSchedule);
     }
 
+    private void setSchedule(ObservableList<Schedule> scheduleList) {
+        this.schedules.setSchedules(scheduleList);
+    }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
@@ -161,9 +172,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule) {
         schedules.remove(toDeleteSchedule);
-        Person personDeletedSched = toDeleteParticipant;
         toDeleteParticipant.deleteSchedule(toDeleteSchedule);
-        setPerson(toDeleteParticipant, personDeletedSched);
+        setPerson(toDeleteParticipant, toDeleteParticipant);
     }
 
     //// util methods
