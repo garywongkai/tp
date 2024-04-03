@@ -35,7 +35,7 @@ public class Schedule {
     public Schedule(String schedName, LocalDateTime startTime,
                     LocalDateTime endTime) {
         requireNonNull(schedName);
-        //checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
         checkArgument(isValidTiming(startTime, endTime));
         this.schedName = schedName;
         this.startTime = startTime;

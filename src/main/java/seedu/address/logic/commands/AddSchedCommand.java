@@ -28,7 +28,7 @@ public class AddSchedCommand extends Command {
             + PREFIX_SCHEDULE + "SCHEDULE "
             + PREFIX_START + "START_DATETIME (yyyy-MM-dd HH:mm) "
             + PREFIX_END + "END_DATETIME (yyyy-MM-dd HH:mm) "
-            + "(START_DATETIME and END_DATETIME must be between 08:00 and 21:00)\n"
+            + "(START_DATETIME and END_DATETIME must be in the same day and between 08:00 and 21:00)\n"
             + "Example: " + COMMAND_WORD + " "
             + "1, 2 "
             + PREFIX_SCHEDULE + "CS2103 weekly meeting "
@@ -53,6 +53,7 @@ public class AddSchedCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         ArrayList<Person> participants = new ArrayList<Person>();

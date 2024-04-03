@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
@@ -63,6 +64,13 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
             LocalDateTime endTime = LocalDateTime.parse(argMultimap.getValue(PREFIX_END).get(),
                     Schedule.CUSTOM_DATETIME);
             Schedule schedule = new Schedule(schedName, startTime, endTime);
+
+            boolean sameDay = (startTime.getYear() == endTime.getYear())
+                    && (startTime.getMonth() == endTime.getMonth())
+                    && (startTime.getDayOfMonth() == endTime.getDayOfMonth());
+            if (!sameDay) {
+                throw new ParseException(String.format(MESSAGE_DIFFERENT_DATE, AddSchedCommand.MESSAGE_USAGE));
+            }
 
             if (startTime.toLocalTime().isBefore(earliestTime) || endTime.toLocalTime().isAfter(latestTime)) {
                 throw new ParseException(String.format(MESSAGE_OUT_SCOPE_DATETIME, AddSchedCommand.MESSAGE_USAGE));
