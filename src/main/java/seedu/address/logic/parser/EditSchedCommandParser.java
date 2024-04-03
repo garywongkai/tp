@@ -61,7 +61,6 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditSchedCommand.MESSAGE_USAGE));
         }
-        
         if (argMultimap.getValue(PREFIX_SCHEDULE).isPresent()) {
             editScheduleDescriptor.setSchedName(argMultimap.getValue(PREFIX_SCHEDULE).get());
         }
