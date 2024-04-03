@@ -273,7 +273,7 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 Examples:
 * `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
 would take place on 5th March 2024 from 4pm - 6pm
-* `addSched 1,2,3 s/CSMeeting start/2024-03-18 13:00 end/2024-03-18 19:00` will add the 1st, 2nd and 3rd persons in the address list
+* `addSched 1, 2, 3 s/CSMeeting start/2024-03-18 13:00 end/2024-03-18 19:00` will add the 1st, 2nd and 3rd persons in the address list
 to the `CSMeeting` event which would take place on 18th March 2024 from 3pm - 7pm
 
 Expected success outcome:
@@ -418,10 +418,7 @@ Action     | Format, Examples
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Clear**  | `clear`
-**Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. 
-`addSched 1,2,3 s/CSMeeting start/2024-02-24 09:00 end/2024-02-24 17:00`
+**Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. `addSched 1, 2, 3 s/CSMeeting start/2024-02-24 09:00 end/2024-02-24 17:00`
 **Delete Schedule**   | `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX` <br> e.g. `deleteSched 1 schedule/2`
-**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME]
-[start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 s/CS1101S meeting 
-start/ 2024-02-03 12:00 end/ 2024-02-03 15:00`
+**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 schedule/1 s/CS1101S meeting start/ 2024-02-03 12:00 end/ 2024-02-03 15:00`
 **Exit**   | `exit`
