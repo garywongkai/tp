@@ -61,7 +61,7 @@ public class EditSchedCommand extends Command {
      * @param scheduleIndex index of schedule to edit
      * @param editScheduleDescriptor to create edited schedule
      */
-    public EditSchedCommand(Index personIndex, Index schedulIndex,
+    public EditSchedCommand(Index personIndex, Index scheduleIndex,
                             EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor) {
         assert personIndex != null;
         assert schedulIndex != null;
@@ -71,7 +71,7 @@ public class EditSchedCommand extends Command {
         requireNonNull(editScheduleDescriptor);
 
         this.personIndex = personIndex;
-        this.schedulIndex = schedulIndex;
+        this.scheduleIndex = scheduleIndex;
         this.editScheduleDescriptor =
                 new EditSchedCommand.EditScheduleDescriptor(editScheduleDescriptor);
     }
