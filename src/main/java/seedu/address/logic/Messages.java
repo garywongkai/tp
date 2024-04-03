@@ -26,7 +26,7 @@ public class Messages {
             + "Format: " + getDateTimeStringFormat();
     public static final String MESSAGE_OUT_SCOPE_DATETIME = "The schedule time should be between 8:00 to 21:00. "
             + "Format: " + getDateTimeStringFormat();
-    public static final String MESSAGE_DIFFERENT_DATE = 
+    public static final String MESSAGE_DIFFERENT_DATE =
             "The schedule start time and end time should be in the same day. "
             + "Format: " + getDateTimeStringFormat();
 
