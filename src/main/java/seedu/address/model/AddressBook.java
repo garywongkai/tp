@@ -70,10 +70,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         setSchedule(newData.getScheduleList());
     }
 
-    private void setSchedule(ObservableList<Schedule> scheduleList) {
-        this.schedules.setSchedules(scheduleList);
-    }
-
     //// person-level operations
 
     /**
@@ -112,7 +108,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-
     /**
      * Adds a schedule to the address book.
      * The schedule must not already exist in the address book.
@@ -149,6 +144,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedSchedule);
 
         schedules.setSchedule(target, editedSchedule);
+    }
+
+    private void setSchedule(ObservableList<Schedule> scheduleList) {
+        this.schedules.setSchedules(scheduleList);
     }
 
     /**

@@ -122,11 +122,16 @@ public class Person {
         schedules.remove(s);
     }
 
-    public void removePersonfromSchedule (Schedule s, String name) {
+    /**
+     * Removes the Person from the participants' list by their Person Name
+     * @param s Schedule to remove participant from
+     * @param name Name of participant
+     */
+    public void removePersonfromSchedule(Schedule s, String name) {
         schedules.forEach(schedule -> {
             if (schedule.isSameSchedule(s)) {
                 schedule.removePerson(name);
-        }
+            }
         });
     }
 
