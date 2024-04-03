@@ -55,11 +55,17 @@ public class DeleteSchedCommand extends Command {
         requireNonNull(model);
         List<Person> personList = model.getFilteredPersonList();
 
+
         if (deleteScheduleIndex.getZeroBased() >= personList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         Person personToDelete = personList.get(deletePersonIndex.getZeroBased());
 
+        ArrayList<Schedule> personScheduleList = personToDelete.getSchedules();
+
+        if (deleteScheduleIndex.getZeroBased() >= personScheduleList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SCHEDULE_DISPLAYED_INDEX);
+        }
         Schedule scheduleToDelete = personToDelete.getSchedules().get(deleteScheduleIndex.getZeroBased());
 
         deleteSchedForSpecificPersons(model, scheduleToDelete, personToDelete);
@@ -87,10 +93,12 @@ public class DeleteSchedCommand extends Command {
             if (!p.getSchedules().contains(scheduleToDelete)) {
                 continue;
             }
-            p.deleteSchedule(scheduleToDelete);
+            Person personChanged = p;
+            personChanged.deleteSchedule(scheduleToDelete);
             if (!p.equals(personToDelete)) {
-                p.addSchedule(scheduleToAdd);
+                personChanged.addSchedule(scheduleToAdd);
             }
+            model.setPerson(p, personChanged);
         }
     }
 
