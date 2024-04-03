@@ -122,6 +122,14 @@ public class Person {
         schedules.remove(s);
     }
 
+    public void removePersonfromSchedule (Schedule s, String name) {
+        schedules.forEach(schedule -> {
+            if (schedule.isSameSchedule(s)) {
+                schedule.removePerson(name);
+        }
+        });
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.

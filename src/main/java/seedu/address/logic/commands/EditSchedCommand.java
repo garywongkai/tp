@@ -105,22 +105,20 @@ public class EditSchedCommand extends Command {
 
     private void deleteSchedForSpecificPerson(Model model, Schedule scheduleToDelete,
                                               Person personToDelete) {
-        model.deleteSchedule(scheduleToDelete);
-        Schedule scheduleToAdd = scheduleToDelete;
-        scheduleToAdd.removePerson(personToDelete.getName().toString());
+        model.deleteSchedule(personToDelete, scheduleToDelete);
+        scheduleToDelete.removePerson(personToDelete.getName().toString());
         if (!scheduleToDelete.getPersonList().isEmpty()) {
-            model.addSchedule(scheduleToAdd);
+            model.addSchedule(scheduleToDelete);
         }
         for (Person p: model.getFilteredPersonList()) {
             if (!p.getSchedules().contains(scheduleToDelete)) {
                 continue;
             }
-            Person personChanged = p;
-            personChanged.deleteSchedule(scheduleToDelete);
+            p.deleteSchedule(scheduleToDelete);
             if (!p.equals(personToDelete)) {
-                personChanged.addSchedule(scheduleToAdd);
+                p.addSchedule(scheduleToDelete);
             }
-            model.setPerson(p, personChanged);
+            model.setPerson(p, p);
         }
     }
 
