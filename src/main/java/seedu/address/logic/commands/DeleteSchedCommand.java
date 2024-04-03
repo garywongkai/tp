@@ -77,17 +77,20 @@ public class DeleteSchedCommand extends Command {
      */
     private void deleteSchedForSpecificPersons(Model model, Schedule scheduleToDelete,
                                                Person personToDelete) {
+        model.deleteSchedule(scheduleToDelete);
         Schedule scheduleToAdd = scheduleToDelete;
-        model.deleteSchedule(personToDelete, scheduleToDelete);
         scheduleToAdd.removePerson(personToDelete.getName().toString());
-        ArrayList<Person> remainParticipants = new ArrayList<Person>();
-        for (Person p: model.getFilteredPersonList()) {
-            if (scheduleToAdd.getPersonList().contains(p.getName().toString())) {
-                remainParticipants.add(p);
-            }
+        if (!scheduleToDelete.getPersonList().isEmpty()) {
+            model.addSchedule(scheduleToAdd);
         }
-        if (!remainParticipants.isEmpty()) {
-            model.addSchedule(scheduleToAdd, remainParticipants);
+        for (Person p: model.getFilteredPersonList()) {
+            if (!p.getSchedules().contains(scheduleToDelete)) {
+                continue;
+            }
+            p.deleteSchedule(scheduleToDelete);
+            if (!p.equals(personToDelete)) {
+                p.addSchedule(scheduleToAdd);
+            }
         }
     }
 

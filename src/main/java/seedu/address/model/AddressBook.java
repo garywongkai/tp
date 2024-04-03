@@ -95,6 +95,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(p);
     }
 
+    /**
+     * Adds a schedule to the address book.
+     * The schedule must not already exist in the address book.
+     */
+    public void addSchedule(Schedule newSchedule) {
+        schedules.add(newSchedule);
+    }
+
 
     /**
      * Adds a schedule to the address book.
@@ -137,6 +145,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeSchedule(Schedule toDeleteSchedule) {
+        schedules.remove(toDeleteSchedule);
     }
 
     /**
