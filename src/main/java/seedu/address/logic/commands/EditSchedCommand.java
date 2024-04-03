@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.time.LocalDateTime;
@@ -132,7 +131,8 @@ public class EditSchedCommand extends Command {
      * edited with {@code editPersonDescriptor}.
      */
     private static Schedule createEditedSchedule(Schedule scheduleToEdit,
-                                                 EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor) throws CommandException {
+                                                 EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor)
+            throws CommandException {
         assert scheduleToEdit != null;
 
         String updatedSchedName = editScheduleDescriptor.getSchedName().orElse(scheduleToEdit.getSchedName());
