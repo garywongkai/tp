@@ -121,14 +121,16 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     private boolean hasOverlap(Schedule schedule, ArrayList<Schedule> schedules) {
         for (Schedule existingSchedule : schedules) {
-            if (schedule.getStartTime().isBefore(existingSchedule.getStartTime())
-                    && (schedule.getEndTime().isBefore(existingSchedule.getEndTime())
-                    || schedule.getEndTime().isAfter(existingSchedule.getEndTime()))) {
-                return true;
-            }
-            if (schedule.getStartTime().isBefore(existingSchedule.getEndTime())
-                    && schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
-                return true;
+            if (schedule.getStartTime().getDayOfWeek() == existingSchedule.getStartTime().getDayOfWeek()) {
+                if (schedule.getStartTime().isBefore(existingSchedule.getStartTime())
+                        && (schedule.getEndTime().isBefore(existingSchedule.getEndTime())
+                        || schedule.getEndTime().isAfter(existingSchedule.getEndTime()))) {
+                    return true;
+                }
+                if (schedule.getStartTime().isBefore(existingSchedule.getEndTime())
+                        && schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
+                    return true;
+                }
             }
         }
         return false;
