@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -28,11 +29,12 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
     public EditSchedCommand parse(String args) throws ParseException {
         assert args != null;
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SPECIFIC_SCHEDULE_INDEX,
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SPECIFIC_SCHEDULE_INDEX, PREFIX_GROUP,
                 PREFIX_SCHEDULE, PREFIX_START, PREFIX_END);
 
         Index personIndex;
         Index scheduleIndex;
+        String changeGroup;
 
         try {
             personIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
@@ -58,6 +60,12 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditSchedCommand.MESSAGE_USAGE));
         }
+        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
+            changeGroup = argMultimap.getValue(PREFIX_GROUP).get();
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditSchedCommand.MESSAGE_USAGE));
+        }
         if (argMultimap.getValue(PREFIX_SCHEDULE).isPresent()) {
             editScheduleDescriptor.setSchedName(argMultimap.getValue(PREFIX_SCHEDULE).get());
         }
@@ -73,6 +81,6 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditSchedCommand(personIndex, scheduleIndex, editScheduleDescriptor);
+        return new EditSchedCommand(personIndex, scheduleIndex, changeGroup, editScheduleDescriptor);
     }
 }
