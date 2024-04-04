@@ -12,16 +12,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import seedu.address.model.schedule.Schedule;
 
-import javax.swing.*;
 
 
 /**
@@ -217,9 +221,9 @@ public class WeeklyScheduleView extends UiPart<Region> {
             Tooltip tooltip = new Tooltip(tooltipText.toString());
             label.setTooltip(tooltip);
 
-//         Add the label to the cell pane
+            //Add the label to the cell pane
             cellPane.getChildren().add(label);
-//         Set the alignment of the label within the cell pane
+            //Set the alignment of the label within the cell pane
             StackPane.setAlignment(label, Pos.CENTER);
         } else {
             // Create a label to display the overlapped schedule information
@@ -257,7 +261,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
         // Set the preferred size of the cell
         cellPane.setPrefWidth(Region.USE_PREF_SIZE);
         cellPane.setPrefHeight(distinctSchedules.size() * 50);
-//        Region.USE_PREF_SIZE
+        //Region.USE_PREF_SIZE
 
         return cellPane;
     }
@@ -273,7 +277,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
         StackPane cellPane = new StackPane();
 
         // Set the style of the cell
-//        cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
+        //cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
         // Create a label to display the schedule information
         Label label = new Label(schedule.getSchedName());
         label.setId("ScheduleLabel");
