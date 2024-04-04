@@ -7,7 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -65,20 +67,33 @@ public class AddSchedCommand extends Command {
             participants.add(lastShownList.get(index.getZeroBased()));
             participantsNames.add(lastShownList.get(index.getZeroBased()).getName().toString());
         }
+        schedule.addParticipants(participantsNames);
         if (model.hasSchedule(schedule)) {
             model.addSchedulePeople(schedule, participantsNames);
-            /*for (String name : participantsNames) {
+            ObservableList<Schedule> arraySched = model.getAddressBook().getScheduleList();
+            final Schedule[] edittedSchedule = new Schedule[1];
+            arraySched.forEach(schedule1 -> {
+                if (schedule1.isSameSchedule(schedule)) {
+                    edittedSchedule[0] = schedule1;
+                }
+            });
+            System.out.println("i was called cause duplicate");
+            for (String name : participantsNames) {
                 model.getFilteredPersonList().forEach(person -> {
                     if (Objects.equals(person.getName().toString(), name)) {
                         if (!person.getSchedules().contains(schedule)) {
-                            person.getSchedules().add(schedule);
+                            // add schedule to the people involved
+                            person.addSchedule(edittedSchedule[0]);
+                        } else {
+                            int index = person.getSchedules().indexOf(schedule);
+                            person.getSchedules().get(index).addParticipants(participantsNames);
                         }
                     }
+                    model.setPerson(person, person);
                 });
-            }*/
+            }
         } else {
-            schedule.addParticipants(participantsNames);
-            model.addSchedule(schedule, participants);
+            model.addSchedule(schedule);
         }
         return new CommandResult(generateSuccessMessage());
     }
