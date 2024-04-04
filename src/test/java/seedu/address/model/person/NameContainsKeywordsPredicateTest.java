@@ -59,39 +59,39 @@ public class NameContainsKeywordsPredicateTest {
 
         // Keywords match phone, email and address
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
 
         // Keywords match partial email
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("gmail"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Main Street").build()));
 
         // Keywords match partial phone number
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("3456"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Main Street").build()));
 
         // Keywords match partial address
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Kent"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd").build()));
 
 
         // Mixed-cased address
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("LOwer keNT RiDGe rd"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd").build()));
 
         // Keywords match tag
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Friends"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd")
                 .withTags("Friends").build()));
 
         // Keywords match partial tag
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("fam"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd")
                 .withTags("Friends", "family").build()));
     }
@@ -108,25 +108,25 @@ public class NameContainsKeywordsPredicateTest {
 
         // Non-matching phone number
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("87654321"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd")
                 .withTags("Friends", "family").build()));
 
         // Non-matching email
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Bob@u.nus.edu"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd")
                 .withTags("Friends", "family").build()));
 
         // Non-matching address
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Upper Thomson Road"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd")
                 .withTags("Friends", "family").build()));
 
         // Non-matching tag
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Enemy"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345678")
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("92345678")
                 .withEmail("alice@gmail.com").withAddress("Lower Kent Ridge Rd")
                 .withTags("Friends", "family").build()));
     }

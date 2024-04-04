@@ -129,11 +129,12 @@ public class ModelManager implements Model {
     public void addSchedulePeople(Schedule schedule, ArrayList<String> personName) {
         if (addressBook.hasSchedule(schedule)) {
             Schedule toEdit = addressBook.getSameSchedule(schedule);
-            if (toEdit != null) {
-                toEdit.getPersonList().addAll(personName);
-            } else {
-                throw new IllegalArgumentException("No such schedule found!");
+            for (String names : personName) {
+                if (!toEdit.getPersonList().contains(names)) {
+                    toEdit.getPersonList().add(names);
+                }
             }
+            //toEdit.getPersonList().addAll(personName);
         } else {
             addressBook.addSchedule(schedule);
             updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
