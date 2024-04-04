@@ -390,6 +390,7 @@
 
 #timetableGrid {
     -fx-padding: 10;
+    -fx-background-color: #FDF7E7;
 }
 
 #personComboBox {
@@ -432,6 +433,11 @@
     -fx-padding: 10 0 10 0;
     -fx-background-color: #FDF7E7;
     -fx-border-width: 0;
+}
+
+#ScrollSchedule {
+    -fx-background-color: #FDF7E7;
+    -fx-background-fill: #FDF7E7;
 }
 
 #dayLabel {
