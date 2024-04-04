@@ -253,7 +253,8 @@ Adds an event with contact from specified date with time
 Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME`
 
 * The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the
-    number of people in the address book
+    number of people in the address book. When adding multiple users, ensure there is a space after the
+    comma e.g. 1, 2, 5
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time

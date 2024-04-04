@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 
 import java.util.ArrayList;
@@ -24,10 +23,9 @@ public class DeleteSchedCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a schedule in address book. "
             + "Parameters: "
             + "Person INDEX(S) (must be positive integer) "
-            + "Schedule INDEX(S) (must be positive integer) "
-            + "TO DELETE PERSON " + PREFIX_SPECIFIC_SCHEDULE_INDEX + "TO DELETE SCHEDULE\n"
-            + "Example: " + COMMAND_WORD + " 1"
-            + PREFIX_SCHEDULE + " 1";
+            + PREFIX_SPECIFIC_SCHEDULE_INDEX + "Schedule INDEX(S) (must be positive integer) \n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_SPECIFIC_SCHEDULE_INDEX + " 1";
 
     public static final String MESSAGE_SUCCESS = "The schedule deleted: %1$s";
 
