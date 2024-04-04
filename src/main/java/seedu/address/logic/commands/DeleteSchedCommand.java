@@ -96,6 +96,8 @@ public class DeleteSchedCommand extends Command {
                     }
                 }
             }
+        } else {
+            model.deleteSchedule(scheduleToDelete);
         }
     }
 
