@@ -168,6 +168,7 @@ public class MainWindow extends UiPart<Stage> {
     private void populatePersonNameComboBox() {
         // Example class names, replace with actual data retrieval logic
         ObservableList<Person> persons = logic.getFilteredPersonList();
+        ObservableList<Schedule> schedules = logic.getAddressBook().getScheduleList();
         personComboBox.setItems(persons);
         // Use a cell factory to display the names of the Person objects
         personComboBox.setCellFactory(comboBox -> new ListCell<Person>() {
@@ -221,9 +222,13 @@ public class MainWindow extends UiPart<Stage> {
                         //populatedPerson.forEach(person -> System.out.print(person.getName()));
                         updateTableView(populatedPerson);
                         populatePersonNameComboBox();
-                        personListPanel.refresh();
                     }
                 }
+            }
+        });
+        schedules.addListener((ListChangeListener.Change<? extends Schedule> change) -> {
+            while (change.next()) {
+                personListPanel.refresh();
             }
         });
     }
@@ -234,8 +239,6 @@ public class MainWindow extends UiPart<Stage> {
      */
 
     public void updateTableView(ArrayList<Person> selectedPersons) {
-        // Clear the table view
-        scheduleTable.getItems().clear();
         // Loop through each selected person
         ArrayList<Schedule> filteredSchedules = new ArrayList<>();
         for (Person person : selectedPersons) {
@@ -254,7 +257,7 @@ public class MainWindow extends UiPart<Stage> {
             }
         }
         // Add each schedule to the table view
-        scheduleTable.getItems().addAll(filteredSchedules);
+        personListPanel.refresh();
         weeklyScheduleView.populateTimetable(filteredSchedules);
     }
 

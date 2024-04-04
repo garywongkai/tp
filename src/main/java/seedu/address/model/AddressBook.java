@@ -102,7 +102,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addSchedule(Schedule newSchedule) {
         if (schedules.contains(newSchedule)) {
-            System.out.println(schedules + " already added!");
         } else {
             schedules.add(newSchedule);
         }
@@ -171,8 +170,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code key} must exist in the address book.
      */
     public void removeSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule) {
-        schedules.remove(toDeleteSchedule);
+        toDeleteSchedule.removePerson(toDeleteParticipant.getName().toString());
         toDeleteParticipant.deleteSchedule(toDeleteSchedule);
+        if (!toDeleteSchedule.getPersonList().isEmpty()) {
+            schedules.setSchedule(toDeleteSchedule, toDeleteSchedule);
+        } else {
+            schedules.remove(toDeleteSchedule);
+        }
         setPerson(toDeleteParticipant, toDeleteParticipant);
     }
 

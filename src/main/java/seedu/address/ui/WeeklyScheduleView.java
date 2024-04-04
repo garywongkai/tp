@@ -8,6 +8,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -119,14 +121,16 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     private boolean hasOverlap(Schedule schedule, ArrayList<Schedule> schedules) {
         for (Schedule existingSchedule : schedules) {
-            if (schedule.getStartTime().isBefore(existingSchedule.getStartTime())
-                    && (schedule.getEndTime().isBefore(existingSchedule.getEndTime())
-                    || schedule.getEndTime().isAfter(existingSchedule.getEndTime()))) {
-                return true;
-            }
-            if (schedule.getStartTime().isBefore(existingSchedule.getEndTime())
-                    && schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
-                return true;
+            if (schedule.getStartTime().getDayOfWeek() == existingSchedule.getStartTime().getDayOfWeek()) {
+                if (schedule.getStartTime().isBefore(existingSchedule.getStartTime())
+                        && (schedule.getEndTime().isBefore(existingSchedule.getEndTime())
+                        || schedule.getEndTime().isAfter(existingSchedule.getEndTime()))) {
+                    return true;
+                }
+                if (schedule.getStartTime().isBefore(existingSchedule.getEndTime())
+                        && schedule.getEndTime().isAfter(existingSchedule.getStartTime())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -197,17 +201,28 @@ public class WeeklyScheduleView extends UiPart<Region> {
         StackPane cellPane = new StackPane();
         cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
 
-        // Create a label to display the overlapped schedule information
-        Label label = new Label("Overlapping Schedules");
-        label.setWrapText(true);
-        label.setAlignment(Pos.CENTER);
-        label.setMaxWidth(Double.MAX_VALUE);
-        label.setMaxHeight(Double.MAX_VALUE);
-
         // Create a tooltip to show the overlapped schedule names
-        StringBuilder tooltipText = new StringBuilder("Overlapping Schedules:\n");
-        for (Schedule overlappingSchedule : overlappingSchedules) {
-            tooltipText.append(overlappingSchedule.getSchedName()).append("\n");
+        List<Schedule> distinctSchedules = overlappingSchedules.stream().distinct().collect(Collectors.toList());
+        StringBuilder tooltipText = (distinctSchedules.size() == 1) ? new StringBuilder("Participants")
+                : new StringBuilder("Overlapping Schedules:\n");
+        Label label = (distinctSchedules.size() == 1) ? new Label("Group Schedule")
+                : new Label("Overlapping Schedules");
+        if (distinctSchedules.size() == 1) {
+            // Create a label to display the overlapped schedule information
+            label.setWrapText(true);
+            label.setAlignment(Pos.CENTER);
+            label.setMaxWidth(Double.MAX_VALUE);
+            label.setMaxHeight(Double.MAX_VALUE);
+            tooltipText.append(distinctSchedules.get(0).getParticipantsName());
+        } else {
+            // Create a label to display the overlapped schedule informatio
+            label.setWrapText(true);
+            label.setAlignment(Pos.CENTER);
+            label.setMaxWidth(Double.MAX_VALUE);
+            label.setMaxHeight(Double.MAX_VALUE);
+            for (Schedule overlappingSchedule : distinctSchedules) {
+                tooltipText.append(overlappingSchedule.getSchedName()).append("\n");
+            }
         }
         Tooltip tooltip = new Tooltip(tooltipText.toString());
         label.setTooltip(tooltip);

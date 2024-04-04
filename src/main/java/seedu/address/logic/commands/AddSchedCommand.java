@@ -67,6 +67,15 @@ public class AddSchedCommand extends Command {
         }
         if (model.hasSchedule(schedule)) {
             model.addSchedulePeople(schedule, participantsNames);
+            /*for (String name : participantsNames) {
+                model.getFilteredPersonList().forEach(person -> {
+                    if (Objects.equals(person.getName().toString(), name)) {
+                        if (!person.getSchedules().contains(schedule)) {
+                            person.getSchedules().add(schedule);
+                        }
+                    }
+                });
+            }*/
         } else {
             schedule.addParticipants(participantsNames);
             model.addSchedule(schedule, participants);
