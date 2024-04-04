@@ -67,6 +67,9 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 Expected success outcome:
+```
+Opened help window.
+```
 ![help message](images/helpMessage.png)
 
 Expected failure outcome:
