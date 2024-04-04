@@ -22,6 +22,9 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_GROUP_SCHEDULE =
+            "The schedule you are trying to edit is a group schedule. " +
+                    "Would you like to edit all of the schedules for the participants? (editYes/editNo)";
     public static final String MESSAGE_INVALID_DATETIME_FORMAT = "The date format provided is invalid. "
             + "Format: " + getDateTimeStringFormat();
     public static final String MESSAGE_OUT_SCOPE_DATETIME = "The schedule time should be between 8:00 to 21:00. "
