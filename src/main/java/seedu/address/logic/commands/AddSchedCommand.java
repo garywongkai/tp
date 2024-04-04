@@ -93,6 +93,9 @@ public class AddSchedCommand extends Command {
                 });
             }
         } else {
+            for (Person p : participants) {
+                p.addSchedule(schedule);
+            }
             model.addSchedule(schedule);
         }
         return new CommandResult(generateSuccessMessage());
