@@ -269,18 +269,23 @@ to the `CSMeeting` event which would take place on 18th March 2024 from 3pm - 7p
 
 Expected success outcome:
 ```
-New schedule added: Event: …
+New schedule added: ...
+    start: 
+    end: 
 ```
 
 Expected failure outcome:
 ```
 Invalid command format!
+addSched: Adds a schedule to person(s) in address book. Parameters: PERSON INDEX(S) (must be positive integer) 
+s/SCHEDULE start/START_DATETIME (yyyy-MM-dd HH:mm) end/END_DATETIME (yyyy-MM-dd HH:mm) 
+(START_DATETIME and END_DATETIME must be in the same day and between 08:00 and 21:00)
+Example: addSched 1, 2 s/CS2103 weekly meeting start/2024-02-24 09:00 end/2024-02-24 17:00
 ```
 OR
 ```
-The person index provided is invalid.
+The date format provided is invalid. Format: yyyy-MM-dd HH:mm
 ```
-
 
 Potential Errors:
 * Time format is wrong!
@@ -310,11 +315,14 @@ The schedule deleted: …
 
 Expected failure outcome:
 ```
-The schedule index provided is invalid.
+Invalid command format! 
+deleteSched: Deletes a schedule in address book. Parameters: Person INDEX(S) (must be positive integer) 
+schedule/Schedule INDEX(S) (must be positive integer) 
+Example: deleteSched 1 schedule/ 1
 ```
 OR
 ```
-The person index provided is invalid
+The schedule index provided is invalid
 ```
 
 Potential Errors:
@@ -364,7 +372,15 @@ Edited Schedule: …
 
 Expected failure outcome:
 ```
-Invalid command format!
+Invalid command format! 
+editSched: Edit a schedule in address book. Parameters: PERSON INDEX(S) (must be positive integer) 
+schedule/TASK INDEX(S) (must be positive integer) g/EDIT ALL PARTICIPANTS (y/n)[s/ SCHEDULE NAME] 
+[start/ START DATETIME (yyyy-MM-dd HH:mm)] [end/ END DATETIME (yyyy-MM-dd HH:mm)] 
+Example: editSched 1 schedule/ 1, 2 g/y[s/ CS2103 weekly meeting] [start/ 2024-02-24 15:00] [end/ 2024-02-24 17:00] 
+```
+OR
+```
+At least one field to edit must be provided.
 ```
 
 Potential Errors:
@@ -379,6 +395,34 @@ Potential Errors:
 Exits the program.
 
 Format: `exit`
+
+### Schedule Diaplay
+The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing. 
+
+1) When there is no conflict between the schedules, the schedule would be displayed with a black border as shown below.
+![img.png](img.png)
+
+2) The schedule which the user would like to view can be done using the dropdown box which displays all the names that of the 
+classmates within the contact list.
+
+![img_3.png](img_3.png)
+
+3) If 2 or more people are participants in the same schedule, the schedule border would be colored blue and it would called
+'Group schedule'. 
+![img_5.png](img_5.png)
+By hovering over the Group schedule, you would be able to view all the participants of that specific group schedule.
+![img_4.png](img_4.png)
+
+If there is a conflict in schedule between 2 people, the schedule border would be colored red. Both schedules would still 
+display each of their own timings.
+4) ![img_2.png](img_2.png)
+
+Important Notes: 
+* The schedule can only display up to 5 user schedules at a time. If you have selected 5 people from the dropdown box and 
+want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the 
+dropdown box again. 
+
+
 
 ### Saving the data
 

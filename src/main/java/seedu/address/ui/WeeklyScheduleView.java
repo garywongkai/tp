@@ -208,7 +208,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
         StringBuilder tooltipText = (distinctSchedules.size() == 1) ? new StringBuilder("Participants")
                 : new StringBuilder("Overlapping Schedules:\n");
         if (distinctSchedules.size() == 1) {
-            Label label = new Label("Overlapping Schedules");
+            Label label = new Label("Group Schedules");
             cellPane.setStyle("-fx-border-color: blue; -fx-border-radius: 18; -fx-background-radius: 18;");
             // Create a label to display the overlapped schedule information
             label.setWrapText(true);
