@@ -218,7 +218,7 @@ public class WeeklyScheduleView extends UiPart<Region> {
             label.setAlignment(Pos.CENTER);
             label.setMaxWidth(Double.MAX_VALUE);
             label.setMaxHeight(Double.MAX_VALUE);
-            for (Schedule overlappingSchedule : overlappingSchedules) {
+            for (Schedule overlappingSchedule : distinctSchedules) {
                 tooltipText.append(overlappingSchedule.getSchedName()).append("\n");
             }
         }

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -67,6 +68,15 @@ public class AddSchedCommand extends Command {
         }
         if (model.hasSchedule(schedule)) {
             model.addSchedulePeople(schedule, participantsNames);
+//            for (String name : participantsNames) {
+//                model.getFilteredPersonList().forEach(person -> {
+//                    if (Objects.equals(person.getName().toString(), name)) {
+//                        if (!person.getSchedules().contains(schedule)) {
+//                            person.getSchedules().add(schedule);
+//                        }
+//                    }
+//                });
+//            }
         } else {
             schedule.addParticipants(participantsNames);
             model.addSchedule(schedule, participants);

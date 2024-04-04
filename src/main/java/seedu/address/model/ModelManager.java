@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -129,11 +130,7 @@ public class ModelManager implements Model {
     public void addSchedulePeople(Schedule schedule, ArrayList<String> personName) {
         if (addressBook.hasSchedule(schedule)) {
             Schedule toEdit = addressBook.getSameSchedule(schedule);
-            if (toEdit != null) {
-                toEdit.getPersonList().addAll(personName);
-            } else {
-                throw new IllegalArgumentException("No such schedule found!");
-            }
+            toEdit.getPersonList().addAll(personName);
         } else {
             addressBook.addSchedule(schedule);
             updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
