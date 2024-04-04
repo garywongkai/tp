@@ -1,7 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.time.LocalDateTime;
@@ -162,7 +166,8 @@ public class EditSchedCommand extends Command {
         String updatedSchedName = editScheduleDescriptor.getSchedName().orElse(scheduleToEdit.getSchedName());
         LocalDateTime updatedStartTime = editScheduleDescriptor.getStartTime().orElse(scheduleToEdit.getStartTime());
         LocalDateTime updatedEndTime = editScheduleDescriptor.getEndTime().orElse(scheduleToEdit.getEndTime());
-        return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime, new ArrayList<>(scheduleToEdit.getPersonList()));
+        return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime,
+                new ArrayList<>(scheduleToEdit.getPersonList()));
     }
 
     @Override
