@@ -1,6 +1,6 @@
 # Moddie User Guide
 
-Moddie is a **desktop app for managing contacts, optimized for use via a Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Moddie is a **desktop app for managing schedules, interests, and tags of contacts optimized for use via a Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Moddie can get your contact and schedule management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -78,12 +78,14 @@ Help not available. Please try again.
 
 Adds a person to the address book with their information.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [i/INTEREST]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [i/INTEREST]…​`
 
 * Phone number **must be a valid Singapore number** (i.e. 8 digits, starts with either 6, 8 or 9)
 * Email **must include @ character**
 * Address **must include and be ordered in street name, block number, and unit number (note: include # symbol)**,
 separated with comma
+* Tag **must be alphanumeric**
+* Interest **must be alphanumeric**
 * If multiple `tag` are added, separate with comma
 * if multiple `interest` are added, separate with comma
 
@@ -91,23 +93,25 @@ separated with comma
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal i/hunting`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/83329001 t/criminal i/hunting`
 
 Expected success outcome:
 ```
-New contact added!
+New person added: …
 ```
 
 Expected failure outcome:
 ```
-Values not accepted.
+Invalid command format! 
 ```
 
 Potential Errors:
 * Phone number format is wrong (i.e. not a Singapore number)
 * Email format is wrong (i.e. no @)
 * Address format is wrong
-* An existing contact with same name and phone number is found in address book
+* Tag format is wrong
+* Interest format is wrong
+* An existing contact with same name is found in address book
 
 
 ### Listing all persons : `list`
@@ -118,13 +122,7 @@ Format: `list`
 
 Expected success outcome:
 ```
-List of contacts:
-...
-```
-
-Expected failure outcome:
-```
-No contacts added yet.
+Listed all persons
 ```
 
 
@@ -141,9 +139,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [i/INTEREST
 * When editing interests, the existing interests of the person will be removed 
   i.e adding of interests is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
-* * You can remove all the person’s tags by typing `i/` without
-    specifying any interests after it.
+  specifying any tags after it.
+* You can remove all the person’s tags by typing `i/` without
+  specifying any interests after it.
 * Adding a person's format for **phone number, email, and address** applies here as well.
 
 Examples:
@@ -153,23 +151,25 @@ Examples:
 
 Expected success outcome:
 ```
-Contact is updated!
+Edited Person: …
 ```
 
 Expected failure outcome:
 ```
-Values not accepted.
+Phone numbers should only contain numbers, and it should be at 8 digits long and starts with either 6, 8 or 9
 ```
 OR
 ```
-Contact not found in address book
+The person index provided is invalid.
 ```
 
 Potential Errors:
 * [if applicable] Phone number format is wrong (i.e. not a Singapore number)
 * [if applicable] Email format is wrong (i.e. no @)
 * [if applicable] Address format is wrong
-* An existing contact with same name and phone number is found in address book
+* [if applicable] Tag format is wrong
+* [if applicable] Interest format is wrong
+* An existing contact with same name, phone number and is found in address book
 
 
 ### Locating persons by name : `find`
@@ -221,16 +221,12 @@ Examples:
 
 Expected success outcome:
 ```
-Contact is updated!
+Deleted Person: …
 ```
 
 Expected failure outcome:
 ```
-Values not accepted.
-```
-OR
-```
-Contact not found in address book
+The person index provided is invalid.
 ```
 
 
@@ -242,13 +238,9 @@ Format: `clear`
 
 Expected success outcome:
 ```
-History cleared
+Address book has been cleared!
 ```
 
-Expected failure outcome:
-```
-History not cleared
-```
 
 ### Adding persons to schedule : `addSched`
 
@@ -272,13 +264,18 @@ to the `CSMeeting` event which would take place on 18th March 2024 from 3pm - 7p
 
 Expected success outcome:
 ```
-Added schedule with ...
+New schedule added: Event: …
 ```
 
 Expected failure outcome:
 ```
-Schedule failed to be added.
+Invalid command format! 
 ```
+OR
+```
+The person index provided is invalid.
+```
+
 
 Potential Errors:
 * Time format is wrong!
@@ -303,12 +300,16 @@ Examples:
 
 Expected success outcome:
 ```
-Delete schedule from ...
+The schedule deleted: …
 ```
 
 Expected failure outcome:
 ```
-Schedule failed to be deleted.
+The schedule index provided is invalid.
+```
+OR
+```
+The person index provided is invalid
 ```
 
 Potential Errors:
@@ -406,7 +407,7 @@ _Details coming soon ..._
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Help**   | `help`
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/94458770 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **List**   | `list`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
