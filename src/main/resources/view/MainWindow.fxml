@@ -91,9 +91,11 @@
                   <FlowPane fx:id="selectedPersonsTag"/>
                 </VBox>
               </HBox>
-              <ScrollPane fx:id="ScrollSchedule" fitToHeight="true">
-                <StackPane fx:id="schedulePanelPlaceholder" VBox.vgrow="ALWAYS"/>
-              </ScrollPane>
+              <VBox styleClass="background" VBox.vgrow="ALWAYS">
+                <ScrollPane fx:id="ScrollSchedule" fitToHeight="true" fitToWidth="true">
+                  <StackPane fx:id="schedulePanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                </ScrollPane>
+              </VBox>
             </VBox>
         </ScrollPane>
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
