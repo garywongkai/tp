@@ -30,6 +30,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final List<JsonAdaptedTag> allTags = new ArrayList<>();
     private final List<JsonAdaptedInterest> interests = new ArrayList<>();
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<JsonAdaptedSchedule> schedules = new ArrayList<>();
@@ -40,7 +41,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("interest") List<JsonAdaptedTag> interests,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("interest") List<JsonAdaptedInterest> interests,
             @JsonProperty("schedule") List<JsonAdaptedSchedule> schedules) {
         this.name = name;
         this.phone = phone;
@@ -48,24 +49,16 @@ class JsonAdaptedPerson {
         this.address = address;
         if (tags != null) {
             this.tags.addAll(tags);
+            this.allTags.addAll(tags);
+        }
+        if (interests != null) {
+            this.interests.addAll(interests);
+            this.allTags.addAll(interests);
         }
         if (schedules != null) {
             this.schedules.addAll(schedules);
         }
     }
-
-    /*@JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        if (tags != null) {
-            this.tags.addAll(tags);
-        }
-    }*/
 
     /**
      * Converts a given {@code Person} into this class for Jackson use.
@@ -75,8 +68,17 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
+        tags.addAll(source.getTag().stream()
                 .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
+        allTags.addAll(source.getTag().stream()
+                .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
+        interests.addAll(source.getInterest().stream()
+                .map(JsonAdaptedInterest::new)
+                .collect(Collectors.toList()));
+        allTags.addAll(source.getInterest().stream()
+                .map(JsonAdaptedInterest::new)
                 .collect(Collectors.toList()));
         schedules.addAll(source.getSchedules().stream()
                 .map(JsonAdaptedSchedule::new)
@@ -124,10 +126,6 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        //if (address == null) {
-        //      throw new IllegalValueException(
-        //      String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        //}
         if (!address.isEmpty()) {
             if (!Address.isValidAddress(address)) {
                 throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
