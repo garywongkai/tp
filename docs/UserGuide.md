@@ -396,7 +396,7 @@ Exits the program.
 
 Format: `exit`
 
-### Schedule Diaplay
+### Schedule Display
 The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing. 
 
 1) When there is no conflict between the schedules, the schedule would be displayed with a black border as shown below.
