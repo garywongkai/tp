@@ -413,9 +413,9 @@ classmates within the contact list.
 By hovering over the Group schedule, you would be able to view all the participants of that specific group schedule.
 ![img_4.png](img_4.png)
 
-If there is a conflict in schedule between 2 people, the schedule border would be colored red. Both schedules would still 
+4) If there is a conflict in schedule between 2 people, the schedule border would be colored red. Both schedules would still 
 display each of their own timings.
-4) ![img_2.png](img_2.png)
+![img_2.png](img_2.png)
 
 Important Notes: 
 * The schedule can only display up to 5 user schedules at a time. If you have selected 5 people from the dropdown box and 
