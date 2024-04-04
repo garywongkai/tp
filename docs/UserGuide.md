@@ -1,12 +1,6 @@
----
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
----
+# Moddie User Guide
 
-# AB-3 User Guide
-
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Moddie is a **desktop app for managing schedules, interests, and tags of contacts optimized for use via a Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Moddie can get your contact and schedule management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -17,11 +11,11 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `addressbook.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `Moddie.jar` from [here](https://github.com/AY2324S2-CS2103-F15-4/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your Moddie.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar Moddie.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -73,6 +67,9 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 Expected success outcome:
+```
+Opened help window.
+```
 ![help message](images/helpMessage.png)
 
 Expected failure outcome:
@@ -84,12 +81,14 @@ Help not available. Please try again.
 
 Adds a person to the address book with their information.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [i/INTEREST]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [i/INTEREST]…​`
 
 * Phone number **must be a valid Singapore number** (i.e. 8 digits, starts with either 6, 8 or 9)
 * Email **must include @ character**
 * Address **must include and be ordered in street name, block number, and unit number (note: include # symbol)**,
 separated with comma
+* Tag **must be alphanumeric**
+* Interest **must be alphanumeric**
 * If multiple `tag` are added, separate with comma
 * if multiple `interest` are added, separate with comma
 
@@ -97,23 +96,25 @@ separated with comma
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal i/hunting`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/83329001 t/criminal i/hunting`
 
 Expected success outcome:
 ```
-New contact added!
+New person added: …
 ```
 
 Expected failure outcome:
 ```
-Values not accepted.
+Invalid command format! 
 ```
 
 Potential Errors:
 * Phone number format is wrong (i.e. not a Singapore number)
 * Email format is wrong (i.e. no @)
 * Address format is wrong
-* An existing contact with same name and phone number is found in address book
+* Tag format is wrong
+* Interest format is wrong
+* An existing contact with same name is found in address book
 
 
 ### Listing all persons : `list`
@@ -124,13 +125,7 @@ Format: `list`
 
 Expected success outcome:
 ```
-List of contacts:
-...
-```
-
-Expected failure outcome:
-```
-No contacts added yet.
+Listed all persons
 ```
 
 
@@ -147,9 +142,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [i/INTEREST
 * When editing interests, the existing interests of the person will be removed 
   i.e adding of interests is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
-* * You can remove all the person’s tags by typing `i/` without
-    specifying any interests after it.
+  specifying any tags after it.
+* You can remove all the person’s tags by typing `i/` without
+  specifying any interests after it.
 * Adding a person's format for **phone number, email, and address** applies here as well.
 
 Examples:
@@ -159,23 +154,25 @@ Examples:
 
 Expected success outcome:
 ```
-Contact is updated!
+Edited Person: …
 ```
 
 Expected failure outcome:
 ```
-Values not accepted.
+Phone numbers should only contain numbers, and it should be at 8 digits long and starts with either 6, 8 or 9
 ```
 OR
 ```
-Contact not found in address book
+The person index provided is invalid.
 ```
 
 Potential Errors:
 * [if applicable] Phone number format is wrong (i.e. not a Singapore number)
 * [if applicable] Email format is wrong (i.e. no @)
 * [if applicable] Address format is wrong
-* An existing contact with same name and phone number is found in address book
+* [if applicable] Tag format is wrong
+* [if applicable] Interest format is wrong
+* An existing contact with same name, phone number and is found in address book
 
 
 ### Locating persons by name : `find`
@@ -227,16 +224,12 @@ Examples:
 
 Expected success outcome:
 ```
-Contact is updated!
+Deleted Person: …
 ```
 
 Expected failure outcome:
 ```
-Values not accepted.
-```
-OR
-```
-Contact not found in address book
+The person index provided is invalid.
 ```
 
 
@@ -248,13 +241,9 @@ Format: `clear`
 
 Expected success outcome:
 ```
-History cleared
+Address book has been cleared!
 ```
 
-Expected failure outcome:
-```
-History not cleared
-```
 
 ### Adding persons to schedule : `addSched`
 
@@ -273,18 +262,23 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 Examples:
 * `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
 would take place on 5th March 2024 from 4pm - 6pm
-* `addSched 1,2,3 s/CSMeeting start/2024-03-18 13:00 end/2024-03-18 19:00` will add the 1st, 2nd and 3rd persons in the address list
+* `addSched 1, 2, 3 s/CSMeeting start/2024-03-18 13:00 end/2024-03-18 19:00` will add the 1st, 2nd and 3rd persons in the address list
 to the `CSMeeting` event which would take place on 18th March 2024 from 3pm - 7pm
 
 Expected success outcome:
 ```
-Added schedule with ...
+New schedule added: Event: …
 ```
 
 Expected failure outcome:
 ```
-Schedule failed to be added.
+Invalid command format! 
 ```
+OR
+```
+The person index provided is invalid.
+```
+
 
 Potential Errors:
 * Time format is wrong!
@@ -309,12 +303,16 @@ Examples:
 
 Expected success outcome:
 ```
-Delete schedule from ...
+The schedule deleted: …
 ```
 
 Expected failure outcome:
 ```
-Schedule failed to be deleted.
+The schedule index provided is invalid.
+```
+OR
+```
+The person index provided is invalid
 ```
 
 Potential Errors:
@@ -419,16 +417,13 @@ _Details coming soon ..._
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Help**   | `help`
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/94458770 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **List**   | `list`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Clear**  | `clear`
-**Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. 
-`addSched 1,2,3 s/CSMeeting start/2024-02-24 09:00 end/2024-02-24 17:00`
+**Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. `addSched 1, 2, 3 s/CSMeeting start/2024-04-04 09:00 end/2024-04-04 17:00`
 **Delete Schedule**   | `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX` <br> e.g. `deleteSched 1 schedule/2`
-**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME]
-[start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 s/CS1101S meeting 
-start/ 2024-02-03 12:00 end/ 2024-02-03 15:00`
+**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 schedule/1 s/CS1101S meeting start/ 2024-02-03 12:00 end/ 2024-02-03 15:00`
 **Exit**   | `exit`
