@@ -162,7 +162,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code key} must exist in the address book.
      */
     public void removeSchedule(Schedule toDeleteSchedule) {
-        schedules.remove(toDeleteSchedule);
+            schedules.remove(toDeleteSchedule);
     }
 
     /**

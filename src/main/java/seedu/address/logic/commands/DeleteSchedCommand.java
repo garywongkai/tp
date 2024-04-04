@@ -82,6 +82,7 @@ public class DeleteSchedCommand extends Command {
      */
     private void deleteSchedForSpecificPerson(Model model, Schedule scheduleToDelete,
                                                Person personToDelete) {
+        //scheduleToDelete.removePerson(personToDelete.getName().toString());
         model.deleteSchedule(personToDelete, scheduleToDelete);
         if (!scheduleToDelete.getPersonList().isEmpty()) {
             for (Person p: model.getFilteredPersonList()) {
@@ -89,15 +90,12 @@ public class DeleteSchedCommand extends Command {
                     if (p.getSchedules().contains(scheduleToDelete)) {
                         p.getSchedules().forEach(schedule -> {
                             if (schedule.isSameSchedule(scheduleToDelete)) {
-                                System.out.println("remove dekc");
                                 schedule.removePerson(personToDelete.getName().toString());
                             }
                         });
                     }
                 }
             }
-        } else {
-            model.deleteSchedule(scheduleToDelete);
         }
     }
 
