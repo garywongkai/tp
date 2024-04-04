@@ -325,12 +325,14 @@ Potential Errors:
 
 Edit a schedule that associated with a person with new information
 
-Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]`
+Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX g/EDIT_GROUP [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]`
 
 * The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the
   number of people in the address book.
 * The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in
   the schedule list for the person from PERSON_INDEX.
+* The EDIT_GROUP **must be either y or n**. Any other characters will cause an error message. 
+   The input is case-insensitive.
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
