@@ -18,12 +18,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import seedu.address.model.schedule.Schedule;
+
 
 
 /**
@@ -38,6 +40,8 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     @FXML
     private VBox timeTableBox;
+    @FXML
+    private Pane timetableOverlap;
     @FXML
     private GridPane timetableGrid;
 
@@ -199,43 +203,65 @@ public class WeeklyScheduleView extends UiPart<Region> {
 
     private Node createOverlapScheduleCell(ArrayList<Schedule> overlappingSchedules) {
         StackPane cellPane = new StackPane();
-        cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
-
         // Create a tooltip to show the overlapped schedule names
         List<Schedule> distinctSchedules = overlappingSchedules.stream().distinct().collect(Collectors.toList());
         StringBuilder tooltipText = (distinctSchedules.size() == 1) ? new StringBuilder("Participants")
                 : new StringBuilder("Overlapping Schedules:\n");
-        Label label = (distinctSchedules.size() == 1) ? new Label("Group Schedule")
-                : new Label("Overlapping Schedules");
         if (distinctSchedules.size() == 1) {
+            Label label = new Label("Overlapping Schedules");
+            cellPane.setStyle("-fx-border-color: blue; -fx-border-radius: 18; -fx-background-radius: 18;");
             // Create a label to display the overlapped schedule information
             label.setWrapText(true);
+            label.setId("GroupScheduleLabel");
             label.setAlignment(Pos.CENTER);
             label.setMaxWidth(Double.MAX_VALUE);
             label.setMaxHeight(Double.MAX_VALUE);
+            label.setStyle("-fx-border-color: black;");
             tooltipText.append(distinctSchedules.get(0).getParticipantsName());
+            Tooltip tooltip = new Tooltip(tooltipText.toString());
+            label.setTooltip(tooltip);
+
+            //Add the label to the cell pane
+            cellPane.getChildren().add(label);
+            //Set the alignment of the label within the cell pane
+            StackPane.setAlignment(label, Pos.CENTER);
         } else {
-            // Create a label to display the overlapped schedule informatio
-            label.setWrapText(true);
-            label.setAlignment(Pos.CENTER);
-            label.setMaxWidth(Double.MAX_VALUE);
-            label.setMaxHeight(Double.MAX_VALUE);
+            // Create a label to display the overlapped schedule information
+            Pane timetableOverlap = new Pane();
+            int earliestStartTime = Integer.MAX_VALUE;
+            int latestEndTime = Integer.MIN_VALUE;
+            int scheduleDone = 0;
             for (Schedule overlappingSchedule : distinctSchedules) {
+                Label label1 = new Label(overlappingSchedule.getSchedName());
+                // Calculate the row index for the start time of the schedule
+                LocalDateTime startTime = overlappingSchedule.getStartTime();
+                int startRowIndex = calculateRowIndex(startTime);
+                earliestStartTime = Math.min(earliestStartTime, startRowIndex);
+
+                // Calculate the row index for the end time of the schedule
+                LocalDateTime endTime = overlappingSchedule.getEndTime();
+                int endRowIndex = calculateRowIndex(endTime);
+                latestEndTime = Math.max(latestEndTime, endRowIndex);
+                timetableOverlap.setPrefWidth((latestEndTime - earliestStartTime) * 65);
+                timetableOverlap.setPrefHeight(50 * distinctSchedules.size());
+                label1.setWrapText(true);
+                label1.setAlignment(Pos.CENTER);
+                label1.setId("ScheduleLabel1");
+                label1.setPrefWidth((endRowIndex - startRowIndex + 1) * 65);
+                label1.setPrefHeight(50);
+                int leftPad = ((startRowIndex - earliestStartTime) * 65);
+                label1.relocate(leftPad, (scheduleDone * 50));
+                scheduleDone++;
+                timetableOverlap.getChildren().add(label1);
                 tooltipText.append(overlappingSchedule.getSchedName()).append("\n");
             }
+            cellPane.getChildren().add(timetableOverlap);
         }
-        Tooltip tooltip = new Tooltip(tooltipText.toString());
-        label.setTooltip(tooltip);
-
-        // Add the label to the cell pane
-        cellPane.getChildren().add(label);
-
-        // Set the alignment of the label within the cell pane
-        StackPane.setAlignment(label, Pos.CENTER);
 
         // Set the preferred size of the cell
         cellPane.setPrefWidth(Region.USE_PREF_SIZE);
-        cellPane.setPrefHeight(Region.USE_PREF_SIZE);
+        cellPane.setPrefHeight(distinctSchedules.size() * 50);
+        //Region.USE_PREF_SIZE
 
         return cellPane;
     }
@@ -251,9 +277,10 @@ public class WeeklyScheduleView extends UiPart<Region> {
         StackPane cellPane = new StackPane();
 
         // Set the style of the cell
-        cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
+        //cellPane.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
         // Create a label to display the schedule information
         Label label = new Label(schedule.getSchedName());
+        label.setId("ScheduleLabel");
         label.setWrapText(true);
         label.setAlignment(Pos.CENTER);
         label.setMaxWidth(Double.MAX_VALUE);

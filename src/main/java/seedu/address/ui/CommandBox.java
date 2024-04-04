@@ -77,7 +77,8 @@ public class CommandBox extends UiPart<Region> {
         List<String> suggestions = new ArrayList<>();
 
         final List<String> commandList = Arrays.asList(
-                "add", "list", "edit", "find", "delete", "clear", "interest", "findinterest", "addsched", "exit", "help"
+                "add", "list", "edit", "find", "delete", "clear", "interest", "findinterest", "addSched",
+                "deleteSched", "editSched", "exit", "help"
         );
 
         // Check if the entered command matches any suggestions

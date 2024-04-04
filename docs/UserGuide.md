@@ -105,7 +105,7 @@ New person added: …
 
 Expected failure outcome:
 ```
-Invalid command format! 
+Invalid command format!
 ```
 
 Potential Errors:
@@ -135,11 +135,12 @@ Edits an existing person's information in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [i/INTEREST]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list.
+  The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* When editing interests, the existing interests of the person will be removed 
+* When editing interests, the existing interests of the person will be removed
   i.e adding of interests is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
   specifying any tags after it.
@@ -148,7 +149,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [i/INTEREST
 * Adding a person's format for **phone number, email, and address** applies here as well.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com i/Bird Watching` Edits the phone number, email address and interest of the 
+*  `edit 1 p/91234567 e/johndoe@example.com i/Bird Watching` Edits the phone number, email address and interest of the
 * 1st person to be `91234567`, `johndoe@example.com` and `Bird Watching` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
@@ -252,7 +253,8 @@ Adds an event with contact from specified date with time
 Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME`
 
 * The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the
-    number of people in the address book
+    number of people in the address book. When adding multiple users, ensure there is a space after the
+    comma e.g. 1, 2, 5
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
@@ -272,7 +274,7 @@ New schedule added: Event: …
 
 Expected failure outcome:
 ```
-Invalid command format! 
+Invalid command format!
 ```
 OR
 ```
@@ -291,9 +293,9 @@ Deletes a schedule that associated with a person
 
 Format: `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX`
 
-* The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the 
+* The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the
    number of people in the address book.
-* The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in 
+* The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in
    the schedule list for the person from PERSON_INDEX.
 * `find Betsy` followed by `deleteSched 1 schedule/2` deletes the 2nd schedule from the 1st person in
    the results of the `find` command.
@@ -329,30 +331,30 @@ Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX g/EDIT_GROUP [s/SCHEDULE
   number of people in the address book.
 * The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in
   the schedule list for the person from PERSON_INDEX.
-* The EDIT_GROUP **must be either y or n**. Any other characters will cause an error message. 
+* The EDIT_GROUP **must be either y or n**. Any other characters will cause an error message.
    The input is case-insensitive.
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
-* There must be at least 1 input for SCHEDULE_NAME, START_DATETIME or END_DATETIME, 
+* There must be at least 1 input for SCHEDULE_NAME, START_DATETIME or END_DATETIME,
    or the command would not be accepted.
 * `find Betsy` followed by `editSched 1 schedule/2 g/y s/CCA meeting` edits the 2nd schedule from the 1st person in
-  the results of the `find` command with the new schedule name `CCA meeting`, as well as the schedule for every other 
+  the results of the `find` command with the new schedule name `CCA meeting`, as well as the schedule for every other
   participants.
 
 Examples:
-* `editSched 1 schedule/2 g/y s/CS1101S meeting start/ 2024-02-03 12:00 end/ 2024-02-03 15:00` will 
-   edit the 2nd schedule from the 1st person in the address list with the new name `CS1101S meeting` on the 
+* `editSched 1 schedule/2 g/y s/CS1101S meeting start/ 2024-02-03 12:00 end/ 2024-02-03 15:00` will
+   edit the 2nd schedule from the 1st person in the address list with the new name `CS1101S meeting` on the
    new timing from 3rd February 2024 12pm to 3rd February 2024 3pm, as well as the schedule for every other
    participants.
-* `editSched 1 schedule/2 g/y s/CS2040S class` will edit the 2nd schedule from the 1st person 
+* `editSched 1 schedule/2 g/y s/CS2040S class` will edit the 2nd schedule from the 1st person
    in the address list with the new name `CS2040S class` as well as the schedule for every other
    participants.
-* `editSched 1 schedule/2 g/n start/ 2024-03-05 11:00 ` will copy the 2nd schedule from the 1st person 
-   in the address list and create a separate schedule with the new starting date time of 5th March 2024 11am for the 
+* `editSched 1 schedule/2 g/n start/ 2024-03-05 11:00 ` will copy the 2nd schedule from the 1st person
+   in the address list and create a separate schedule with the new starting date time of 5th March 2024 11am for the
    1st person only.
-* `editSched 1 schedule/2 g/n end/ 2024-06-12 20:00` will copy the 2nd schedule from the 1st person 
-   in the address list and create a separate schedule with the new ending date time of 12th June 2024 8pm for the 1st 
+* `editSched 1 schedule/2 g/n end/ 2024-06-12 20:00` will copy the 2nd schedule from the 1st person
+   in the address list and create a separate schedule with the new ending date time of 12th June 2024 8pm for the 1st
    person only.
 
 Expected success outcome:
@@ -362,7 +364,7 @@ Edited Schedule: …
 
 Expected failure outcome:
 ```
-Invalid command format! 
+Invalid command format!
 ```
 
 Potential Errors:

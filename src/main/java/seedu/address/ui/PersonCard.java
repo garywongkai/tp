@@ -64,9 +64,9 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> {
                     Label tagLabel = new Label(tag.tagName);
                     if (tag instanceof Interest) {
-                        tagLabel.setStyle("-fx-background-color: rgb(255, 140, 0)");
+                        tagLabel.setStyle("-fx-background-color: #C5844C");
                     } else {
-                        tagLabel.setStyle("-fx-background-color: rgb(0, 128, 128)");
+                        tagLabel.setStyle("-fx-background-color: #306E6B");
                     }
                     tags.getChildren().add(tagLabel);
                 });
