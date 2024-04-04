@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Interest;
 import seedu.address.model.tag.Tag;
@@ -13,6 +15,7 @@ public class JsonAdaptedInterest extends JsonAdaptedTag {
      * Constructs a {@code JsonAdaptedInterest} with the given tag name.
      * @param tagName The name of the interest.
      */
+    @JsonCreator
     public JsonAdaptedInterest(String tagName) {
         super(tagName);
     }
