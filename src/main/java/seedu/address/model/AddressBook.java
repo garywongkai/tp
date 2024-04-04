@@ -171,9 +171,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code key} must exist in the address book.
      */
     public void removeSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule) {
-        schedules.remove(toDeleteSchedule);
+        if (toDeleteSchedule.getPersonList().size() == 1) {
+            schedules.remove(toDeleteSchedule);
+        } else {
+            Schedule changedSchedule = toDeleteSchedule;
+            changedSchedule.removePerson(toDeleteSchedule.getParticipantsName());
+            schedules.setSchedule(toDeleteSchedule, changedSchedule);
+        }
         toDeleteParticipant.deleteSchedule(toDeleteSchedule);
-        setPerson(toDeleteParticipant, toDeleteParticipant);
+        //setPerson(toDeleteParticipant, toDeleteParticipant);
     }
 
     //// util methods
