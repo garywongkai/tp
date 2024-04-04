@@ -26,6 +26,7 @@ public class EditSchedCommandParser implements Parser<EditSchedCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditSchedCommand parse(String args) throws ParseException {
+        assert args != null;
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SPECIFIC_SCHEDULE_INDEX,
                 PREFIX_SCHEDULE, PREFIX_START, PREFIX_END);

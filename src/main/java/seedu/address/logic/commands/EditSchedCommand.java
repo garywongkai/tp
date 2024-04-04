@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -51,7 +53,10 @@ public class EditSchedCommand extends Command {
     private final Index scheduleIndex;
 
 
+    private final Logger logger = LogsCenter.getLogger(EditSchedCommand.class);
+
     private final EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor;
+
 
 
     /**
@@ -94,6 +99,7 @@ public class EditSchedCommand extends Command {
         Schedule scheduleToEdit = personScheduleList.get(scheduleIndex.getZeroBased());
 
         deleteSchedForSpecificPerson(model, scheduleToEdit, personToChange);
+        //personToChange.deleteSchedule(scheduleToEdit);
         Schedule editedSchedule = createEditedSchedule(scheduleToEdit, editScheduleDescriptor);
 
         personToChange.addSchedule(editedSchedule);
@@ -103,8 +109,18 @@ public class EditSchedCommand extends Command {
                 Messages.format(editedSchedule)));
     }
 
+    private CommandResult multipleParticipants(Schedule scheduleToCheck) {
+        logger.info("number of participants = [" + scheduleToCheck.getPersonList().size() + "]");
+        if (scheduleToCheck.getPersonList().size() > 1) {
+            assert(scheduleToCheck.getPersonList().size() > 1);
+            return new CommandResult(Messages.MESSAGE_GROUP_SCHEDULE);
+        }
+        return new CommandResult("No problem Detected");
+    }
+
     private void deleteSchedForSpecificPerson(Model model, Schedule scheduleToDelete,
                                               Person personToDelete) {
+        multipleParticipants(scheduleToDelete);
         model.deleteSchedule(personToDelete, scheduleToDelete);
         scheduleToDelete.removePerson(personToDelete.getName().toString());
         ArrayList<Person> changedPerson = new ArrayList<>();
