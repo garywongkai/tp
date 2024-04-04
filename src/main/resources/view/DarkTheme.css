@@ -407,6 +407,14 @@
     -fx-text-fill: #3e7b91;
 }
 
+#scheduleCell {
+    -fx-background-color: #48B7BE;
+    -fx-background-radius: 15;
+    -fx-label-padding: 10 0 10 0;
+    -fx-border-width: 0;
+
+}
+
 #personComboBox .list-cell .list-cell:hover {
     -fx-text-fill: #3e7b91;
 }
@@ -428,4 +436,29 @@
 
 #dayLabel {
     -fx-padding: 10 0 10 0;
+    -fx-vertical-alignment: top;
+}
+
+#ScheduleLabel1 {
+    -fx-padding: 10 0 10 0;
+    -fx-border-width: 1;
+    -fx-border-color: red;
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
+}
+
+#GroupScheduleLabel {
+    -fx-padding: 10 0 10 0;
+    -fx-border-width: 0;
+    -fx-border-color: blue;
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
+}
+
+#ScheduleLabel {
+    -fx-padding: 10 0 10 0;
+    -fx-border-width: 1;
+    -fx-border-color: black;
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
 }
