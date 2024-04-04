@@ -258,6 +258,8 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
+  The END_DATETIME must be on the same date as the START_DATETIME. E.g. START_DATETIME = 2024-07-07 12:00 
+  and END_DATETIME = 2024-07-07 17:00
 * `find Betsy` followed by `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
    the results of the `find` command to the event stated.
 
@@ -421,6 +423,7 @@ Important Notes:
 * The schedule can only display up to 5 user schedules at a time. If you have selected 5 people from the dropdown box and 
 want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the 
 dropdown box again. 
+* The schedule will only display any timing from the current week from 8am to 9pm.
 
 
 
