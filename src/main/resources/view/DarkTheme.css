@@ -287,11 +287,11 @@
 }
 
 .scroll-bar {
-    -fx-background-color: #FDF7E7;
+    -fx-background-color: #D9D9D9;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #FDF7E7;
+    -fx-background-color: FDF7E7;
     -fx-background-insets: 3;
 }
 
