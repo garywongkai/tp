@@ -19,6 +19,8 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
          title="Moddie" minWidth="450" minHeight="600" >
   <icons>
@@ -81,6 +83,15 @@
                   </items>
                 </ComboBox>
               </VBox>
+              <HBox fx:id="selectionPersonBackground" styleClass="background">
+                <padding>
+                  <Insets topRightBottomLeft="8"/>
+                </padding>
+                <VBox VBox.vgrow="ALWAYS" styleClass="pane-with-border">
+                  <FlowPane fx:id="selectedPersonsTag"/>
+                </VBox>
+              </HBox>
+
               <ScrollPane fitToHeight="true">
                 <StackPane fx:id="schedulePanelPlaceholder" VBox.vgrow="ALWAYS"/>
               </ScrollPane>
