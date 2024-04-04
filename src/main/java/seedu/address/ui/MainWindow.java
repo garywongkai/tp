@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
@@ -14,12 +16,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
@@ -66,6 +70,8 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private ComboBox<Person> personComboBox;
+    @FXML
+    private FlowPane selectedPersonsTag;
 
     @FXML
     private TableView<Schedule> scheduleTable;
@@ -188,11 +194,29 @@ public class MainWindow extends UiPart<Stage> {
         });
 
         ArrayList<Person> populatedPerson = new ArrayList<>();
+        Map<Person, Label> populatedLabels = new HashMap<>();
+        ArrayList<String> colorList = new ArrayList<>();
+        colorList.add("-fx-background-color: rgb(255, 140, 0)");
+        colorList.add("-fx-background-color: rgb(0, 102, 255)");
+        colorList.add("-fx-background-color: rgb(204, 0, 255)");
+        colorList.add("-fx-background-color: rgb(51, 204, 51)");
+        colorList.add("-fx-background-color: rgb(255, 0, 102)");
+        colorList.add("-fx-background-color: rgb(255, 140, 0)");
         // Optional: Add a listener to react to selection changes
         personComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                int colorLocation = 0;
                 if (populatedPerson.contains(newValue)) {
                     populatedPerson.remove(newValue);
+                    Label nameLabel = populatedLabels.get(newValue);
+                    selectedPersonsTag.getChildren().remove(nameLabel);
+                    populatedLabels.remove(newValue);
+                    for (Map.Entry<Person, Label> entry : populatedLabels.entrySet()) {
+                        Label currentLabel = entry.getValue();
+                        currentLabel.setStyle(colorList.get(colorLocation));
+                        entry.setValue(currentLabel);
+                        colorLocation++;
+                    }
                     //System.out.println("Removed person: " + newValue.getName());
                     updateTableView(populatedPerson);
                 } else {
@@ -200,6 +224,12 @@ public class MainWindow extends UiPart<Stage> {
                         System.out.println("5 People have already been selected!");
                     } else {
                         populatedPerson.add(newValue);
+                        Label nameLabel = new Label(newValue.getName().toString());
+                        System.out.println(populatedLabels.size());
+                        String color = colorList.get(populatedLabels.size());
+                        nameLabel.setStyle(color);
+                        selectedPersonsTag.getChildren().add(nameLabel);
+                        populatedLabels.put(newValue, nameLabel);
                         //System.out.println("Added person: " + newValue.getName());
                         updateTableView(populatedPerson);
                     }
