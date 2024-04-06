@@ -258,6 +258,11 @@ public class MainWindow extends UiPart<Stage> {
                 }
             }
         });
+        schedules.addListener((ListChangeListener.Change<? extends Schedule> change) -> {
+            while (change.next()) {
+                personListPanel.refresh();
+            }
+        });
     }
 
     /**
