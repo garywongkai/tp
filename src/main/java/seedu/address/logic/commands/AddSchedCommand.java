@@ -40,6 +40,7 @@ public class AddSchedCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";
     private static final String MESSAGE_DUPLICATE = "Schedule has already been added: %1$s";
+    private static final String MESSAGE_DUPLICATE_SCHEDULE = "Duplicate Schedule cannot be added to same Person";
 
     private final ArrayList<Index> targetIndexes;
 
@@ -79,19 +80,25 @@ public class AddSchedCommand extends Command {
                 }
             });
             System.out.println("i was called cause duplicate");
-            for (String name : participantsNames) {
-                model.getFilteredPersonList().forEach(person -> {
-                    if (Objects.equals(person.getName().toString(), name)) {
-                        if (!person.getSchedules().contains(schedule)) {
-                            // add schedule to the people involved
-                            person.addSchedule(schedule);
-                        } else {
-                            int index = person.getSchedules().indexOf(schedule);
-                            person.getSchedules().get(index).addParticipants(participantsNames);
+            try {
+                for (String name : participantsNames) {
+                    for (Person person : model.getFilteredPersonList()) {
+                        if (Objects.equals(person.getName().toString(), name)) {
+                            if (!person.getSchedules().contains(schedule)) {
+                                // add schedule to the people involved
+                                person.addSchedule(schedule);
+                            } else {
+                                //int index = person.getSchedules().indexOf(schedule);
+                                //person.getSchedules().get(index).addParticipants(participantsNames);
+                                throw new CommandException("Duplicate Schedule Found");
+                            }
                         }
                     }
-                });
+                }
+            } catch (CommandException e) {
+                return new CommandResult(MESSAGE_DUPLICATE_SCHEDULE);
             }
+
         } else {
             for (Person p : participants) {
                 p.addSchedule(schedule);
