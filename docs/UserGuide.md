@@ -272,6 +272,8 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
   and END_DATETIME = 2024-07-07 17:00
 * `find Betsy` followed by `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
    the results of the `find` command to the event stated.
+* When adding multiple persons to schedule, said schedule must not be a duplicate in any of these persons.
+* Manual clicking of Contact list might be necessary to update changes done by user on slower devices.
 
 Examples:
 * `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
@@ -298,6 +300,10 @@ OR
 ```
 The date format provided is invalid. Format: yyyy-MM-dd HH:mm
 ```
+OR
+```
+Duplicate Schedule cannot be added to same Person
+```
 
 Potential Errors:
 * Time format is wrong!
@@ -316,6 +322,7 @@ Format: `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX`
    the schedule list for the person from PERSON_INDEX.
 * `find Betsy` followed by `deleteSched 1 schedule/2` deletes the 2nd schedule from the 1st person in
    the results of the `find` command.
+* * Manual click of Contact list might be necessary to reflect changes done by user on slower devices.
 
 Examples:
 * `deleteSched 1 schedule/2` will delete the 2nd schedule from the 1st person in the address list
