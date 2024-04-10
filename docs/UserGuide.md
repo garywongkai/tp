@@ -77,6 +77,16 @@ Expected failure outcome:
 Help not available. Please try again.
 ```
 
+### Suggestion bar:
+Prompts suggestions to user based on their inputs.
+Expected success outcome:
+```
+Lists down similar suggestion seperated by whitespaces matching user inputs
+Upon typing some input and deleting it entirely, will prompt it to list down all commands!
+```
+![Suggestion Bar](images/suggestionBar.png)
+
+
 ### Adding a person: `add`
 
 Adds a person to the address book with their information.
