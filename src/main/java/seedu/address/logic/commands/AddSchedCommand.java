@@ -135,6 +135,7 @@ public class AddSchedCommand extends Command {
     private String generateSuccessMessage() {
         return String.format(MESSAGE_SUCCESS, schedule);
     }
+    
     private  String generateDuplicateMessage() {
         return String.format(MESSAGE_DUPLICATE, schedule);
     }
