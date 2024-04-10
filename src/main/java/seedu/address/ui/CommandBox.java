@@ -83,7 +83,8 @@ public class CommandBox extends UiPart<Region> {
 
         // Check if the entered command matches any suggestions
         for (String command : commandList) {
-            if (command.startsWith(commandText) || command.contains(commandText)) {
+            if (command.toLowerCase().startsWith(commandText)
+                    || command.toLowerCase().contains(commandText)) {
                 suggestions.add(command);
             }
         }

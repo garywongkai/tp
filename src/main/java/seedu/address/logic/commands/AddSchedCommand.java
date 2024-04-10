@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.util.ArrayList;
@@ -135,8 +134,8 @@ public class AddSchedCommand extends Command {
     private String generateSuccessMessage() {
         return String.format(MESSAGE_SUCCESS, schedule);
     }
-    
-    private  String generateDuplicateMessage() {
+
+    private String generateDuplicateMessage() {
         return String.format(MESSAGE_DUPLICATE, schedule);
     }
 }
