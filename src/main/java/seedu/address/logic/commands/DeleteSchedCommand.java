@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class DeleteSchedCommand extends Command {
 
     private final Index deleteScheduleIndex;
 
-
+    private Schedule deleteSchedule;
 
     /**
      * Creates an DeleteCommand to delete the specified {@code Schedule}
@@ -63,11 +64,16 @@ public class DeleteSchedCommand extends Command {
         if (deleteScheduleIndex.getZeroBased() >= personScheduleList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_SCHEDULE_DISPLAYED_INDEX);
         }
-        Schedule scheduleToDelete = personToDelete.getSchedules().get(deleteScheduleIndex.getZeroBased());
+        deleteSchedule = personToDelete.getSchedules().get(deleteScheduleIndex.getZeroBased());
+        //Command not outputting because the CommandBox
+        // is catching one of these CommandException and not displaying the CommandResult!
+        deleteSchedForSpecificPerson(model, deleteSchedule, personToDelete);
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        return new CommandResult(generateSuccessMessage());
+    }
 
-        deleteSchedForSpecificPerson(model, scheduleToDelete, personToDelete);
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(scheduleToDelete)));
+    private String generateSuccessMessage() {
+        return String.format(MESSAGE_SUCCESS, deleteSchedule);
     }
 
 
@@ -85,13 +91,11 @@ public class DeleteSchedCommand extends Command {
         if (!scheduleToDelete.getPersonList().isEmpty()) {
             for (Person p: model.getFilteredPersonList()) {
                 if (!p.equals(personToDelete)) {
-                    if (p.getSchedules().contains(scheduleToDelete)) {
-                        p.getSchedules().forEach(schedule -> {
-                            if (schedule.isSameSchedule(scheduleToDelete)) {
-                                schedule.removePerson(personToDelete.getName().toString());
-                            }
-                        });
-                    }
+                    p.getSchedules().forEach(schedule -> {
+                        if (schedule.isSameSchedule(scheduleToDelete)) {
+                            schedule.removePerson(personToDelete.getName().toString());
+                        }
+                    });
                 }
             }
         }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
@@ -260,11 +259,6 @@ public class MainWindow extends UiPart<Stage> {
         });
         schedules.addListener((ListChangeListener.Change<? extends Schedule> change) -> {
             while (change.next()) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                } catch (InterruptedException e) {
-                    System.out.println("Interrupted!");
-                }
                 personListPanel.refresh();
             }
         });
@@ -294,7 +288,6 @@ public class MainWindow extends UiPart<Stage> {
             }
         }
         // Add each schedule to the table view
-        personListPanel.refresh();
         weeklyScheduleView.populateTimetable(filteredSchedules);
     }
 

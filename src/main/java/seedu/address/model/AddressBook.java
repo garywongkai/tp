@@ -175,7 +175,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (toDeleteSchedule.getPersonList().isEmpty()) {
             schedules.remove(toDeleteSchedule);
         }
-        //setPerson(toDeleteParticipant, toDeleteParticipant);
+        setPerson(toDeleteParticipant, toDeleteParticipant);
     }
 
     //// util methods

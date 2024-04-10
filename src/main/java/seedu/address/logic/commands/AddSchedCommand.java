@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class AddSchedCommand extends Command {
             + PREFIX_END + "2024-02-24 17:00";
 
     public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";
+    private static final String MESSAGE_DUPLICATE = "Schedule has already been added: %1$s";
 
     private final ArrayList<Index> targetIndexes;
 
@@ -71,10 +73,9 @@ public class AddSchedCommand extends Command {
         if (model.hasSchedule(schedule)) {
             model.addSchedulePeople(schedule, participantsNames);
             ObservableList<Schedule> arraySched = model.getAddressBook().getScheduleList();
-            final Schedule[] edittedSchedule = new Schedule[1];
             arraySched.forEach(schedule1 -> {
                 if (schedule1.isSameSchedule(schedule)) {
-                    edittedSchedule[0] = schedule1;
+                    schedule1.setPersonList(schedule.getPersonList());
                 }
             });
             System.out.println("i was called cause duplicate");
@@ -83,13 +84,12 @@ public class AddSchedCommand extends Command {
                     if (Objects.equals(person.getName().toString(), name)) {
                         if (!person.getSchedules().contains(schedule)) {
                             // add schedule to the people involved
-                            person.addSchedule(edittedSchedule[0]);
+                            person.addSchedule(schedule);
                         } else {
                             int index = person.getSchedules().indexOf(schedule);
                             person.getSchedules().get(index).addParticipants(participantsNames);
                         }
                     }
-                    model.setPerson(person, person);
                 });
             }
         } else {
@@ -98,6 +98,7 @@ public class AddSchedCommand extends Command {
             }
             model.addSchedule(schedule);
         }
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         return new CommandResult(generateSuccessMessage());
     }
 
@@ -132,6 +133,10 @@ public class AddSchedCommand extends Command {
      */
     private String generateSuccessMessage() {
         return String.format(MESSAGE_SUCCESS, schedule);
+    }
+
+    private String generateDuplicateMessage() {
+        return String.format(MESSAGE_DUPLICATE, schedule);
     }
 }
 

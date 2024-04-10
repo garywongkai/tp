@@ -77,13 +77,14 @@ public class CommandBox extends UiPart<Region> {
         List<String> suggestions = new ArrayList<>();
 
         final List<String> commandList = Arrays.asList(
-                "add", "list", "edit", "find", "delete", "clear", "interest", "findinterest", "addSched",
+                "add", "list", "edit", "find", "delete", "clear", "addSched",
                 "deleteSched", "editSched", "exit", "help"
         );
 
         // Check if the entered command matches any suggestions
         for (String command : commandList) {
-            if (command.startsWith(commandText) || command.contains(commandText)) {
+            if (command.toLowerCase().startsWith(commandText)
+                    || command.toLowerCase().contains(commandText)) {
                 suggestions.add(command);
             }
         }
