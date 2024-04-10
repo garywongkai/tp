@@ -75,9 +75,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
      */
     public void remove(Schedule toRemove) {
         requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
-            throw new ScheduleNotFoundException();
-        }
+        internalList.remove(toRemove);
     }
 
     public void setSchedules(UniqueScheduleList replacement) {
