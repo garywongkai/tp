@@ -127,7 +127,7 @@ public class Schedule {
      * Returns true if startTime before endTime
      */
     public static boolean isValidTiming(LocalDateTime startTime, LocalDateTime endTime) {
-        return startTime.isBefore(endTime);
+        return !startTime.isAfter(endTime);
     }
 
     /**
