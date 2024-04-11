@@ -258,7 +258,7 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
-* `find Betsy` followed by `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
+* `find Betsy` followed by `addSched 1 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
    the results of the `find` command to the event stated.
 
 Examples:
