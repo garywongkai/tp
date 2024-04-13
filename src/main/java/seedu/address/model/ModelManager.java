@@ -107,7 +107,7 @@ public class ModelManager implements Model {
     @Override
     public void deletePerson(Person target) {
         for (int i = 0; i < target.getSchedules().size(); i++) {
-//            System.out.println(target.getSchedules().get(i));
+            //System.out.println(target.getSchedules().get(i));
             addressBook.removeSchedule(target, target.getSchedules().get(i));
             updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         }

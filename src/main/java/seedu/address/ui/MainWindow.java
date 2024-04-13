@@ -43,7 +43,7 @@ public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
 
-    public static final String SCHEDULE_TOO_MANY_PEOPLE = "5 People have already been "
+    private static final String SCHEDULE_TOO_MANY_PEOPLE = "5 People have already been "
             + "selected for the schedule table. \n"
             + "If you wish to see the schedule for different people, please unselect 1 of the currently "
             + "selected person before selecting a new person.";
@@ -211,11 +211,11 @@ public class MainWindow extends UiPart<Stage> {
         colorList.add("-fx-background-color: #ff8c00");
         // Optional: Add a listener to react to selection changes
         personComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            System.out.println("observable = " + observable);
-//            System.out.println("oldValue = " + oldValue);
-//            System.out.println("newValue = " + newValue);
-//            System.out.println("Population size = " + populatedPerson.size());
-//            System.out.println("Population person = " + populatedPerson);
+            //System.out.println("observable = " + observable);
+            //System.out.println("oldValue = " + oldValue);
+            //System.out.println("newValue = " + newValue);
+            //System.out.println("Population size = " + populatedPerson.size());
+            //System.out.println("Population person = " + populatedPerson);
             if (newValue != null) {
                 int colorLocation = 0;
                 if (populatedPerson.contains(newValue)) {
