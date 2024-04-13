@@ -105,7 +105,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [i/INTEREST]…�
 * Names **must contain alphanumeric characters and spaces, and it should not be blank**
 * Phone number **must be a valid Singapore number** (i.e. 8 digits, starts with either 6, 8 or 9)
 * Email **must include @ character**
-* Address **optional and may be provided in any format**
+* Address **is optional and may be provided in any format**
 * Tag **must be alphanumeric**
 * Interest **must be alphanumeric**
 * If multiple `tag` are added, separate with a space (e.g t/friends t/neighbours)
@@ -427,7 +427,7 @@ Format: `exit`
 
 --------------------------------------------------------------------------------------------------------------------
 
-### Schedule Display
+## Schedule Display
 The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing. 
 
 1) When there is no conflict between the schedules, the schedule would be displayed with a black border as shown below.
