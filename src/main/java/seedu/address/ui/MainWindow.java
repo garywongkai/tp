@@ -43,6 +43,11 @@ public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
 
+    public static final String SCHEDULE_TOO_MANY_PEOPLE = "5 People have already been "
+            + "selected for the schedule table. \n"
+            + "If you wish to see the schedule for different people, please unselect 1 of the currently "
+            + "selected person before selecting a new person.";
+
     private final Logger logger = LogsCenter.getLogger(getClass());
 
     private Stage primaryStage;
@@ -194,16 +199,23 @@ public class MainWindow extends UiPart<Stage> {
         });
 
         ArrayList<Person> populatedPerson = new ArrayList<>();
+        System.out.println("populated size = " + populatedPerson.size());
+        System.out.println("populatedPerson = " + populatedPerson);
         Map<Person, Label> populatedLabels = new HashMap<>();
         ArrayList<String> colorList = new ArrayList<>();
-        colorList.add("-fx-background-color: rgb(255, 140, 0)");
-        colorList.add("-fx-background-color: rgb(0, 102, 255)");
-        colorList.add("-fx-background-color: rgb(204, 0, 255)");
-        colorList.add("-fx-background-color: rgb(51, 204, 51)");
-        colorList.add("-fx-background-color: rgb(255, 0, 102)");
-        colorList.add("-fx-background-color: rgb(255, 140, 0)");
+        colorList.add("-fx-background-color: #ff8c00");
+        colorList.add("-fx-background-color: #0066ff");
+        colorList.add("-fx-background-color: #cc00ff");
+        colorList.add("-fx-background-color: #33cc33");
+        colorList.add("-fx-background-color: #ff0066");
+        colorList.add("-fx-background-color: #ff8c00");
         // Optional: Add a listener to react to selection changes
         personComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            System.out.println("observable = " + observable);
+//            System.out.println("oldValue = " + oldValue);
+//            System.out.println("newValue = " + newValue);
+//            System.out.println("Population size = " + populatedPerson.size());
+//            System.out.println("Population person = " + populatedPerson);
             if (newValue != null) {
                 int colorLocation = 0;
                 if (populatedPerson.contains(newValue)) {
@@ -252,7 +264,6 @@ public class MainWindow extends UiPart<Stage> {
                         //populatedPerson.forEach(person -> System.out.print(person.getName()));
                         updateTableView(populatedPerson);
                         personListPanel.refresh();
-                        populatePersonNameComboBox();
                     }
                 }
             }

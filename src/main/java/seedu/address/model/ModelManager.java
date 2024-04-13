@@ -106,6 +106,11 @@ public class ModelManager implements Model {
 
     @Override
     public void deletePerson(Person target) {
+        for (int i = 0; i < target.getSchedules().size(); i++) {
+//            System.out.println(target.getSchedules().get(i));
+            addressBook.removeSchedule(target, target.getSchedules().get(i));
+            updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        }
         addressBook.removePerson(target);
     }
 
@@ -118,11 +123,13 @@ public class ModelManager implements Model {
     @Override
     public void deleteSchedule(Schedule toDeleteSchedule) {
         addressBook.removeSchedule(toDeleteSchedule);
+        updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
     }
 
     @Override
     public void deleteSchedule(Person toDeleteParticipant, Schedule toDeleteSchedule) {
         addressBook.removeSchedule(toDeleteParticipant, toDeleteSchedule);
+        updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
     }
 
     @Override
