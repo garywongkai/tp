@@ -147,6 +147,7 @@ Expected success outcome:
 Listed all persons
 ```
 
+<div style="page-break-after: always;"></div>
 
 ### Editing a person : `edit`
 
@@ -358,6 +359,8 @@ Potential Errors:
 * Contact not found in address book
 * Schedule not found in schedule list of person
 
+<div style="page-break-after: always;"></div>
+
 ### Editing a schedule: `editSched`
 
 Edit a schedule that associated with a person with new information
@@ -425,6 +428,8 @@ Exits the program.
 
 Format: `exit`
 
+<div style="page-break-after: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Schedule Display
@@ -453,6 +458,8 @@ Important Notes:
 want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the 
 dropdown box again. 
 * The schedule will only display any timing from the current week from 8am to 9pm.
+
+<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
