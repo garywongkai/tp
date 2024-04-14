@@ -208,6 +208,16 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
+Disclaimer:
+* Index-based commands must be used after `list` after `find` command.
+* Example: To edit index 3 after finding alex
+  1. `find alex`
+  ![result for 'find alex'](images/findAlexResult.png)
+  2. `list`
+  ![result for 'list'](images/listResultAfterFind.png)
+  3. `edit 3 …`
+* Failure to follow these steps will result in unintended outcomes for index-based commands. (edit, delete, etc.)
+
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
@@ -430,9 +440,7 @@ Format: `exit`
 
 <div style="page-break-after: always;"></div>
 
---------------------------------------------------------------------------------------------------------------------
-
-## Schedule Display
+### Schedule Display
 The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing. 
 
 1) When there is no conflict between the schedules, the schedule would be displayed with a black border as shown below.
@@ -458,6 +466,22 @@ Important Notes:
 want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the 
 dropdown box again. 
 * The schedule will only display any timing from the current week from 8am to 9pm.
+
+
+### Saving the data
+
+Moddie data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+### Editing the data file
+
+Moddie data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<box type="warning" seamless>
+
+**Caution:**
+If your changes to the data file makes its format invalid, Moddie will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+</box>
 
 <div style="page-break-after: always;"></div>
 
@@ -494,21 +518,6 @@ dropdown box again.
   * Must be Alphanumeric.
   * Example: `i/fruits`
 
-
-### Saving the data
-
-Moddie data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-### Editing the data file
-
-Moddie data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<box type="warning" seamless>
-
-**Caution:**
-If your changes to the data file makes its format invalid, Moddie will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
 
 ### Archiving data files `[coming in v2.0]`
 
