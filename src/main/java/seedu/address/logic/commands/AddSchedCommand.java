@@ -35,8 +35,9 @@ public class AddSchedCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + "1, 2 "
             + PREFIX_SCHEDULE + "CS2103 weekly meeting "
-            + PREFIX_START + "2024-02-24 09:00 "
-            + PREFIX_END + "2024-02-24 17:00";
+            + PREFIX_START + "2024-04-16 09:00 "
+            + PREFIX_END + "2024-04-16 17:00 \n"
+            + "The schedule tab will only show the schedules for the current week.";
 
     public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";
     private static final String MESSAGE_DUPLICATE = "Schedule has already been added: %1$s";

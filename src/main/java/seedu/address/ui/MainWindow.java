@@ -43,6 +43,9 @@ public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
 
+    /**
+     * I added this to try to display it in the information box. Couldn't do it now.
+     */
     private static final String SCHEDULE_TOO_MANY_PEOPLE = "5 People have already been "
             + "selected for the schedule table. \n"
             + "If you wish to see the schedule for different people, please unselect 1 of the currently "
@@ -199,8 +202,8 @@ public class MainWindow extends UiPart<Stage> {
         });
 
         ArrayList<Person> populatedPerson = new ArrayList<>();
-        System.out.println("populated size = " + populatedPerson.size());
-        System.out.println("populatedPerson = " + populatedPerson);
+        //System.out.println("populated size = " + populatedPerson.size());
+        //System.out.println("populatedPerson = " + populatedPerson);
         Map<Person, Label> populatedLabels = new HashMap<>();
         ArrayList<String> colorList = new ArrayList<>();
         colorList.add("-fx-background-color: #ff8c00");
@@ -237,7 +240,7 @@ public class MainWindow extends UiPart<Stage> {
                     } else {
                         populatedPerson.add(newValue);
                         Label nameLabel = new Label(newValue.getName().toString());
-                        System.out.println(populatedLabels.size());
+                        //System.out.println(populatedLabels.size());
                         String color = colorList.get(populatedLabels.size());
                         nameLabel.setStyle(color);
                         selectedPersonsTag.getChildren().add(nameLabel);
@@ -254,16 +257,43 @@ public class MainWindow extends UiPart<Stage> {
         });
 
         persons.addListener((ListChangeListener.Change<? extends Person> change) -> {
+            //System.out.println("change = " + change);
             while (change.next()) {
-                if (change.wasRemoved()) {
-                    List<? extends Person> removedPersons = change.getRemoved();
-                    for (Person removedPerson : removedPersons) {
-                        //System.out.println("Removed person cause deleted: " + removedPerson.getName());
-                        populatedPerson.remove(removedPerson);
-                        //System.out.println("Current List of person: ");
-                        //populatedPerson.forEach(person -> System.out.print(person.getName()));
-                        updateTableView(populatedPerson);
-                        personListPanel.refresh();
+                //System.out.println("wasRemoved = " + change.wasRemoved());
+                //System.out.println("Removed = " + change.getRemoved());
+                //System.out.println("wasAdded = " + change.wasAdded());
+                //System.out.println("Added = " + change.getAddedSubList());
+                //System.out.println("same = " + change.getRemoved().equals(change.getAddedSubList()));
+                //System.out.println("Added name " + change.getAddedSubList().get(0));
+                //System.out.println("Removed name " + change.getRemoved().get(0));
+                //System.out.println(!change.wasAdded() || change.getAddedSubList().get(0).getName()
+                //        != change.getRemoved().get(0).getName());
+                if (change.wasRemoved() && !change.getRemoved().equals(change.getAddedSubList())) {
+                    //This if statement is used if change was removed but change was not added, indicating that it is
+                    //only the delete command. The or statement is used only for the edit command.
+                    if (!change.wasAdded() || change.getAddedSubList()
+                            != change.getRemoved()) {
+                        List<? extends Person> removedPersons = change.getRemoved();
+                        for (Person removedPerson : removedPersons) {
+                            //System.out.println("Removed person cause deleted: " + removedPerson.getName());
+                            //System.out.println("Populated person: " + populatedPerson);
+                            populatedPerson.remove(removedPerson);
+                            //System.out.println("Populated person: " + populatedPerson);
+                            Label nameLabel = populatedLabels.get(removedPerson);
+                            selectedPersonsTag.getChildren().remove(nameLabel);
+                            populatedLabels.remove(removedPerson);
+                            int colorLocation = 0;
+                            for (Map.Entry<Person, Label> entry : populatedLabels.entrySet()) {
+                                Label currentLabel = entry.getValue();
+                                currentLabel.setStyle(colorList.get(colorLocation));
+                                entry.setValue(currentLabel);
+                                colorLocation++;
+                            }
+                            //System.out.println("Current List of person: ");
+                            //populatedPerson.forEach(person -> System.out.print(person.getName()));
+                            updateTableView(populatedPerson);
+                            personListPanel.refresh();
+                        }
                     }
                 }
             }

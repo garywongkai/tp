@@ -1,6 +1,5 @@
 package seedu.address.model.util;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -23,9 +22,6 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         ArrayList<Schedule> sampleScheduleList = new ArrayList<>();
-        sampleScheduleList.add(
-                new Schedule("Test Mod",
-                        LocalDateTime.parse("2015-08-04T10:11:30"), LocalDateTime.parse("2019-08-04T10:11:30")));
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"),
