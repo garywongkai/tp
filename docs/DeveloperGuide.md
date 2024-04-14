@@ -548,5 +548,5 @@ testers are expected to do more *exploratory* testing.
 1. Adding the color to the schedule display corresponding to the tag Person
 2. Have a command to view a certain date, and show the schedule for that week/date
 3. Add command to view schedules instead of drop-down box
-4. More error catching that is the cause of Program hangs/crashes
+4. Enhance find command to allow for specific category finding (e.g. find [name/] [email/])
 5. Split group schedules cell display in the event that multiple schedules' timings coincide
