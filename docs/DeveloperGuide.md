@@ -158,6 +158,14 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Add Schedule feature 
+
+The following sequence diagram shows how an add schedule operation goes through the Logic component:
+<puml src="diagrams/AddSchedSequenceDiagram.puml" alt="AddScheduleSequenceDiagram" />
+
+The following activity diagram summarizes what happens when a user executes the addSched command:
+<puml src="diagrams/AddSchedActivityDiagram.puml" alt="AddScheduleActivityDiagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -534,3 +542,11 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+
+## **Appendix: Planned Enhancments**
+1. Adding the color to the schedule display corresponding to the tag Person
+2. Have a command to view a certain date, and show the schedule for that week/date
+3. Add command to view schedules instead of drop-down box
+4. More error catching that is the cause of Program hangs/crashes
+5. Split group schedules cell display in the event that multiple schedules' timings coincide
