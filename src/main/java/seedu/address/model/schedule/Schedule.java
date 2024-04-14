@@ -16,6 +16,7 @@ import java.util.Objects;
 public class Schedule {
 
     public static final String MESSAGE_CONSTRAINTS = "Schedule names should be alphanumeric";
+    public static final String MESSAGE_CONSTRAINTS_STARTAFTEREND = "Start datetime should not be after end datetime";
     public static final String VALIDATION_REGEX = "\\s?\\p{Alnum}+[\\s?\\p{Alnum}*]*";
     public static final String DATETIME_STRING = "yyyy-MM-dd HH:mm";
     public static final DateTimeFormatter CUSTOM_DATETIME = DateTimeFormatter.ofPattern(DATETIME_STRING);
@@ -37,7 +38,7 @@ public class Schedule {
                     LocalDateTime endTime) {
         requireNonNull(schedName);
         checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
-        checkArgument(isValidTiming(startTime, endTime));
+        checkArgument(isValidTiming(startTime, endTime), MESSAGE_CONSTRAINTS_STARTAFTEREND);
         this.schedName = schedName;
         this.startTime = startTime;
         this.endTime = endTime;
