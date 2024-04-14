@@ -87,14 +87,15 @@
                 <padding>
                   <Insets topRightBottomLeft="8"/>
                 </padding>
-                <VBox VBox.vgrow="ALWAYS" styleClass="pane-with-border">
+                <VBox fx:id="selectedPersonsBox" VBox.vgrow="ALWAYS" styleClass="pane-with-border">
                   <FlowPane fx:id="selectedPersonsTag"/>
                 </VBox>
               </HBox>
-
-              <ScrollPane fx:id="ScrollSchedule" fitToHeight="true">
-                <StackPane fx:id="schedulePanelPlaceholder" VBox.vgrow="ALWAYS"/>
-              </ScrollPane>
+              <VBox styleClass="background" VBox.vgrow="ALWAYS">
+                <ScrollPane fx:id="ScrollSchedule" fitToHeight="true" pannable="true">
+                  <StackPane fx:id="schedulePanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                </ScrollPane>
+              </VBox>
             </VBox>
         </ScrollPane>
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

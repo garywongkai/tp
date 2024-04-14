@@ -75,19 +75,20 @@ public class CommandBox extends UiPart<Region> {
      */
     private List<String> generateSuggestions(String commandText) {
         List<String> suggestions = new ArrayList<>();
-
+        String commandInput = commandText.trim();
         final List<String> commandList = Arrays.asList(
-                "add", "list", "edit", "find", "delete", "clear", "interest", "findinterest", "addSched",
+                "add", "list", "edit", "find", "delete", "clear", "addSched",
                 "deleteSched", "editSched", "exit", "help"
         );
 
         // Check if the entered command matches any suggestions
         for (String command : commandList) {
-            if (command.startsWith(commandText) || command.contains(commandText)) {
+            if (command.toLowerCase().startsWith(commandInput)
+                    || command.toLowerCase().contains(commandInput)) {
                 suggestions.add(command);
             }
         }
-        suggestions.removeIf(suggest -> suggest.equals(commandText));
+        suggestions.removeIf(suggest -> suggest.equals(commandInput));
         return suggestions;
     }
 

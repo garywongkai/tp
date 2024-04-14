@@ -1,3 +1,9 @@
+---
+  layout: default.md
+  title: "User Guide"
+  pageNav: 3
+---
+
 # Moddie User Guide
 
 Moddie is a **desktop app for managing schedules, interests, and tags of contacts optimized for use via a Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Moddie can get your contact and schedule management tasks done faster than traditional GUI apps.
@@ -33,6 +39,8 @@ Moddie is a **desktop app for managing schedules, interests, and tags of contact
    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
+
+<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -77,20 +85,31 @@ Expected failure outcome:
 Help not available. Please try again.
 ```
 
+### Suggestion bar:
+Prompts suggestions to user based on their inputs.
+Expected success outcome:
+```
+Lists down similar suggestion seperated by whitespaces matching user inputs
+Upon typing some input and deleting it entirely, will prompt it to list down all commands!
+```
+![Suggestion Bar](images/suggestionBar.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Adding a person: `add`
 
 Adds a person to the address book with their information.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [i/INTEREST]…​`
 
+* Names **must contain alphanumeric characters and spaces, and it should not be blank**
 * Phone number **must be a valid Singapore number** (i.e. 8 digits, starts with either 6, 8 or 9)
 * Email **must include @ character**
-* Address **must include and be ordered in street name, block number, and unit number (note: include # symbol)**,
-separated with comma
+* Address **is optional and may be provided in any format**
 * Tag **must be alphanumeric**
 * Interest **must be alphanumeric**
-* If multiple `tag` are added, separate with comma
-* if multiple `interest` are added, separate with comma
+* If multiple `tag` are added, separate with a space (e.g t/friends t/neighbours)
+* if multiple `interest` are added, separate with a space (e.g i/basketball i/shopping)
 
 **Tip:** A person can have any number of tags or interests (including 0)
 
@@ -109,12 +128,12 @@ Invalid command format!
 ```
 
 Potential Errors:
+* Name format is wrong
 * Phone number format is wrong (i.e. not a Singapore number)
 * Email format is wrong (i.e. no @)
-* Address format is wrong
 * Tag format is wrong
 * Interest format is wrong
-* An existing contact with same name is found in address book
+* An existing contact with same name, same phone number or email is found in address book
 
 
 ### Listing all persons : `list`
@@ -128,12 +147,13 @@ Expected success outcome:
 Listed all persons
 ```
 
+<div style="page-break-after: always;"></div>
 
 ### Editing a person : `edit`
 
 Edits an existing person's information in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [i/INTEREST]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [i/INTEREST]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list.
   The index **must be a positive integer** 1, 2, 3, …​
@@ -168,12 +188,12 @@ The person index provided is invalid.
 ```
 
 Potential Errors:
+* [if applicable] Name format is wrong
 * [if applicable] Phone number format is wrong (i.e. not a Singapore number)
 * [if applicable] Email format is wrong (i.e. no @)
-* [if applicable] Address format is wrong
 * [if applicable] Tag format is wrong
 * [if applicable] Interest format is wrong
-* An existing contact with same name, phone number and is found in address book
+* An existing contact with same name, same phone number or email is found in address book
 
 
 ### Locating persons by name : `find`
@@ -208,6 +228,7 @@ Expected failure outcome:
 0 persons listed!
 ```
 
+<div style="page-break-after: always;"></div>
 
 ### Deleting a person : `delete`
 
@@ -260,6 +281,9 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * `find Betsy` followed by `addSched 1 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
    the results of the `find` command to the event stated.
+* The END_DATETIME must be on the same date as the START_DATETIME. E.g. START_DATETIME = 2024-07-07 12:00 and END_DATETIME = 2024-07-07 17:00
+* When adding multiple persons to schedule, said schedule must not be a duplicate in any of these persons.
+* Manual clicking of Contact list might be necessary to update changes done by user on slower devices.
 
 Examples:
 * `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
@@ -286,6 +310,10 @@ OR
 ```
 The date format provided is invalid. Format: yyyy-MM-dd HH:mm
 ```
+OR
+```
+Duplicate Schedule cannot be added to same Person
+```
 
 Potential Errors:
 * Time format is wrong!
@@ -304,6 +332,7 @@ Format: `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX`
    the schedule list for the person from PERSON_INDEX.
 * `find Betsy` followed by `deleteSched 1 schedule/2` deletes the 2nd schedule from the 1st person in
    the results of the `find` command.
+* * Manual click of Contact list might be necessary to reflect changes done by user on slower devices.
 
 Examples:
 * `deleteSched 1 schedule/2` will delete the 2nd schedule from the 1st person in the address list
@@ -328,6 +357,8 @@ The schedule index provided is invalid
 Potential Errors:
 * Contact not found in address book
 * Schedule not found in schedule list of person
+
+<div style="page-break-after: always;"></div>
 
 ### Editing a schedule: `editSched`
 
@@ -396,7 +427,11 @@ Exits the program.
 
 Format: `exit`
 
-### Schedule Diaplay
+<div style="page-break-after: always;"></div>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Schedule Display
 The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing. 
 
 1) When there is no conflict between the schedules, the schedule would be displayed with a black border as shown below.
@@ -421,23 +456,57 @@ Important Notes:
 * The schedule can only display up to 5 user schedules at a time. If you have selected 5 people from the dropdown box and 
 want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the 
 dropdown box again. 
-* The schedules will only display schedules of the current week.
+* The schedule will only display any timing from the current week from 8am to 9pm.
 
+<div style="page-break-after: always;"></div>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Field Constraints
+* NAME:
+    * Must only contain Alphanumeric characters and Spaces.
+  1. Names are case-insensitive.
+  2. Number of spaces between words affects the name.
+    * Example: `n/John Doe` and `n/john doe` are both considered the same valid name.
+* PHONE:
+  * Must only be 8 digits, starting with either 6, 8 or 9.
+  * Example: `p/82710912`
+* EMAIL:
+  * should be of the format local-part@domain and adhere to the following constraints:
+    1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
+    2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
+    * The domain name must:
+      - end with a domain label at least 2 characters long
+      - have each domain label start and end with alphanumeric characters
+    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+  * Example: `e/CS2103_grp@nus.sg`
+* ADDRESS:
+  * Optional.
+  * Can be in any format.
+  * Example: `a/Blk 810 Sengkang St 21`.
+* TAG:
+  * Optional.
+  * Must be Alphanumeric.
+  * Example: `t/friends`
+* INTEREST:
+  * Optional.
+  * Must be Alphanumeric.
+  * Example: `i/fruits`
 
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Moddie data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+Moddie data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, Moddie will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ### Archiving data files `[coming in v2.0]`
@@ -449,13 +518,16 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Moddie home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+2. Currently, the application has a limitation where users are recommended to **keep only up to 8 users** in their schedule. Attempting to add more than 8 users <u> may result in unexpected behavior or performance issues. </u> 
+
+<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -464,9 +536,9 @@ _Details coming soon ..._
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Help**   | `help`
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/94458770 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [i/INTEREST]… [t/TAG]…​` <br> e.g., `add n/James Ho p/94458770 e/jamesho@example.com a/123, Clementi Rd, 1234665 i/ basketball t/friend t/colleague`
 **List**   | `list`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [i/INTEREST]… [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Clear**  | `clear`

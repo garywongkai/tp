@@ -38,9 +38,9 @@ public class EditSchedCommand extends Command {
             + PREFIX_GROUP + "EDIT ALL PARTICIPANTS (y/n)"
             + "[" + PREFIX_SCHEDULE + " SCHEDULE NAME] "
             + "[" + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)] "
-            + "[" + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)] "
+            + "[" + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)] \n"
             + "Example: " + COMMAND_WORD + " " + "1 "
-            + PREFIX_SPECIFIC_SCHEDULE_INDEX + " 1, 2 "
+            + PREFIX_SPECIFIC_SCHEDULE_INDEX + " 1 "
             + PREFIX_GROUP + "y"
             + "[" + PREFIX_SCHEDULE + " CS2103 weekly meeting] "
             + "[" + PREFIX_START + " 2024-02-24 15:00] "
@@ -101,7 +101,7 @@ public class EditSchedCommand extends Command {
 
         ArrayList<Schedule> personScheduleList = personToChange.getSchedules();
         if (scheduleIndex.getZeroBased() >= personScheduleList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_SCHEDULE_DISPLAYED_INDEX);
         }
         Schedule scheduleToEdit = personScheduleList.get(scheduleIndex.getZeroBased());
 
