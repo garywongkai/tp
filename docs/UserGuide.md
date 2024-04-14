@@ -421,6 +421,7 @@ Important Notes:
 * The schedule can only display up to 5 user schedules at a time. If you have selected 5 people from the dropdown box and 
 want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the 
 dropdown box again. 
+* The schedules will only display schedules of the current week.
 
 
 

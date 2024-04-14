@@ -7,7 +7,7 @@
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-Together we made ````Moddie!``
+Together we made ````Moddie!````
 
 ## Project team
 
