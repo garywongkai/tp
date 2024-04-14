@@ -94,13 +94,11 @@ Upon typing some input and deleting it entirely, will prompt it to list down all
 ```
 ![Suggestion Bar](images/suggestionBar.png)
 
-<div style="page-break-after: always;"></div>
-
 ### Adding a person: `add`
 
 Adds a person to the address book with their information.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [i/INTEREST]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]… [i/INTEREST]…​`
 
 * Names **must contain alphanumeric characters and spaces, and it should not be blank**
 * Phone number **must be a valid Singapore number** (i.e. 8 digits, starts with either 6, 8 or 9)
@@ -146,8 +144,6 @@ Expected success outcome:
 ```
 Listed all persons
 ```
-
-<div style="page-break-after: always;"></div>
 
 ### Editing a person : `edit`
 
@@ -209,7 +205,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Disclaimer:
-* Index-based commands must be used after `list` after `find` command.
+* Index-based commands must be used after `list` if `find` command is called.
 * Example: To edit index 3 after finding alex
   1. `find alex`
   ![result for 'find alex'](images/findAlexResult.png)
@@ -237,8 +233,6 @@ Expected failure outcome:
 ```
 0 persons listed!
 ```
-
-<div style="page-break-after: always;"></div>
 
 ### Deleting a person : `delete`
 
@@ -327,8 +321,9 @@ Duplicate Schedule cannot be added to same Person
 ```
 
 Potential Errors:
-* Time format is wrong!
+* Time format is wrong
 * Date format is wrong
+* Duplicate Schedule with the same name is added to the same person.
 * Contact not found in address book
 
 ### Deleting a schedule: `deleteSched`
@@ -369,11 +364,9 @@ Potential Errors:
 * Contact not found in address book
 * Schedule not found in schedule list of person
 
-<div style="page-break-after: always;"></div>
-
 ### Editing a schedule: `editSched`
 
-Edit a schedule that associated with a person with new information
+Edit a schedule that associated with a person with new information, and optionally, you may also edit the group associated with the schedule.
 
 Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX g/EDIT_GROUP [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]`
 
@@ -426,8 +419,8 @@ At least one field to edit must be provided.
 ```
 
 Potential Errors:
-* [if applicable] Time format is wrong!
-* [if applicable] Date format is wrong!
+* [if applicable] Time format is wrong
+* [if applicable] Date format is wrong
 * Contact not found in address book
 * Schedule not found in schedule list of person
 * There is no input for the SCHEDULE_NAME, START_DATETIME and END_DATETIME
@@ -438,8 +431,6 @@ Exits the program.
 
 Format: `exit`
 
-<div style="page-break-after: always;"></div>
-
 ### Schedule Display
 The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing. 
 
@@ -449,7 +440,7 @@ The schedule display allows users to be able to view the schedule of their class
 2) The schedule which the user would like to view can be done using the dropdown box which displays all the names that of the 
 classmates within the contact list.
 
-![img_3.png](img_3.png)
+    ![img_3.png](img_3.png)
 
 3) If 2 or more people are participants in the same schedule, the schedule border would be colored blue and it would called
 'Group schedule'. 
@@ -489,10 +480,10 @@ Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.
 
 ## Field Constraints
 * NAME:
-    * Must only contain Alphanumeric characters and Spaces.
-  1. Names are case-insensitive.
-  2. Number of spaces between words affects the name.
-    * Example: `n/John Doe` and `n/john doe` are both considered the same valid name.
+  * Must only contain Alphanumeric characters and Spaces.
+  * Names are case-insensitive.
+  * Number of spaces between words affects the name.
+  * Example: `n/John Doe` and `n/john doe` are both considered the same valid name.
 * PHONE:
   * Must only be 8 digits, starting with either 6, 8 or 9.
   * Example: `p/82710912`
@@ -517,6 +508,14 @@ Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.
   * Optional.
   * Must be Alphanumeric.
   * Example: `i/fruits`
+* SCHEDULE_NAME 
+  * must not have any special characters e.g. !, @, #, $, …​
+* START_DATETIME 
+  * must be in the format of yyyy-MM-dd HH:mm in 24-hour time
+* *END_DATETIME 
+  * must be in the format of yyyy-MM-dd HH:mm in 24-hour time
+  * must be on the same date as the START_DATETIME. 
+  * Example: START_DATETIME = `2024-07-07 12:00` and END_DATETIME = `2024-07-07 17:00`
 
 
 ### Archiving data files `[coming in v2.0]`
@@ -535,7 +534,7 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. Currently, the application has a limitation where users are recommended to **keep only up to 8 users** in their schedule. Attempting to add more than 8 users <u> may result in unexpected behavior or performance issues. </u> 
+2. Depending on your device, the application has a limitation where users are safely recommended to **keep only up to 8 users** in their schedule. Attempting to add more than 8 users <u> may result in unexpected behavior or performance issues. </u> 
 
 <div style="page-break-after: always;"></div>
 
@@ -543,7 +542,7 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action     | Format, Examples
+Command    | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Help**   | `help`
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [i/INTEREST]… [t/TAG]…​` <br> e.g., `add n/James Ho p/94458770 e/jamesho@example.com a/123, Clementi Rd, 1234665 i/ basketball t/friend t/colleague`
