@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.*;
+import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
+import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
+import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
@@ -171,13 +173,12 @@ public class EditSchedCommand extends Command {
         String updatedSchedName = editScheduleDescriptor.getSchedName().orElse(scheduleToEdit.getSchedName());
         LocalDateTime updatedStartTime = editScheduleDescriptor.getStartTime().orElse(scheduleToEdit.getStartTime());
         LocalDateTime updatedEndTime = editScheduleDescriptor.getEndTime().orElse(scheduleToEdit.getEndTime());
-        
         return generateInvalidSchedule(updatedSchedName, updatedStartTime, updatedEndTime,
                 new ArrayList<>(scheduleToEdit.getPersonList()));
     }
 
     private static Schedule generateInvalidSchedule(String schedName, LocalDateTime startTime, LocalDateTime endTime,
-                                          ArrayList<String> personList) throws CommandException{
+                                          ArrayList<String> personList) throws CommandException {
         boolean sameDay = (startTime.getYear() == endTime.getYear())
                 && (startTime.getMonth() == endTime.getMonth())
                 && (startTime.getDayOfMonth() == endTime.getDayOfMonth());

@@ -158,7 +158,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Add Schedule feature 
+### Add Schedule feature
 
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
 <puml src="diagrams/AddSchedSequenceDiagram.puml" alt="AddScheduleSequenceDiagram" />
