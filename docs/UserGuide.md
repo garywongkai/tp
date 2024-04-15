@@ -202,6 +202,7 @@ Potential Errors:
 * [if applicable] Interest format is wrong
 * An existing contact with same name, same phone number or email is found in address book
 
+<div style="page-break-after: always;"></div>
 
 ### Locating persons by name : `find`
 
@@ -342,6 +343,8 @@ Potential Errors:
 * Duplicate Schedule with the same name is added to the same person.
 * Contact not found in address book
 
+<div style="page-break-after: always;"></div>
+
 ### Deleting a schedule: `deleteSched`
 
 Deletes a schedule that associated with a person
@@ -471,8 +474,6 @@ want to select a 6th person, you would need to unselect one of the 5 currently s
 dropdown box again.
 * The schedule will only display any timing from the current week from 8am to 9pm.
 
-<div style="page-break-after: always;"></div>
-
 ### Saving the data
 
 Moddie data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -487,6 +488,10 @@ Moddie data are saved automatically as a JSON file `[JAR file location]/data/add
 If your changes to the data file makes its format invalid, Moddie will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
+
+### Archiving data files `[coming in v2.0]`
+
+_Details coming soon ..._
 
 <div style="page-break-after: always;"></div>
 
@@ -548,6 +553,20 @@ Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.
 
 --------------------------------------------------------------------------------------------------------------------
 
+## FAQ
+
+**Q**: How do I transfer my data to another Computer?<br>
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Moddie home folder.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Known issues
+
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+2. Depending on your device, the application has a limitation where users are safely recommended to **keep only up to 8 users** in their schedule. Attempting to add more than 8 users <u> may result in unexpected behavior or performance issues. </u>
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Command summary
 
 Command    | Format, Examples
@@ -562,23 +581,4 @@ Command    | Format, Examples
 **Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. `addSched 1, 2, 3 s/CSMeeting start/2024-04-04 09:00 end/2024-04-04 17:00`
 **Delete Schedule**   | `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX` <br> e.g. `deleteSched 1 schedule/2`
 **Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 schedule/1 s/CS1101S meeting start/ 2024-04-04 12:00 end/ 2024-04-04 15:00`
-
 **Exit**   | `exit`
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
---------------------------------------------------------------------------------------------------------------------
-
-## FAQ
-
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Moddie home folder.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Known issues
-
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. Depending on your device, the application has a limitation where users are safely recommended to **keep only up to 8 users** in their schedule. Attempting to add more than 8 users <u> may result in unexpected behavior or performance issues. </u>
