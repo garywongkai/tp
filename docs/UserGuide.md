@@ -567,5 +567,5 @@ Command    | Format, Examples
 **Clear**  | `clear`
 **Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. `addSched 1, 2, 3 s/CSMeeting start/2024-04-04 09:00 end/2024-04-04 17:00`
 **Delete Schedule**   | `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX` <br> e.g. `deleteSched 1 schedule/2`
-**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX g/EDIT_GROUP [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 schedule/1 g/y s/CS1101S meeting start/ 2024-04-04 12:00 end/ 2024-04-04 15:00`
+**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX g/EDIT_GROUP [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 schedule/1 s/CS1101S meeting start/ 2024-04-04 12:00 end/ 2024-04-04 15:00`
 **Exit**   | `exit`
