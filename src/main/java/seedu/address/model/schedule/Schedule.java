@@ -15,8 +15,8 @@ import java.util.Objects;
 /**
  * Represents a Schedule in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidSchedName(String)},
- * timings are valid as declared in {@link #isStartNotAfterEnd(LocalDateTime, LocalDateTime),
- * #isInTimeRange(LocalDateTime, LocalDateTime), #isSameDay(LocalDateTime, LocalDateTime)}
+ * timings are valid as declared in {@link #isStartNotAfterEnd(LocalDateTime, LocalDateTime)},
+ * {@link #isInTimeRange(LocalDateTime, LocalDateTime)}, {@link #isSameDay(LocalDateTime, LocalDateTime)}
  */
 public class Schedule {
 
@@ -89,7 +89,7 @@ public class Schedule {
     }
 
     public void setPersonList(ArrayList<String> newPersonList) {
-        this.personList = newPersonList;
+        personList = newPersonList;
     }
 
     public ArrayList<String> getPersonList() {
