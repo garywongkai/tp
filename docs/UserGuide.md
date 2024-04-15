@@ -108,6 +108,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [t/TAG]… [i/INTEREST]�
 * Interest **must be alphanumeric**
 * If multiple `tag` are added, separate with a space (e.g t/friends t/neighbours)
 * if multiple `interest` are added, separate with a space (e.g i/basketball i/shopping)
+* You should be unable to add a duplicate person. To know what is considered a
+  duplicate person, see Duplication under the [field constraints](#field-constraints) section.
 
 **Tip:** A person can have any number of tags or interests (including 0)
 
@@ -163,11 +165,15 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [i/INTER
 * You can remove all the person’s tags by typing `i/` without
   specifying any interests after it.
 * Adding a person's format for **phone number, email, and address** applies here as well.
+* You should be unable to edit a person to become a duplicate of another person. To know what is considered a 
+duplicate person, see Duplication under the [field constraints](#field-constraints) section.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com i/Bird Watching` Edits the phone number, email address and interest of the
-* 1st person to be `91234567`, `johndoe@example.com` and `Bird Watching` respectively.
+    1st person to be `91234567`, `johndoe@example.com` and `Bird Watching` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `find alex` and then running `edit 1 n/Alen a/10 Admiralty St #04-01` will only edit the 1st person who is displayed 
+  on the contact list.
 
 Expected success outcome:
 ```
@@ -288,6 +294,9 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * The END_DATETIME must be on the same date as the START_DATETIME. E.g. START_DATETIME = 2024-07-07 12:00 and END_DATETIME = 2024-07-07 17:00
 * When adding multiple persons to schedule, said schedule must not be a duplicate in any of these persons.
 * Manual clicking of Contact list might be necessary to update changes done by user on slower devices.
+* Disclamier: If there are 2 persons with the same name, the group schedule will still show 2 participants, 
+but both participants has the same name. To know what is considered a duplicate person, 
+see Duplication under the [field constraints](#field-constraints) section.
 
 Examples:
 * `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
@@ -511,10 +520,23 @@ Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.
   * must not have any special characters e.g. !, @, #, $, …​
 * START_DATETIME 
   * must be in the format of yyyy-MM-dd HH:mm in 24-hour time
-* *END_DATETIME 
+* END_DATETIME 
   * must be in the format of yyyy-MM-dd HH:mm in 24-hour time
   * must be on the same date as the START_DATETIME. 
   * Example: START_DATETIME = `2024-07-07 12:00` and END_DATETIME = `2024-07-07 17:00`
+* Duplication
+  * A person is only considered a duplicate if the two persons share the same name and the same phone number/email.
+  * Example: Person 1: Name = `John Doe`, Phone number = `98765432`, Email = `john@gmail.com`
+  * Person 2: Name = `John Doe`, Phone number = `98765432`, Email = `johnD@outlook.com`
+  * Person 3: Name = `John Doe`, Phone number = `87654321`, Email = `john@gmail.com`
+  * Person 4: Name = `Jack Black`, Phone number = `98765432`, Email = `john@gmail.com`
+  * Person 5: Name = `John Doe`, Phone number = `81234567`, Email = `jonnyBoy@gmail.com`
+  * Person 2 is considered a duplicate of Person 1 since they share the same name and phone number
+  * Person 3 is considered a duplicate of Person 1 since they share the same name and email
+  * Person 4 is not considered a duplicate of Person 1 since they share different name, despite having the 
+    same phone number and same email
+  * Person 5 is not considered a duplicate of Person 1 since they have different phone numbers and different emails, 
+    despite having the same name
 
 
 ### Archiving data files `[coming in v2.0]`
