@@ -6,13 +6,13 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
 import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -25,9 +25,6 @@ import seedu.address.model.schedule.Schedule;
  * Parses input arguments and creates a new AddSchedCommandParser object
  */
 public class AddSchedCommandParser implements Parser<AddSchedCommand> {
-
-    private static final LocalTime earliestTime = LocalTime.of(8, 0);
-    private static final LocalTime latestTime = LocalTime.of(21, 0);
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddSchedCommand
@@ -64,21 +61,6 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
                     Schedule.CUSTOM_DATETIME);
             LocalDateTime endTime = LocalDateTime.parse(argMultimap.getValue(PREFIX_END).get(),
                     Schedule.CUSTOM_DATETIME);
-
-            boolean sameDay = (startTime.getYear() == endTime.getYear())
-                    && (startTime.getMonth() == endTime.getMonth())
-                    && (startTime.getDayOfMonth() == endTime.getDayOfMonth());
-            if (!sameDay) {
-                throw new ParseException(String.format(MESSAGE_DIFFERENT_DATE, AddSchedCommand.MESSAGE_USAGE));
-            }
-
-            if (startTime.toLocalTime().isBefore(earliestTime) || endTime.toLocalTime().isAfter(latestTime)) {
-                throw new ParseException(String.format(MESSAGE_OUT_SCOPE_DATETIME, AddSchedCommand.MESSAGE_USAGE));
-            }
-
-            if (!startTime.isBefore(endTime)) {
-                throw new ParseException(String.format(MESSAGE_START_LATE_THAN_END, AddSchedCommand.MESSAGE_USAGE));
-            }
 
             Schedule schedule = new Schedule(schedName, startTime, endTime);
             return new AddSchedCommand(indexArrayList, schedule);

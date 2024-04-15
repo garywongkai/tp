@@ -12,6 +12,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -240,9 +241,16 @@ public class ParserUtil {
         if (!Schedule.isValidSchedName(formatinputs[0])) {
             throw new ParseException(Schedule.MESSAGE_CONSTRAINTS);
         }
-        if (!Schedule.isValidTiming(startTime, endTime)) {
-            throw new ParseException(Schedule.MESSAGE_CONSTRAINTS);
+        if (!Schedule.isStartNotAfterEnd(startTime, endTime)) {
+            throw new ParseException(Messages.MESSAGE_START_LATE_THAN_END);
         }
+        if (!Schedule.isInTimeRange(startTime, endTime)) {
+            throw new ParseException(Messages.MESSAGE_OUT_SCOPE_DATETIME);
+        }
+        if (!Schedule.isSameDay(startTime, endTime)) {
+            throw new ParseException(Messages.MESSAGE_DIFFERENT_DATE);
+        }
+
         return new Schedule(name, startTime, endTime);
     }
 

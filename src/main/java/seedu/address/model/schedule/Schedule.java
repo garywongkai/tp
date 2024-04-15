@@ -2,8 +2,12 @@ package seedu.address.model.schedule;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
+import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
+import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -11,16 +15,18 @@ import java.util.Objects;
 /**
  * Represents a Schedule in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidSchedName(String)},
- * timings are valid as declared in {@link #isValidTiming(LocalDateTime, LocalDateTime)}
+ * timings are valid as declared in {@link #isStartNotAfterEnd(LocalDateTime, LocalDateTime)},
+ * {@link #isInTimeRange(LocalDateTime, LocalDateTime)}, {@link #isSameDay(LocalDateTime, LocalDateTime)}
  */
 public class Schedule {
 
     public static final String MESSAGE_CONSTRAINTS = "Schedule names should be alphanumeric";
-    public static final String MESSAGE_CONSTRAINTS_STARTAFTEREND = "Start datetime should not be after end datetime";
     public static final String VALIDATION_REGEX = "\\s?\\p{Alnum}+[\\s?\\p{Alnum}*]*";
     public static final String DATETIME_STRING = "yyyy-MM-dd HH:mm";
     public static final DateTimeFormatter CUSTOM_DATETIME = DateTimeFormatter.ofPattern(DATETIME_STRING);
     public static final DateTimeFormatter DATETIME_SHOW = DateTimeFormatter.ofPattern("dd MMM yyyy hh:mma");
+    private static final LocalTime earliestTime = LocalTime.of(8, 0);
+    private static final LocalTime latestTime = LocalTime.of(21, 0);
     private final String schedName;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
@@ -38,7 +44,10 @@ public class Schedule {
                     LocalDateTime endTime) {
         requireNonNull(schedName);
         checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
-        checkArgument(isValidTiming(startTime, endTime), MESSAGE_CONSTRAINTS_STARTAFTEREND);
+        checkArgument(isStartNotAfterEnd(startTime, endTime), MESSAGE_START_LATE_THAN_END);
+        checkArgument(isInTimeRange(startTime, endTime), MESSAGE_OUT_SCOPE_DATETIME);
+        checkArgument(isSameDay(startTime, endTime), MESSAGE_DIFFERENT_DATE);
+
         this.schedName = schedName;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -57,7 +66,10 @@ public class Schedule {
                     LocalDateTime endTime, ArrayList<String> personList) {
         requireNonNull(schedName);
         checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
-        checkArgument(isValidTiming(startTime, endTime));
+        checkArgument(isStartNotAfterEnd(startTime, endTime), MESSAGE_START_LATE_THAN_END);
+        checkArgument(isInTimeRange(startTime, endTime), MESSAGE_OUT_SCOPE_DATETIME);
+        checkArgument(isSameDay(startTime, endTime), MESSAGE_DIFFERENT_DATE);
+
         this.schedName = schedName;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -125,10 +137,26 @@ public class Schedule {
     }
 
     /**
+     * Returns true if startTime not after endTime
+     */
+    public static boolean isStartNotAfterEnd(LocalDateTime startTime, LocalDateTime endTime) {
+        return !startTime.isAfter(endTime);
+    }
+
+    /**
      * Returns true if startTime before endTime
      */
-    public static boolean isValidTiming(LocalDateTime startTime, LocalDateTime endTime) {
-        return !startTime.isAfter(endTime);
+    public static boolean isInTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
+        return !(startTime.toLocalTime().isBefore(earliestTime) || endTime.toLocalTime().isAfter(latestTime));
+    }
+
+    /**
+     * Returns true if startTime and endTime are on the same day
+     */
+    public static boolean isSameDay(LocalDateTime startTime, LocalDateTime endTime) {
+        return (startTime.getYear() == endTime.getYear())
+                && (startTime.getMonth() == endTime.getMonth())
+                && (startTime.getDayOfMonth() == endTime.getDayOfMonth());
     }
 
     /**
@@ -141,7 +169,9 @@ public class Schedule {
         }
 
         return otherSchedule != null
-                && otherSchedule.getSchedName().equals(getSchedName());
+                && otherSchedule.getSchedName().equals(getSchedName())
+                && otherSchedule.getStartTime().equals(getStartTime())
+                && otherSchedule.getEndTime().equals(getEndTime());
     }
 
     /**
