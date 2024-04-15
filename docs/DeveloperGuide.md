@@ -548,6 +548,74 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Adding a schedule
+
+1. Adding a schedule while all persons are being shown
+
+    1. Prerequisites: List some persons using the `list` command. All persons in the contact list.
+
+    1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
+       Expected: New schedule is added to first contact and appears in the Schedules column for the first contact, 
+   containing the title CS2103 weekly meeting, the start date 16 Apr 2024 12:00PM and the end date 16 APR 2024 03:00PM.
+
+   1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 12:00`<br>
+      Expected: New schedule is added to first contact and appears in the Schedules column for the first contact,
+      containing the title CS2103 weekly meeting, the start date 16 Apr 2024 12:00PM and the end date 16 APR 2024 12:00PM.
+
+    1. Test case: `addSched 1 s/ start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
+       Expected: No schedule is added. Error details shown in the status message. Contact list remains the same.
+   The error is because the title is blank
+
+   1. Test case: `addSched 1 s/CS2103 weekly meeting start/ end/2024-04-16 15:00`<br>
+      Expected: Similar to previous. The error is because the start date time is blank
+
+   1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/`<br>
+      Expected: Similar to previous. The error is because the end date time is blank
+
+   1. Test case: `addSched 0 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
+      Expected: Similar to previous. The error is because the person index is <1
+
+   1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 11:00`<br>
+      Expected: Similar to previous. The error is because the end date time is earlier than the start date time
+
+   1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-15 12:00 end/2024-04-17 11:00`<br>
+      Expected: Similar to previous. The error is because the start date time and end date time are on different days, which is not allowed
+
+   1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-15 05:00 end/2024-04-17 23:00`<br>
+      Expected: Similar to previous. The error is because the start date time and end date time are out of the range of 08:00 to 21:00
+
+    1. Other incorrect addSched commands to try: `addSched`, `addSched x s/..`, `...` (where x is larger than the list size)<br>
+       Expected: Similar to previous.
+
+1. Adding a schedule while some persons are being shown
+
+    1. Prerequisites: List some persons using the `find` command. Multiple persons in the contact list, but less
+       than contact list size. Assume there are 6 contacts in the entire contact list, 
+   but `find` shows 3 of those contacts currently.
+
+    1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
+       Expected: New schedule is added to first contact and appears in the Schedules column for the first contact,
+       containing the title CS2103 weekly meeting, the start date 16 Apr 2024 12:00PM and the end date 16 APR 2024 12:00PM.
+       2. Using the `list` command afterwards, it would display all 6 contacts in the contact list. The added schedule
+       will be shown with the person it was added to, which may be in a different index from before.
+
+    1. Test case: `addSched 4 s/ start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
+       Expected: No schedule is added. Error details shown in the status message. Contact list remains the same.
+       The error is because person index is out of range
+
+   1. Other incorrect addSched commands: all previous incorrect addSched applies here
+
+1. Adding a schedule while no persons are being shown
+
+    1. Prerequisites: List no persons using the `find` command. No person in the contact list. Assume there are 6 contacts in the entire contact list,
+       but `find` shows 0 of those contacts currently.
+
+    1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
+       Expected: No schedule is added. Error details shown in the status message. Contact list remains the same.
+       The error is because the person index is out of range
+
+   1. Other incorrect addSched commands: all previous incorrect addSched applies here
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files

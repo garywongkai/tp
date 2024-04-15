@@ -144,7 +144,7 @@ public class Schedule {
     }
 
     /**
-     * Returns true if startTime before endTime
+     * Returns true if startTime and endTime are in range
      */
     public static boolean isInTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
         return !(startTime.toLocalTime().isBefore(earliestTime) || endTime.toLocalTime().isAfter(latestTime));
