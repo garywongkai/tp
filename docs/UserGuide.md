@@ -393,7 +393,7 @@ Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start
   number of people in the address book.
 * The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in
   the schedule list for the person from PERSON_INDEX.
-* The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
+* The SCHEDULE_NAME **must be included, can be of any format** 
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * There must be at least 1 input for SCHEDULE_NAME, START_DATETIME or END_DATETIME,
@@ -523,7 +523,7 @@ Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.
   * Must be Alphanumeric.
   * Example: `i/fruits`
 * SCHEDULE_NAME
-  * must not have any special characters e.g. !, @, #, $, …​
+  * Can be in any format
 * START_DATETIME
   * must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * END_DATETIME 
