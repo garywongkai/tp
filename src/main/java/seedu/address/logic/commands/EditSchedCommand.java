@@ -5,7 +5,6 @@ import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
 import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
 import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -39,16 +38,14 @@ public class EditSchedCommand extends Command {
             + "Parameters: "
             + "PERSON INDEX(S) (must be positive integer) "
             + PREFIX_SPECIFIC_SCHEDULE_INDEX + "TASK INDEX(S) (must be positive integer) "
-            + PREFIX_GROUP + "EDIT ALL PARTICIPANTS (y/n)"
             + "[" + PREFIX_SCHEDULE + " SCHEDULE NAME] "
-            + "[" + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)] "
-            + "[" + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)] \n"
+            + "[" + PREFIX_START + "START DATETIME (yyyy-MM-dd HH:mm)] "
+            + "[" + PREFIX_END + "END DATETIME (yyyy-MM-dd HH:mm)] \n"
             + "Example: " + COMMAND_WORD + " " + "1 "
             + PREFIX_SPECIFIC_SCHEDULE_INDEX + " 1 "
-            + PREFIX_GROUP + "y"
-            + "[" + PREFIX_SCHEDULE + " CS2103 weekly meeting] "
-            + "[" + PREFIX_START + " 2024-02-24 15:00] "
-            + "[" + PREFIX_END + " 2024-02-24 17:00] ";
+            + "[" + PREFIX_SCHEDULE + "CS2103 weekly meeting] "
+            + "[" + PREFIX_START + "2024-02-24 15:00] "
+            + "[" + PREFIX_END + "2024-02-24 17:00] ";
 
     public static final String MESSAGE_EDIT_SCHEDULE_SUCCESS = "Edited Schedule: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -61,7 +58,6 @@ public class EditSchedCommand extends Command {
 
     private final Index personIndex;
     private final Index scheduleIndex;
-    private final String changeGroup;
 
 
     private final Logger logger = LogsCenter.getLogger(EditSchedCommand.class);
@@ -77,20 +73,17 @@ public class EditSchedCommand extends Command {
      * @param scheduleIndex index of schedule to edit
      * @param editScheduleDescriptor to create edited schedule
      */
-    public EditSchedCommand(Index personIndex, Index scheduleIndex, String changeGroup,
+    public EditSchedCommand(Index personIndex, Index scheduleIndex,
                             EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor) {
         assert personIndex != null;
         assert scheduleIndex != null;
-        assert changeGroup != null;
         assert editScheduleDescriptor != null;
         requireNonNull(personIndex);
         requireNonNull(scheduleIndex);
-        requireNonNull(changeGroup);
         requireNonNull(editScheduleDescriptor);
 
         this.personIndex = personIndex;
         this.scheduleIndex = scheduleIndex;
-        this.changeGroup = changeGroup;
         this.editScheduleDescriptor =
                 new EditSchedCommand.EditScheduleDescriptor(editScheduleDescriptor);
     }
@@ -128,28 +121,15 @@ public class EditSchedCommand extends Command {
                                               Schedule editedSchedule, Person personToDelete) throws CommandException {
         System.out.println(scheduleToDelete.getPersonList().size());
         if (scheduleToDelete.getPersonList().size() > 1) {
-            if (changeGroup.equalsIgnoreCase("y")) {
-                for (Person p: model.getFilteredPersonList()) {
-                    if (p.getSchedules().contains(scheduleToDelete)) {
-                        System.out.println();
-                        model.deleteSchedule(p, scheduleToDelete);
-                        p.addSchedule(editedSchedule);
-                        model.addSchedule(editedSchedule);
-                    }
-                }
-            } else if (changeGroup.equalsIgnoreCase("n")) {
-                ArrayList<String> newParticipants = new ArrayList<>();
-                newParticipants.add(personToDelete.getName().toString());
-                editedSchedule.setPersonList(newParticipants);
-                model.deleteSchedule(personToDelete, scheduleToDelete);
-                scheduleToDelete.removePerson(personToDelete.getName().toString());
-                ArrayList<Person> changedPerson = new ArrayList<>();
-                changedPerson.add(personToDelete);
-                if (!scheduleToDelete.getPersonList().isEmpty()) {
-                    model.addSchedule(editedSchedule, changedPerson);
-                }
-            } else {
-                throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+            ArrayList<String> newParticipants = new ArrayList<>();
+            newParticipants.add(personToDelete.getName().toString());
+            editedSchedule.setPersonList(newParticipants);
+            model.deleteSchedule(personToDelete, scheduleToDelete);
+            scheduleToDelete.removePerson(personToDelete.getName().toString());
+            ArrayList<Person> changedPerson = new ArrayList<>();
+            changedPerson.add(personToDelete);
+            if (!scheduleToDelete.getPersonList().isEmpty()) {
+                model.addSchedule(editedSchedule, changedPerson);
             }
         } else {
             model.deleteSchedule(personToDelete, scheduleToDelete);
