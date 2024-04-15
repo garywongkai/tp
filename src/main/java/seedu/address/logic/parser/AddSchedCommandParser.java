@@ -1,10 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
+import static seedu.address.logic.Messages.*;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -63,7 +60,6 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
                     Schedule.CUSTOM_DATETIME);
             LocalDateTime endTime = LocalDateTime.parse(argMultimap.getValue(PREFIX_END).get(),
                     Schedule.CUSTOM_DATETIME);
-            Schedule schedule = new Schedule(schedName, startTime, endTime);
 
             boolean sameDay = (startTime.getYear() == endTime.getYear())
                     && (startTime.getMonth() == endTime.getMonth())
@@ -74,9 +70,15 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
 
             if (startTime.toLocalTime().isBefore(earliestTime) || endTime.toLocalTime().isAfter(latestTime)) {
                 throw new ParseException(String.format(MESSAGE_OUT_SCOPE_DATETIME, AddSchedCommand.MESSAGE_USAGE));
-            } else {
-                return new AddSchedCommand(indexArrayList, schedule);
             }
+
+            if (!startTime.isBefore(endTime)) {
+                throw new ParseException(String.format(MESSAGE_START_LATE_THAN_END, AddSchedCommand.MESSAGE_USAGE));
+            }
+
+            Schedule schedule = new Schedule(schedName, startTime, endTime);
+            return new AddSchedCommand(indexArrayList, schedule);
+
         } catch (DateTimeException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_DATETIME_FORMAT, AddSchedCommand.MESSAGE_USAGE));
         }
