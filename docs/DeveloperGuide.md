@@ -552,6 +552,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  A user can view 5 other students at one go in the schedule view.
 5.  The program should run on a decently fast device.
 *{More to be added}*
+<div style="page-break-after: always;"></div>
 
 ### Glossary
 
@@ -559,6 +560,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Module**: A slot in the day used for lesson
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -604,6 +606,7 @@ testers are expected to do more *exploratory* testing.
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
+<div style="page-break-after: always;"></div>
 
 ### Adding a schedule
 
