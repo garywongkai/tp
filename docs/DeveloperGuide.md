@@ -22,6 +22,7 @@ _{ list here sources of all reused/adapted ideas, code, documentation, and third
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;">
 
 ## **Design**
 
@@ -47,6 +48,7 @@ The bulk of the app's work is done by the following four components:
 * [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
+<div style="page-break-after: always;">
 
 **How the architecture components interact with each other**
 
@@ -64,6 +66,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 <puml src="diagrams/ComponentManagers.puml" width="300" />
 
 The sections below give more details of each component.
+<div style="page-break-after: always;">
 
 ### UI component
 
@@ -81,6 +84,7 @@ The `UI` component,
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+<div style="page-break-after: always;">
 
 ### Logic component
 
@@ -114,6 +118,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+<div style="page-break-after: always;">
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -136,6 +141,7 @@ The `Model` component,
 
 </box>
 
+<div style="page-break-after: always;">
 
 ### Storage component
 
@@ -153,6 +159,7 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;">
 
 ## **Implementation**
 
@@ -165,6 +172,7 @@ The following sequence diagram shows how an add schedule operation goes through 
 
 The following activity diagram summarizes what happens when a user executes the addSched command:
 <puml src="diagrams/AddSchedActivityDiagram.puml" alt="AddScheduleActivityDiagram" />
+<div style="page-break-after: always;">
 
 ### Edit Schedule feature
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
@@ -172,6 +180,7 @@ The following sequence diagram shows how an add schedule operation goes through 
 
 The following activity diagram summarizes what happens when a user executes the editSched command:
 <puml src="diagrams/EditSchedActivityDiagram.puml" alt="EditSchedActivityDiagram" />
+<div style="page-break-after: always;">
 
 ### Delete Schedule feature
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
@@ -257,6 +266,7 @@ Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Sinc
 The following activity diagram summarizes what happens when a user executes a new command:
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
+<div style="page-break-after: always;">
 
 #### Design considerations:
 
@@ -279,6 +289,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;">
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -305,7 +316,6 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefer a simple UI
 
 **Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
 
 ### User stories
 
@@ -591,7 +601,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1g1. AddressBook shows a message: The schedule name should not be empty.
 
       Use case ends.
-  
+
+<div style="page-break-after: always;">
 
 
 ### Non-Functional Requirements
@@ -609,6 +620,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Module**: A slot in the day used for lesson
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;">
 
 ## **Appendix: Instructions for manual testing**
 
@@ -809,6 +821,7 @@ testers are expected to do more *exploratory* testing.
        The error is because schedule index is out of range
 
    1. Other incorrect editSched commands: all previous incorrect editSched applies here
+<div style="page-break-after: always;">
 
 ### Deleting a schedule
 
@@ -878,6 +891,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+<div style="page-break-after: always;">
 
 ## **Appendix: Planned Enhancments**
 1. Adding the color to the schedule display corresponding to the tag Person
