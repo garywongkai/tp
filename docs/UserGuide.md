@@ -11,6 +11,8 @@ Moddie is a **desktop app for managing schedules, interests, and tags of contact
 <!-- * Table of Contents -->
 <page-nav-print />
 
+<div style="page-break-after: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
@@ -94,6 +96,8 @@ Upon typing some input and deleting it entirely, will prompt it to list down all
 ```
 ![Suggestion Bar](images/suggestionBar.png)
 
+<div style="page-break-after: always;"></div>
+
 ### Adding a person: `add`
 
 Adds a person to the address book with their information.
@@ -144,6 +148,8 @@ Expected success outcome:
 ```
 Listed all persons
 ```
+
+<div style="page-break-after: always;"></div>
 
 ### Editing a person : `edit`
 
@@ -234,6 +240,8 @@ Expected failure outcome:
 0 persons listed!
 ```
 
+<div style="page-break-after: always;"></div>
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -288,6 +296,8 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * The END_DATETIME must be on the same date as the START_DATETIME. E.g. START_DATETIME = 2024-07-07 12:00 and END_DATETIME = 2024-07-07 17:00
 * When adding multiple persons to schedule, said schedule must not be a duplicate in any of these persons.
 * Manual clicking of Contact list might be necessary to update changes done by user on slower devices.
+
+<div style="page-break-after: always;"></div>
 
 Examples:
 * `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
@@ -363,6 +373,8 @@ Potential Errors:
 * Contact not found in address book
 * Schedule not found in schedule list of person
 
+<div style="page-break-after: always;"></div>
+
 ### Editing a schedule: `editSched`
 
 Edit a schedule that associated with a person with new information, and optionally, you may also edit the group associated with the schedule.
@@ -424,6 +436,8 @@ Potential Errors:
 * Schedule not found in schedule list of person
 * There is no input for the SCHEDULE_NAME, START_DATETIME and END_DATETIME
 
+<div style="page-break-after: always;"></div>
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -457,6 +471,7 @@ want to select a 6th person, you would need to unselect one of the 5 currently s
 dropdown box again. 
 * The schedule will only display any timing from the current week from 8am to 9pm.
 
+<div style="page-break-after: always;"></div>
 
 ### Saving the data
 
