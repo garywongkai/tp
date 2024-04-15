@@ -279,10 +279,9 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
-  The END_DATETIME must be on the same date as the START_DATETIME. E.g. START_DATETIME = 2024-07-07 12:00 
-  and END_DATETIME = 2024-07-07 17:00
-* `find Betsy` followed by `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
+* `find Betsy` followed by `addSched 1 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` adds the 1st person in
    the results of the `find` command to the event stated.
+* The END_DATETIME must be on the same date as the START_DATETIME. E.g. START_DATETIME = 2024-07-07 12:00 and END_DATETIME = 2024-07-07 17:00
 * When adding multiple persons to schedule, said schedule must not be a duplicate in any of these persons.
 * Manual clicking of Contact list might be necessary to update changes done by user on slower devices.
 
