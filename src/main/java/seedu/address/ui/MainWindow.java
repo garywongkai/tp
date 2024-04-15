@@ -300,6 +300,15 @@ public class MainWindow extends UiPart<Stage> {
         });
         schedules.addListener((ListChangeListener.Change<? extends Schedule> change) -> {
             while (change.next()) {
+                List<? extends Person> removedPersons1 = personComboBox.getItems();
+                System.out.println("person combo box items = " + personComboBox.getItems().toString());
+                for (Person removedPerson1 : removedPersons1) {
+                    populatedPerson.remove(removedPerson1);
+                    Label nameLabel2 = populatedLabels.get(removedPerson1);
+                    selectedPersonsTag.getChildren().remove(nameLabel2);
+                    populatedLabels.remove(removedPerson1);
+                }
+                weeklyScheduleView.clear();
                 personListPanel.refresh();
             }
         });
