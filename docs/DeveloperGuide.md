@@ -22,6 +22,7 @@ _{ list here sources of all reused/adapted ideas, code, documentation, and third
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always;">
 
 ## **Design**
@@ -48,6 +49,7 @@ The bulk of the app's work is done by the following four components:
 * [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
+
 <div style="page-break-after: always;">
 
 **How the architecture components interact with each other**
@@ -66,6 +68,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 <puml src="diagrams/ComponentManagers.puml" width="300" />
 
 The sections below give more details of each component.
+
 <div style="page-break-after: always;">
 
 ### UI component
@@ -84,6 +87,7 @@ The `UI` component,
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+
 <div style="page-break-after: always;">
 
 ### Logic component
@@ -118,6 +122,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
 <div style="page-break-after: always;">
 
 ### Model component
@@ -159,6 +164,7 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always;">
 
 ## **Implementation**
@@ -174,6 +180,8 @@ The following activity diagram summarizes what happens when a user executes the 
 <puml src="diagrams/AddSchedActivityDiagram.puml" alt="AddScheduleActivityDiagram" />
 <div style="page-break-after: always;">
 
+<div style="page-break-after: always;">
+
 ### Edit Schedule feature
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
 <puml src="diagrams/EditSchedSequenceDiagram.puml" alt="EditSchedSequenceDiagram" />
@@ -182,12 +190,16 @@ The following activity diagram summarizes what happens when a user executes the 
 <puml src="diagrams/EditSchedActivityDiagram.puml" alt="EditSchedActivityDiagram" />
 <div style="page-break-after: always;">
 
+<div style="page-break-after: always;">
+
 ### Delete Schedule feature
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
 <puml src="diagrams/DeleteSchedSequenceDiagram.puml" alt="DeleteSchedSequenceDiagram" />
 
 The following activity diagram summarizes what happens when a user executes the deleteSched command:
 <puml src="diagrams/DeleteSchedActivityDiagram.puml" alt="DeleteSchedActivityDiagram" />
+
+<div style="page-break-after: always;">
 
 ### \[Proposed\] Undo/redo feature
 
@@ -233,6 +245,8 @@ than attempting to perform the undo.
 
 </box>
 
+<div style="page-break-after: always;">
+
 The following sequence diagram shows how an undo operation goes through the `Logic` component:
 
 <puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
@@ -266,6 +280,7 @@ Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Sinc
 The following activity diagram summarizes what happens when a user executes a new command:
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
+
 <div style="page-break-after: always;">
 
 #### Design considerations:
@@ -289,6 +304,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always;">
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -300,6 +316,8 @@ _{Explain here how the data archiving feature will be implemented}_
 * [DevOps guide](DevOps.md)
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;">
 
 ## **Appendix: Requirements**
 
@@ -354,6 +372,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*` | project leader                                          |have an interface to see the timetable of my group mates | synchronise meetings best fitted for everyone’s schedule.                                          |
 | `*` | international student                                   | know my groupmates’ schedules to better arrange my flights (to avoid missing any meeting)| successfully accommodate my travel plans.                                                          |
 | `*` | introverted NUS student                                 |arrange meetings with my new groupmates without interacting with them| comfortably initiate group collaboration and fulfil project requirements.                          |
+
+<div style="page-break-after: always;">
 
 ### Use cases
 
@@ -452,6 +472,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
+<div style="page-break-after: always;">
 
 **Use case: UC06 - Help**
 
@@ -525,6 +546,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1g1. AddressBook shows a message: The schedule name should not be empty.
 
       Use case ends.
+
+<div style="page-break-after: always;">
 
 **Use case UC09 - Delete a schedule**
 
@@ -604,7 +627,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 <div style="page-break-after: always;">
 
-
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
@@ -620,6 +642,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Module**: A slot in the day used for lesson
 --------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always;">
 
 ## **Appendix: Instructions for manual testing**
@@ -706,6 +729,8 @@ testers are expected to do more *exploratory* testing.
     1. Other incorrect addSched commands to try: `addSched`, `addSched x s/..`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
+<div style="page-break-after: always;">
+
 1. Adding a schedule while some persons are being shown
 
     1. Prerequisites: List some persons using the `find` command. Multiple persons in the contact list, but less
@@ -734,6 +759,8 @@ testers are expected to do more *exploratory* testing.
        The error is because the person index is out of range
 
    1. Other incorrect addSched commands: all previous incorrect addSched applies here
+
+<div style="page-break-after: always;">
 
 ### Editing a schedule
 
@@ -778,6 +805,8 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect editSched commands to try: `editSched`, `editSched x schedule/x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
+<div style="page-break-after: always;">
+
 1. Editing a schedule while some persons are being shown
 
     1. Prerequisites: List some persons using the `find` command. Multiple persons in the contact list, but less
@@ -821,6 +850,7 @@ testers are expected to do more *exploratory* testing.
        The error is because schedule index is out of range
 
    1. Other incorrect editSched commands: all previous incorrect editSched applies here
+
 <div style="page-break-after: always;">
 
 ### Deleting a schedule
@@ -860,6 +890,8 @@ testers are expected to do more *exploratory* testing.
        Expected: Similar to previous. The error is because the schedule index is out of range
 
    1. Other incorrect deleteSched commands: all previous incorrect deleteSched applies here
+
+<div style="page-break-after: always;">
 
 1. Deleting a schedule while no persons are being shown
 
