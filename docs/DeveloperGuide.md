@@ -22,6 +22,7 @@ _{ list here sources of all reused/adapted ideas, code, documentation, and third
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
@@ -47,6 +48,7 @@ The bulk of the app's work is done by the following four components:
 * [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
+<div style="page-break-after: always;"></div>
 
 **How the architecture components interact with each other**
 
@@ -64,6 +66,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 <puml src="diagrams/ComponentManagers.puml" width="300" />
 
 The sections below give more details of each component.
+<div style="page-break-after: always;"></div>
 
 ### UI component
 
@@ -81,6 +84,7 @@ The `UI` component,
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+<div style="page-break-after: always;"></div>
 
 ### Logic component
 
@@ -114,6 +118,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+<div style="page-break-after: always;"></div>
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -136,6 +141,7 @@ The `Model` component,
 
 </box>
 
+<div style="page-break-after: always;"></div>
 
 ### Storage component
 
@@ -153,6 +159,7 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Implementation**
 
@@ -486,14 +493,64 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+**Use case: UC09 - Edit schedule**
+
+**MSS**
+
+1.  User requests to edit an event with contact from specified date with time.
+2.  AddressBook edit the event to the specific contact.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The entered datetime format is invalid
+
+    * 1a1. AddressBook shows an error message: The date format provided is invalid. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1b. The entered index is invalid
+
+    * 1b1. AddressBook shows a message: The person index provided is invalid
+
+      Use case ends.
+* 1c. The schedule name is invalid
+    * 1c1. AddressBook shows a message: Schedule name is invalid
+  
+    Use case ends.
+<div style="page-break-after: always;"></div>
+
+**Use case: UC10 - Delete schedule**
+
+**MSS**
+
+1.  User requests to delete an event with contact from specified date with time.
+2.  AddressBook delete the event to the specific contact.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The entered schedule index is invalid
+
+    * 1a1. AddressBook shows an error message: The schedule index provided is invalid
+
+      Use case ends.
+
+* 1b. The entered person index is invalid
+
+    * 1b1. AddressBook shows a message: The person index provided is invalid
+
+      Use case ends.
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-5.  A user can view 5 other students at one go in the schedule view.
-
+4.  A user can view 5 other students at one go in the schedule view.
+5.  The program should run on a decently fast device.
 *{More to be added}*
 
 ### Glossary
@@ -624,6 +681,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Planned Enhancments**
 1. Adding the color to the schedule display corresponding to the tag Person
