@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.*;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
@@ -9,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +53,9 @@ public class EditSchedCommand extends Command {
     public static final String MESSAGE_TASK_NOT_SPECIFIED = "No task index has been specified.";
     public static final String MESSAGE_DUPLICATE_SCHEDULE =
             "This schedule already exists in the address book.";
+
+    private static final LocalTime earliestTime = LocalTime.of(8, 0);
+    private static final LocalTime latestTime = LocalTime.of(21, 0);
 
     private final Index personIndex;
     private final Index scheduleIndex;
@@ -166,8 +171,29 @@ public class EditSchedCommand extends Command {
         String updatedSchedName = editScheduleDescriptor.getSchedName().orElse(scheduleToEdit.getSchedName());
         LocalDateTime updatedStartTime = editScheduleDescriptor.getStartTime().orElse(scheduleToEdit.getStartTime());
         LocalDateTime updatedEndTime = editScheduleDescriptor.getEndTime().orElse(scheduleToEdit.getEndTime());
-        return new Schedule(updatedSchedName, updatedStartTime, updatedEndTime,
+        
+        return generateInvalidSchedule(updatedSchedName, updatedStartTime, updatedEndTime,
                 new ArrayList<>(scheduleToEdit.getPersonList()));
+    }
+
+    private static Schedule generateInvalidSchedule(String schedName, LocalDateTime startTime, LocalDateTime endTime,
+                                          ArrayList<String> personList) throws CommandException{
+        boolean sameDay = (startTime.getYear() == endTime.getYear())
+                && (startTime.getMonth() == endTime.getMonth())
+                && (startTime.getDayOfMonth() == endTime.getDayOfMonth());
+        if (!sameDay) {
+            throw new CommandException(String.format(MESSAGE_DIFFERENT_DATE, AddSchedCommand.MESSAGE_USAGE));
+        }
+
+        if (startTime.toLocalTime().isBefore(earliestTime) || endTime.toLocalTime().isAfter(latestTime)) {
+            throw new CommandException(String.format(MESSAGE_OUT_SCOPE_DATETIME, AddSchedCommand.MESSAGE_USAGE));
+        }
+
+        if (!startTime.isBefore(endTime)) {
+            throw new CommandException(String.format(MESSAGE_START_LATE_THAN_END, AddSchedCommand.MESSAGE_USAGE));
+        }
+        return new Schedule(schedName, startTime, endTime, personList);
+
     }
 
     @Override

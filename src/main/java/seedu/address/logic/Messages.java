@@ -35,6 +35,10 @@ public class Messages {
             "The schedule start time and end time should be in the same day. "
             + "Format: " + getDateTimeStringFormat();
 
+    public static final String MESSAGE_START_LATE_THAN_END =
+            "The schedule start time should be earlier than end time. "
+                    + "Format: " + getDateTimeStringFormat();
+
     /**
      * Returns an error message indicating the duplicate prefixes.
      */

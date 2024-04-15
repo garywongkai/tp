@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Interest;
@@ -120,6 +121,15 @@ public class Person {
 
     public void deleteSchedule(Schedule s) {
         schedules.remove(s);
+    }
+
+    public void setSchedule(Schedule toEditSchedule, Schedule editedSchedule) {
+        int n = schedules.size();
+        for (int i = 0; i < n; i++) {
+            if (schedules.get(i).isSameSchedule(toEditSchedule)) {
+                schedules.set(i, editedSchedule);
+            }
+        }
     }
 
     /**
