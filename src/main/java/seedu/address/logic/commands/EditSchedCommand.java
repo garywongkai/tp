@@ -52,6 +52,7 @@ public class EditSchedCommand extends Command {
     public static final String MESSAGE_TASK_NOT_SPECIFIED = "No task index has been specified.";
     public static final String MESSAGE_DUPLICATE_SCHEDULE =
             "This schedule already exists in the address book.";
+    private static final String MESSAGE_INVALID_NAME = "Schedule name is invalid";
 
     private static final LocalTime earliestTime = LocalTime.of(8, 0);
     private static final LocalTime latestTime = LocalTime.of(21, 0);
@@ -173,7 +174,15 @@ public class EditSchedCommand extends Command {
         if (!startTime.isBefore(endTime)) {
             throw new CommandException(String.format(MESSAGE_START_LATE_THAN_END, AddSchedCommand.MESSAGE_USAGE));
         }
-        return new Schedule(schedName, startTime, endTime, personList);
+
+        if (schedName == null) {
+            throw new CommandException(String.format(MESSAGE_INVALID_NAME, AddSchedCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new Schedule(schedName, startTime, endTime, personList);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(String.format(MESSAGE_INVALID_NAME, AddSchedCommand.MESSAGE_USAGE));
+        }
 
     }
 
