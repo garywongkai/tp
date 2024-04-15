@@ -3,8 +3,8 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
-import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
+import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -158,8 +158,6 @@ public class Schedule {
                 && (startTime.getMonth() == endTime.getMonth())
                 && (startTime.getDayOfMonth() == endTime.getDayOfMonth());
     }
-
-
 
     /**
      * Returns true if both persons have the same name.
