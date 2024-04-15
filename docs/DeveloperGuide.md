@@ -23,7 +23,7 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
@@ -50,7 +50,7 @@ The bulk of the app's work is done by the following four components:
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 **How the architecture components interact with each other**
 
@@ -69,7 +69,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 The sections below give more details of each component.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### UI component
 
@@ -88,7 +88,7 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Logic component
 
@@ -123,7 +123,7 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -146,7 +146,7 @@ The `Model` component,
 
 </box>
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Storage component
 
@@ -165,7 +165,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ## **Implementation**
 
@@ -178,9 +178,8 @@ The following sequence diagram shows how an add schedule operation goes through 
 
 The following activity diagram summarizes what happens when a user executes the addSched command:
 <puml src="diagrams/AddSchedActivityDiagram.puml" alt="AddScheduleActivityDiagram" />
-<div style="page-break-after: always;">
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Edit Schedule feature
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
@@ -188,9 +187,8 @@ The following sequence diagram shows how an add schedule operation goes through 
 
 The following activity diagram summarizes what happens when a user executes the editSched command:
 <puml src="diagrams/EditSchedActivityDiagram.puml" alt="EditSchedActivityDiagram" />
-<div style="page-break-after: always;">
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Delete Schedule feature
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
@@ -199,7 +197,7 @@ The following sequence diagram shows how an add schedule operation goes through 
 The following activity diagram summarizes what happens when a user executes the deleteSched command:
 <puml src="diagrams/DeleteSchedActivityDiagram.puml" alt="DeleteSchedActivityDiagram" />
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### \[Proposed\] Undo/redo feature
 
@@ -245,7 +243,7 @@ than attempting to perform the undo.
 
 </box>
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 The following sequence diagram shows how an undo operation goes through the `Logic` component:
 
@@ -281,7 +279,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 #### Design considerations:
 
@@ -305,7 +303,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -317,7 +315,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Requirements**
 
@@ -373,7 +371,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*` | international student                                   | know my groupmates’ schedules to better arrange my flights (to avoid missing any meeting)| successfully accommodate my travel plans.                                                          |
 | `*` | introverted NUS student                                 |arrange meetings with my new groupmates without interacting with them| comfortably initiate group collaboration and fulfil project requirements.                          |
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Use cases
 
@@ -397,7 +395,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 
-#### **Use case: UC02 - Delete a contact**
+**Use case: UC02 - Delete a contact**
 
 **MSS**
 
@@ -472,7 +470,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 **Use case: UC06 - Help**
 
@@ -547,7 +545,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 **Use case UC09 - Delete a schedule**
 
@@ -625,7 +623,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Non-Functional Requirements
 
@@ -643,7 +641,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Module**: A slot in the day used for lesson
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -729,7 +727,7 @@ testers are expected to do more *exploratory* testing.
     1. Other incorrect addSched commands to try: `addSched`, `addSched x s/..`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 1. Adding a schedule while some persons are being shown
 
@@ -760,7 +758,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect addSched commands: all previous incorrect addSched applies here
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Editing a schedule
 
@@ -805,7 +803,7 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect editSched commands to try: `editSched`, `editSched x schedule/x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 1. Editing a schedule while some persons are being shown
 
@@ -851,7 +849,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect editSched commands: all previous incorrect editSched applies here
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ### Deleting a schedule
 
@@ -891,7 +889,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect deleteSched commands: all previous incorrect deleteSched applies here
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 1. Deleting a schedule while no persons are being shown
 
@@ -923,7 +921,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-<div style="page-break-after: always;">
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Planned Enhancments**
 1. Adding the color to the schedule display corresponding to the tag Person
