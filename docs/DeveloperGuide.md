@@ -474,17 +474,124 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The entered datetime format is invalid
+* 1a. The edited datetime format is invalid
 
     * 1a1. AddressBook shows an error message: The date format provided is invalid. Format: yyyy-MM-dd HH:mm
 
       Use case ends.
 
-* 1b. The entered index is invalid
+* 1b. The edited person index is invalid
 
     * 1b1. AddressBook shows a message: The person index provided is invalid
 
       Use case ends.
+
+* 1c. The edited schedule index is invalid
+
+    * 1c1. AddressBook shows a message: The schedule index provided is invalid
+
+      Use case ends.
+
+* 1d. The edited datetime is out of range
+
+    * 1d1. AddressBook shows a message: The schedule time should be between 8:00 to 21:00. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1e. The edited start datetime and end datetime are not on the same day
+
+    * 1e1. AddressBook shows a message: The schedule start time and end time should be in the same day. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1f. The edited end datetime is before the start date time
+
+    * 1f1. AddressBook shows a message: The schedule start time should be earlier than end time. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1g. The edited schedule name is empty
+
+    * 1g1. AddressBook shows a message: The schedule name should not be empty.
+
+      Use case ends.
+
+**Use case UC09 - Delete a schedule**
+
+**MSS**
+
+1.  User requests to delete the specific event from specific contact.
+2.  AddressBook removes the specific event to the specific contact.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The entered person index is invalid
+
+    * 1a1. AddressBook shows a message: The person index provided is invalid
+
+      Use case ends.
+
+* 1b. The entered schedule index is invalid
+
+    * 1b1. AddressBook shows a message: The schedule index provided is invalid
+
+      Use case ends.
+
+**Use case UC10 - Edit a schedule**
+
+**MSS**
+
+1.  User requests to edit the specific event from specific contact.
+2.  AddressBook edits the event information of the specific event from the specific contact.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The edited datetime format is invalid
+
+    * 1a1. AddressBook shows an error message: The date format provided is invalid. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1b. The edited person index is invalid
+
+    * 1b1. AddressBook shows a message: The person index provided is invalid
+
+      Use case ends.
+
+* 1c. The edited schedule index is invalid
+
+    * 1c1. AddressBook shows a message: The schedule index provided is invalid
+
+      Use case ends.
+
+* 1d. The edited datetime is out of range
+
+    * 1d1. AddressBook shows a message: The schedule time should be between 8:00 to 21:00. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1e. The edited start datetime and end datetime are not on the same day
+
+    * 1e1. AddressBook shows a message: The schedule start time and end time should be in the same day. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1f. The edited end datetime is before the start date time
+
+    * 1f1. AddressBook shows a message: The schedule start time should be earlier than end time. Format: yyyy-MM-dd HH:mm
+
+      Use case ends.
+
+* 1g. The edited schedule name is empty
+
+    * 1g1. AddressBook shows a message: The schedule name should not be empty.
+
+      Use case ends.
+  
 
 
 ### Non-Functional Requirements
