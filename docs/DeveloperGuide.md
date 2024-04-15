@@ -556,11 +556,11 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
        Expected: New schedule is added to first contact and appears in the Schedules column for the first contact, 
-   containing the title CS2103 weekly meeting, the start date 16 Apr 2024 12:00PM and the end date 16 APR 2024 03:00PM.
+   containing the title CS2103 weekly meeting, the start date 16th Apr 2024 12:00PM and the end date 16th Apr 2024 03:00PM.
 
    1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 12:00`<br>
       Expected: New schedule is added to first contact and appears in the Schedules column for the first contact,
-      containing the title CS2103 weekly meeting, the start date 16 Apr 2024 12:00PM and the end date 16 APR 2024 12:00PM.
+      containing the title CS2103 weekly meeting, the start date 16th Apr 2024 12:00PM and the end date 16th Apr 2024 12:00PM.
 
     1. Test case: `addSched 1 s/ start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
        Expected: No schedule is added. Error details shown in the status message. Contact list remains the same.
@@ -573,7 +573,7 @@ testers are expected to do more *exploratory* testing.
       Expected: Similar to previous. The error is because the end date time is blank
 
    1. Test case: `addSched 0 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 15:00`<br>
-      Expected: Similar to previous. The error is because the person index is <1
+      Expected: Similar to previous. The error is because the person index is out of range
 
    1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 12:00 end/2024-04-16 11:00`<br>
       Expected: Similar to previous. The error is because the end date time is earlier than the start date time
@@ -581,7 +581,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-15 12:00 end/2024-04-17 11:00`<br>
       Expected: Similar to previous. The error is because the start date time and end date time are on different days, which is not allowed
 
-   1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-15 05:00 end/2024-04-17 23:00`<br>
+   1. Test case: `addSched 1 s/CS2103 weekly meeting start/2024-04-16 05:00 end/2024-04-16 23:00`<br>
       Expected: Similar to previous. The error is because the start date time and end date time are out of the range of 08:00 to 21:00
 
     1. Other incorrect addSched commands to try: `addSched`, `addSched x s/..`, `...` (where x is larger than the list size)<br>
@@ -615,6 +615,117 @@ testers are expected to do more *exploratory* testing.
        The error is because the person index is out of range
 
    1. Other incorrect addSched commands: all previous incorrect addSched applies here
+
+### Editing a schedule
+
+1. Editing a schedule while all persons are being shown
+
+    1. Prerequisites: List some persons using the `list` command. All persons in the contact list.
+
+    1. Test case: `editSched 1 schedule/1 s/CS2102 Lessons start/2024-04-17 10:00 end/2024-04-17 15:00`<br>
+       Expected: The first schedule for the first person is edited. The first schedule now has the title `CS2102 Lessons`, 
+   the start date time 17th Apr 2024 10:00AM and the end date time 17th Apr 2024 03:00PM
+
+   1. Test case: `editSched 1 schedule/1 s/CS2102 Lessons`<br>
+      Expected: The first schedule for the first person is edited. The first schedule now has the title `CS2102 Lessons`
+
+   1. Test case: `editSched 1 schedule/1 start/2024-04-17 10:00 end/2024-04-17 15:00`<br>
+      Expected: The first schedule for the first person is edited. The first schedule now has the start date time 
+   17th Apr 2024 10:00AM and the end date time 17th Apr 2024 03:00PM
+
+   1. Test case: `editSched 1 schedule/1 s/ start/ end/`<br>
+      1.Assuming that the start date time is 2024-04-17 12:00 and the end date time is 2024-04-17 13:00
+
+      Expected: No schedule is edited. Error details shown in the status message. Contact list remains the same.
+      The error is because the title, start and end are blank
+
+   1. Test case: `editSched 1 schedule/1 end/2024-04-17 10:00`<br>
+      1.Assuming that the start date time is 2024-04-17 12:00 and the end date time is 2024-04-17 13:00
+
+      Expected: Similar to previous. The error is because the end date time is before the start date time.
+
+
+
+   1. Other incorrect editSched commands to try: `editSched`, `editSched x schedule/x`, `...` (where x is larger than the list size)<br>
+      Expected: Similar to previous.
+
+1. Editing a schedule while some persons are being shown
+
+    1. Prerequisites: List some persons using the `find` command. Multiple persons in the contact list, but less
+       than contact list size. Assume there are 6 contacts in the entire contact list,
+       but `find` shows 3 of those contacts currently.
+
+    1. Test case: `editSched 1 schedule/1 s/CS2103 weekly meeting start/2024-04-15 12:00 end/2024-04-17 11:00`<br>
+       Expected:
+
+   1. Other incorrect editSched commands: all previous incorrect editSched applies here
+
+1. Editing a schedule while no persons are being shown
+
+    1. Prerequisites: List no persons using the `find` command. No person in the contact list. Assume there are 6 contacts in the entire contact list,
+       but `find` shows 0 of those contacts currently.
+
+    1. Test case: `editSched 1 schedule/1 s/CS2103 weekly meeting start/2024-04-15 12:00 end/2024-04-17 11:00`<br>
+       Expected: No schedule is changed. Error details shown in the status message. Contact list remains the same.
+       The error is because person index is out of range
+
+   1. Other incorrect editSched commands: all previous incorrect editSched applies here
+
+1. Editing a schedule for a person with no schedules
+
+    1. Prerequisites: List some persons using the `list` command. All persons in the contact list. Assume all the persons
+   don't have any schedules added to them.
+
+    1. Test case: `editSched 1 schedule/1 s/CS2103 weekly meeting start/2024-04-15 12:00 end/2024-04-17 11:00`<br>
+       Expected: No schedule is changed. Error details shown in the status message. Contact list remains the same.
+       The error is because schedule index is out of range
+
+   1. Other incorrect editSched commands: all previous incorrect editSched applies here
+
+### Deleting a schedule
+
+1. Deleting a schedule while all persons are being shown
+
+    1. Prerequisites: List some persons using the `list` command. All persons in the contact list.
+
+    1. Test case: `deleteSched 1 s/CS2103 weekly meeting start/2024-04-15 12:00 end/2024-04-17 11:00`<br>
+       Expected:
+
+   1. Other incorrect deleteSched commands to try: `deleteSched`, `deleteSched x schedule/x`, `...` (where x is larger than the list size)<br>
+      Expected: Similar to previous.
+
+1. Deleting a schedule while some persons are being shown
+
+    1. Prerequisites: List some persons using the `find` command. Multiple persons in the contact list, but less
+       than contact list size. Assume there are 6 contacts in the entire contact list,
+       but `find` shows 3 of those contacts currently.
+
+    1. Test case: `deleteSched 1 schedule/1`<br>
+       Expected:
+
+   1. Other incorrect deleteSched commands: all previous incorrect deleteSched applies here
+
+1. Deleting a schedule while no persons are being shown
+
+    1. Prerequisites: List no persons using the `find` command. No person in the contact list. Assume there are 6 contacts in the entire contact list,
+       but `find` shows 0 of those contacts currently.
+
+    1. Test case: `deleteSched 1 schedule/1`<br>
+       Expected:No schedule is changed. Error details shown in the status message. Contact list remains the same.
+       The error is because person index is out of range
+
+   1. Other incorrect deleteSched commands: all previous incorrect deleteSched applies here
+
+1. Deleting a schedule for a person with no schedules
+
+    1. Prerequisites: List some persons using the `list` command. All persons in the contact list. Assume all the persons
+       don't have any schedules added to them.
+
+    1. Test case: `deleteSched 1 schedule/1`<br>
+       Expected: No schedule is changed. Error details shown in the status message. Contact list remains the same.
+       The error is because schedule index is out of range
+
+   1. Other incorrect deleteSched commands: all previous incorrect deleteSched applies here
 
 ### Saving data
 
