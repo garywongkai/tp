@@ -1,7 +1,12 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.*;
+import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
+import static seedu.address.logic.Messages.MESSAGE_SCHEDULE_NAME_SPACE;
+import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -21,7 +26,6 @@ import seedu.address.model.schedule.Schedule;
  * Parses input arguments and creates a new AddSchedCommandParser object
  */
 public class AddSchedCommandParser implements Parser<AddSchedCommand> {
-
     private static final LocalTime earliestTime = LocalTime.of(8, 0);
     private static final LocalTime latestTime = LocalTime.of(21, 0);
 
@@ -55,12 +59,14 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
         }
 
         String schedName = argMultimap.getValue(PREFIX_SCHEDULE).get();
+        if (schedName.trim().isEmpty() || schedName.isBlank()) {
+            throw new ParseException(String.format(MESSAGE_SCHEDULE_NAME_SPACE, AddSchedCommand.MESSAGE_USAGE));
+        }
         try {
             LocalDateTime startTime = LocalDateTime.parse(argMultimap.getValue(PREFIX_START).get(),
                     Schedule.CUSTOM_DATETIME);
             LocalDateTime endTime = LocalDateTime.parse(argMultimap.getValue(PREFIX_END).get(),
                     Schedule.CUSTOM_DATETIME);
-
             boolean sameDay = (startTime.getYear() == endTime.getYear())
                     && (startTime.getMonth() == endTime.getMonth())
                     && (startTime.getDayOfMonth() == endTime.getDayOfMonth());
@@ -75,7 +81,6 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
             if (!startTime.isBefore(endTime)) {
                 throw new ParseException(String.format(MESSAGE_START_LATE_THAN_END, AddSchedCommand.MESSAGE_USAGE));
             }
-
             Schedule schedule = new Schedule(schedName, startTime, endTime);
             return new AddSchedCommand(indexArrayList, schedule);
 

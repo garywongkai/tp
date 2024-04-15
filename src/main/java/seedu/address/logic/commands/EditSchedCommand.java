@@ -1,9 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.*;
+import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
+import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
+import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIFIC_SCHEDULE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -37,29 +38,27 @@ public class EditSchedCommand extends Command {
             + "Parameters: "
             + "PERSON INDEX(S) (must be positive integer) "
             + PREFIX_SPECIFIC_SCHEDULE_INDEX + "TASK INDEX(S) (must be positive integer) "
-            + PREFIX_GROUP + "EDIT ALL PARTICIPANTS (y/n)"
             + "[" + PREFIX_SCHEDULE + " SCHEDULE NAME] "
-            + "[" + PREFIX_START + " START DATETIME (yyyy-MM-dd HH:mm)] "
-            + "[" + PREFIX_END + " END DATETIME (yyyy-MM-dd HH:mm)] \n"
+            + "[" + PREFIX_START + "START DATETIME (yyyy-MM-dd HH:mm)] "
+            + "[" + PREFIX_END + "END DATETIME (yyyy-MM-dd HH:mm)] \n"
             + "Example: " + COMMAND_WORD + " " + "1 "
             + PREFIX_SPECIFIC_SCHEDULE_INDEX + " 1 "
-            + PREFIX_GROUP + "y"
-            + "[" + PREFIX_SCHEDULE + " CS2103 weekly meeting] "
-            + "[" + PREFIX_START + " 2024-02-24 15:00] "
-            + "[" + PREFIX_END + " 2024-02-24 17:00] ";
+            + "[" + PREFIX_SCHEDULE + "CS2103 weekly meeting] "
+            + "[" + PREFIX_START + "2024-02-24 15:00] "
+            + "[" + PREFIX_END + "2024-02-24 17:00] ";
 
     public static final String MESSAGE_EDIT_SCHEDULE_SUCCESS = "Edited Schedule: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_TASK_NOT_SPECIFIED = "No task index has been specified.";
     public static final String MESSAGE_DUPLICATE_SCHEDULE =
             "This schedule already exists in the address book.";
+    private static final String MESSAGE_INVALID_NAME = "Schedule name is invalid";
 
     private static final LocalTime earliestTime = LocalTime.of(8, 0);
     private static final LocalTime latestTime = LocalTime.of(21, 0);
 
     private final Index personIndex;
     private final Index scheduleIndex;
-    private final String changeGroup;
 
 
     private final Logger logger = LogsCenter.getLogger(EditSchedCommand.class);
@@ -75,20 +74,17 @@ public class EditSchedCommand extends Command {
      * @param scheduleIndex index of schedule to edit
      * @param editScheduleDescriptor to create edited schedule
      */
-    public EditSchedCommand(Index personIndex, Index scheduleIndex, String changeGroup,
+    public EditSchedCommand(Index personIndex, Index scheduleIndex,
                             EditSchedCommand.EditScheduleDescriptor editScheduleDescriptor) {
         assert personIndex != null;
         assert scheduleIndex != null;
-        assert changeGroup != null;
         assert editScheduleDescriptor != null;
         requireNonNull(personIndex);
         requireNonNull(scheduleIndex);
-        requireNonNull(changeGroup);
         requireNonNull(editScheduleDescriptor);
 
         this.personIndex = personIndex;
         this.scheduleIndex = scheduleIndex;
-        this.changeGroup = changeGroup;
         this.editScheduleDescriptor =
                 new EditSchedCommand.EditScheduleDescriptor(editScheduleDescriptor);
     }
@@ -126,28 +122,15 @@ public class EditSchedCommand extends Command {
                                               Schedule editedSchedule, Person personToDelete) throws CommandException {
         System.out.println(scheduleToDelete.getPersonList().size());
         if (scheduleToDelete.getPersonList().size() > 1) {
-            if (changeGroup.equalsIgnoreCase("y")) {
-                for (Person p: model.getFilteredPersonList()) {
-                    if (p.getSchedules().contains(scheduleToDelete)) {
-                        System.out.println();
-                        model.deleteSchedule(p, scheduleToDelete);
-                        p.addSchedule(editedSchedule);
-                        model.addSchedule(editedSchedule);
-                    }
-                }
-            } else if (changeGroup.equalsIgnoreCase("n")) {
-                ArrayList<String> newParticipants = new ArrayList<>();
-                newParticipants.add(personToDelete.getName().toString());
-                editedSchedule.setPersonList(newParticipants);
-                model.deleteSchedule(personToDelete, scheduleToDelete);
-                scheduleToDelete.removePerson(personToDelete.getName().toString());
-                ArrayList<Person> changedPerson = new ArrayList<>();
-                changedPerson.add(personToDelete);
-                if (!scheduleToDelete.getPersonList().isEmpty()) {
-                    model.addSchedule(editedSchedule, changedPerson);
-                }
-            } else {
-                throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+            ArrayList<String> newParticipants = new ArrayList<>();
+            newParticipants.add(personToDelete.getName().toString());
+            editedSchedule.setPersonList(newParticipants);
+            model.deleteSchedule(personToDelete, scheduleToDelete);
+            scheduleToDelete.removePerson(personToDelete.getName().toString());
+            ArrayList<Person> changedPerson = new ArrayList<>();
+            changedPerson.add(personToDelete);
+            if (!scheduleToDelete.getPersonList().isEmpty()) {
+                model.addSchedule(editedSchedule, changedPerson);
             }
         } else {
             model.deleteSchedule(personToDelete, scheduleToDelete);
@@ -171,13 +154,12 @@ public class EditSchedCommand extends Command {
         String updatedSchedName = editScheduleDescriptor.getSchedName().orElse(scheduleToEdit.getSchedName());
         LocalDateTime updatedStartTime = editScheduleDescriptor.getStartTime().orElse(scheduleToEdit.getStartTime());
         LocalDateTime updatedEndTime = editScheduleDescriptor.getEndTime().orElse(scheduleToEdit.getEndTime());
-        
         return generateInvalidSchedule(updatedSchedName, updatedStartTime, updatedEndTime,
                 new ArrayList<>(scheduleToEdit.getPersonList()));
     }
 
     private static Schedule generateInvalidSchedule(String schedName, LocalDateTime startTime, LocalDateTime endTime,
-                                          ArrayList<String> personList) throws CommandException{
+                                          ArrayList<String> personList) throws CommandException {
         boolean sameDay = (startTime.getYear() == endTime.getYear())
                 && (startTime.getMonth() == endTime.getMonth())
                 && (startTime.getDayOfMonth() == endTime.getDayOfMonth());
@@ -192,7 +174,15 @@ public class EditSchedCommand extends Command {
         if (!startTime.isBefore(endTime)) {
             throw new CommandException(String.format(MESSAGE_START_LATE_THAN_END, AddSchedCommand.MESSAGE_USAGE));
         }
-        return new Schedule(schedName, startTime, endTime, personList);
+
+        if (schedName == null) {
+            throw new CommandException(String.format(MESSAGE_INVALID_NAME, AddSchedCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new Schedule(schedName, startTime, endTime, personList);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(String.format(MESSAGE_INVALID_NAME, AddSchedCommand.MESSAGE_USAGE));
+        }
 
     }
 
