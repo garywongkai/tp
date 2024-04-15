@@ -107,6 +107,8 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </box>
 
+<div style="page-break-after: always;"></div>
+
 How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
@@ -303,8 +305,6 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-<div style="page-break-after: always;"></div>
-
 ## **Documentation, logging, testing, configuration, dev-ops**
 
 * [Documentation guide](Documentation.md)
@@ -436,6 +436,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+<div style="page-break-after: always;"></div>
 
 **Use case: UC04 - List all contacts**
 
@@ -545,7 +546,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-<div style="page-break-after: always;"></div>
 
 **Use case UC09 - Delete a schedule**
 
@@ -578,6 +578,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  AddressBook edits the event information of the specific event from the specific contact.
 
     Use case ends.
+
+<div style="page-break-after: always;"></div>
 
 **Extensions**
 
@@ -623,8 +625,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-<div style="page-break-after: always;"></div>
-
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
@@ -640,8 +640,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Module**: A slot in the day used for lesson
 --------------------------------------------------------------------------------------------------------------------
-
-<div style="page-break-after: always;"></div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -670,6 +668,8 @@ testers are expected to do more *exploratory* testing.
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
+
+<div style="page-break-after: always;"></div>
 
 ### Deleting a person
 
@@ -889,8 +889,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect deleteSched commands: all previous incorrect deleteSched applies here
 
-<div style="page-break-after: always;"></div>
-
 1. Deleting a schedule while no persons are being shown
 
     1. Prerequisites: List no persons using the `find` command. No person in the contact list. Assume there are 6 contacts in the entire contact list,
@@ -913,6 +911,8 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect deleteSched commands: all previous incorrect deleteSched applies here
 
+<div style="page-break-after: always;"></div>
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
@@ -920,8 +920,6 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
-
-<div style="page-break-after: always;"></div>
 
 ## **Appendix: Planned Enhancments**
 1. Adding the color to the schedule display corresponding to the tag Person
