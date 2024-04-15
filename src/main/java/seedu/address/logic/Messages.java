@@ -38,6 +38,8 @@ public class Messages {
     public static final String MESSAGE_START_LATE_THAN_END =
             "The schedule start time should be earlier than end time. "
                     + "Format: " + getDateTimeStringFormat();
+    public static final String MESSAGE_SCHEDULE_NAME_SPACE =
+            "The schedule name should not be empty.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

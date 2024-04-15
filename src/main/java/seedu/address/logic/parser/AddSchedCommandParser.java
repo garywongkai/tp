@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_SCHEDULE_NAME_SPACE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -52,6 +53,9 @@ public class AddSchedCommandParser implements Parser<AddSchedCommand> {
         }
 
         String schedName = argMultimap.getValue(PREFIX_SCHEDULE).get();
+        if (schedName.trim().isEmpty() || schedName.isBlank()) {
+            throw new ParseException(String.format(MESSAGE_SCHEDULE_NAME_SPACE, AddSchedCommand.MESSAGE_USAGE));
+        }
         try {
             LocalDateTime startTime = LocalDateTime.parse(argMultimap.getValue(PREFIX_START).get(),
                     Schedule.CUSTOM_DATETIME);
