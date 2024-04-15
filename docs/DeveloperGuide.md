@@ -563,3 +563,4 @@ testers are expected to do more *exploratory* testing.
 3. Add command to view schedules instead of drop-down box
 4. Enhance find command to allow for specific category finding (e.g. find [name/] [email/])
 5. Split group schedules cell display in the event that multiple schedules' timings coincide
+6. Update the schedule section to reflect any changes made after the schedule commands

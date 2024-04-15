@@ -297,6 +297,7 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * Disclamier: If there are 2 persons with the same name, the group schedule will still show 2 participants, 
 but both participants has the same name. To know what is considered a duplicate person, 
 see Duplication under the [field constraints](#field-constraints) section.
+* After adding a schedule, reselect a person in the schedule section dropdown box.
 
 Examples:
 * `addSched 4 s/Exam start/2024-03-05 16:00 end/2024-03-05 18:00` will add the 4th person in the address list to the `Exam` event which
@@ -347,6 +348,7 @@ Format: `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX`
 * `find Betsy` followed by `deleteSched 1 schedule/2` deletes the 2nd schedule from the 1st person in
    the results of the `find` command.
 * * Manual click of Contact list might be necessary to reflect changes done by user on slower devices.
+* After deleting a schedule, reselect a person in the schedule section dropdown box.
 
 Examples:
 * `deleteSched 1 schedule/2` will delete the 2nd schedule from the 1st person in the address list
@@ -390,6 +392,7 @@ Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start
 * `find Betsy` followed by `editSched 1 schedule/2 s/CCA meeting` edits the 2nd schedule from the 1st person in
   the results of the `find` command with the new schedule name `CCA meeting`, as well as the schedule for every other
   participants.
+* After editing a schedule, reselect a person in the schedule section dropdown box.
 
 Examples:
 * `editSched 1 schedule/2 s/CS1101S meeting start/2024-02-03 12:00 end/2024-02-03 15:00` will copy the 
