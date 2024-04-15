@@ -117,6 +117,7 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
+        System.out.println("Address book = " + addressBook.getPersonList().toString());
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
