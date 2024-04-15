@@ -171,8 +171,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [i/INTER
 * You can remove all the person’s tags by typing `i/` without
   specifying any interests after it.
 * Adding a person's format for **phone number, email, and address** applies here as well.
-* You should be unable to edit a person to become a duplicate of another person. To know what is considered a 
-duplicate person, see Duplication under the [field constraints](#field-constraints) section.
+* You should be unable to edit a person to become a duplicate of another person. To know what is considered a duplicate person, see Duplication under the [field constraints](#field-constraints) section.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com i/Bird Watching` Edits the phone number, email address and interest of the
@@ -302,9 +301,7 @@ Format: `addSched PERSON_INDEX [MORE_PERSON_INDEX] s/SCHEDULE_NAME start/START_D
 * The END_DATETIME must be on the same date as the START_DATETIME. E.g. START_DATETIME = 2024-07-07 12:00 and END_DATETIME = 2024-07-07 17:00
 * When adding multiple persons to schedule, said schedule must not be a duplicate in any of these persons.
 * Manual clicking of Contact list might be necessary to update changes done by user on slower devices.
-* Disclamier: If there are 2 persons with the same name, the group schedule will still show 2 participants, 
-but both participants has the same name. To know what is considered a duplicate person, 
-see Duplication under the [field constraints](#field-constraints) section.
+* Disclamier: If there are 2 persons with the same name, the group schedule will still show 2 participants, but both participants has the same name. To know what is considered a duplicate person, see Duplication under the [field constraints](#field-constraints) section.
 * After adding a schedule, reselect a person in the schedule section dropdown box.
 
 <div style="page-break-after: always;"></div>
@@ -410,14 +407,9 @@ Examples:
 * `editSched 1 schedule/2 s/CS1101S meeting start/2024-02-03 12:00 end/2024-02-03 15:00` will copy the 
    2nd schedule from the 1st person in the address list with the new name `CS1101S meeting` on the
    new timing from 3rd February 2024 12pm to 3rd February 2024 3pm, for the 1st person only.
-* `editSched 1 schedule/2 s/CS2040S class` will copy the 2nd schedule from the 1st person 
-in the address list and create a separate schedule with the new name `CS2040S class` for the 1st person only.
-* `editSched 1 schedule/2 start/2024-03-05 11:00 ` will copy the 2nd schedule from the 1st person
-   in the address list and create a separate schedule with the new starting date time of 5th March 2024 11am for the
-   1st person only.
-* `editSched 1 schedule/2 end/2024-06-12 20:00` will copy the 2nd schedule from the 1st person
-   in the address list and create a separate schedule with the new ending date time of 12th June 2024 8pm for the 1st
-   person only.
+* `editSched 1 schedule/2 s/CS2040S class` will copy the 2nd schedule from the 1st person in the address list and create a separate schedule with the new name `CS2040S class` for the 1st person only.
+* `editSched 1 schedule/2 start/2024-03-05 11:00 ` will copy the 2nd schedule from the 1st person in the address list and create a separate schedule with the new starting date time of 5th March 2024 11am for the 1st person only.
+* `editSched 1 schedule/2 end/2024-06-12 20:00` will copy the 2nd schedule from the 1st person in the address list and create a separate schedule with the new ending date time of 12th June 2024 8pm for the 1st person only.
 
 Expected success outcome:
 ```
