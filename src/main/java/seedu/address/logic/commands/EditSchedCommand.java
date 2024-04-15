@@ -171,7 +171,6 @@ public class EditSchedCommand extends Command {
         String updatedSchedName = editScheduleDescriptor.getSchedName().orElse(scheduleToEdit.getSchedName());
         LocalDateTime updatedStartTime = editScheduleDescriptor.getStartTime().orElse(scheduleToEdit.getStartTime());
         LocalDateTime updatedEndTime = editScheduleDescriptor.getEndTime().orElse(scheduleToEdit.getEndTime());
-        
         return generateInvalidSchedule(updatedSchedName, updatedStartTime, updatedEndTime,
                 new ArrayList<>(scheduleToEdit.getPersonList()));
     }

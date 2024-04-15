@@ -298,15 +298,15 @@ to the `CSMeeting` event which would take place on 18th March 2024 from 3pm - 7p
 Expected success outcome:
 ```
 New schedule added: ...
-    start: 
-    end: 
+    start:
+    end:
 ```
 
 Expected failure outcome:
 ```
 Invalid command format!
-addSched: Adds a schedule to person(s) in address book. Parameters: PERSON INDEX(S) (must be positive integer) 
-s/SCHEDULE start/START_DATETIME (yyyy-MM-dd HH:mm) end/END_DATETIME (yyyy-MM-dd HH:mm) 
+addSched: Adds a schedule to person(s) in address book. Parameters: PERSON INDEX(S) (must be positive integer)
+s/SCHEDULE start/START_DATETIME (yyyy-MM-dd HH:mm) end/END_DATETIME (yyyy-MM-dd HH:mm)
 (START_DATETIME and END_DATETIME must be in the same day and between 08:00 and 21:00)
 Example: addSched 1, 2 s/CS2103 weekly meeting start/2024-02-24 09:00 end/2024-02-24 17:00
 ```
@@ -349,9 +349,9 @@ The schedule deleted: …
 
 Expected failure outcome:
 ```
-Invalid command format! 
-deleteSched: Deletes a schedule in address book. Parameters: Person INDEX(S) (must be positive integer) 
-schedule/Schedule INDEX(S) (must be positive integer) 
+Invalid command format!
+deleteSched: Deletes a schedule in address book. Parameters: Person INDEX(S) (must be positive integer)
+schedule/Schedule INDEX(S) (must be positive integer)
 Example: deleteSched 1 schedule/ 1
 ```
 OR
@@ -406,11 +406,11 @@ Edited Schedule: …
 
 Expected failure outcome:
 ```
-Invalid command format! 
-editSched: Edit a schedule in address book. Parameters: PERSON INDEX(S) (must be positive integer) 
-schedule/TASK INDEX(S) (must be positive integer) g/EDIT ALL PARTICIPANTS (y/n)[s/ SCHEDULE NAME] 
-[start/ START DATETIME (yyyy-MM-dd HH:mm)] [end/ END DATETIME (yyyy-MM-dd HH:mm)] 
-Example: editSched 1 schedule/ 1, 2 g/y[s/ CS2103 weekly meeting] [start/ 2024-02-24 15:00] [end/ 2024-02-24 17:00] 
+Invalid command format!
+editSched: Edit a schedule in address book. Parameters: PERSON INDEX(S) (must be positive integer)
+schedule/TASK INDEX(S) (must be positive integer) g/EDIT ALL PARTICIPANTS (y/n)[s/ SCHEDULE NAME]
+[start/ START DATETIME (yyyy-MM-dd HH:mm)] [end/ END DATETIME (yyyy-MM-dd HH:mm)]
+Example: editSched 1 schedule/ 1, 2 g/y[s/ CS2103 weekly meeting] [start/ 2024-02-24 15:00] [end/ 2024-02-24 17:00]
 ```
 OR
 ```
@@ -431,30 +431,30 @@ Exits the program.
 Format: `exit`
 
 ### Schedule Display
-The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing. 
+The schedule display allows users to be able to view the schedule of their classmates and determine if there are any conflicts in timing.
 
 1) When there is no conflict between the schedules, the schedule would be displayed with a black border as shown below.
 ![img.png](img.png)
 
-2) The schedule which the user would like to view can be done using the dropdown box which displays all the names that of the 
+2) The schedule which the user would like to view can be done using the dropdown box which displays all the names that of the
 classmates within the contact list.
 
     ![img_3.png](img_3.png)
 
 3) If 2 or more people are participants in the same schedule, the schedule border would be colored blue and it would called
-'Group schedule'. 
+'Group schedule'.
 ![img_5.png](img_5.png)
 By hovering over the Group schedule, you would be able to view all the participants of that specific group schedule.
 ![img_4.png](img_4.png)
 
-4) If there is a conflict in schedule between 2 people, the schedule border would be colored red. Both schedules would still 
+4) If there is a conflict in schedule between 2 people, the schedule border would be colored red. Both schedules would still
 display each of their own timings.
 ![img_2.png](img_2.png)
 
-Important Notes: 
-* The schedule can only display up to 5 user schedules at a time. If you have selected 5 people from the dropdown box and 
-want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the 
-dropdown box again. 
+Important Notes:
+* The schedule can only display up to 5 user schedules at a time. If you have selected 5 people from the dropdown box and
+want to select a 6th person, you would need to unselect one of the 5 currently selected people by clicking on their name in the
+dropdown box again.
 * The schedule will only display any timing from the current week from 8am to 9pm.
 
 
@@ -507,13 +507,13 @@ Furthermore, certain edits can cause the Moddie to behave in unexpected ways (e.
   * Optional.
   * Must be Alphanumeric.
   * Example: `i/fruits`
-* SCHEDULE_NAME 
+* SCHEDULE_NAME
   * must not have any special characters e.g. !, @, #, $, …​
-* START_DATETIME 
+* START_DATETIME
   * must be in the format of yyyy-MM-dd HH:mm in 24-hour time
-* *END_DATETIME 
+* *END_DATETIME
   * must be in the format of yyyy-MM-dd HH:mm in 24-hour time
-  * must be on the same date as the START_DATETIME. 
+  * must be on the same date as the START_DATETIME.
   * Example: START_DATETIME = `2024-07-07 12:00` and END_DATETIME = `2024-07-07 17:00`
 
 
@@ -533,7 +533,7 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. Depending on your device, the application has a limitation where users are safely recommended to **keep only up to 8 users** in their schedule. Attempting to add more than 8 users <u> may result in unexpected behavior or performance issues. </u> 
+2. Depending on your device, the application has a limitation where users are safely recommended to **keep only up to 8 users** in their schedule. Attempting to add more than 8 users <u> may result in unexpected behavior or performance issues. </u>
 
 <div style="page-break-after: always;"></div>
 
