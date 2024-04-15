@@ -89,7 +89,7 @@ public class Schedule {
     }
 
     public void setPersonList(ArrayList<String> newPersonList) {
-        personList = newPersonList;
+        this.personList = newPersonList;
     }
 
     public ArrayList<String> getPersonList() {
