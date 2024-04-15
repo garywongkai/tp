@@ -1,10 +1,6 @@
 package seedu.address.model.schedule;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.logic.Messages.MESSAGE_DIFFERENT_DATE;
-import static seedu.address.logic.Messages.MESSAGE_OUT_SCOPE_DATETIME;
-import static seedu.address.logic.Messages.MESSAGE_START_LATE_THAN_END;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -43,10 +39,6 @@ public class Schedule {
     public Schedule(String schedName, LocalDateTime startTime,
                     LocalDateTime endTime) {
         requireNonNull(schedName);
-        checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
-        checkArgument(isStartNotAfterEnd(startTime, endTime), MESSAGE_START_LATE_THAN_END);
-        checkArgument(isInTimeRange(startTime, endTime), MESSAGE_OUT_SCOPE_DATETIME);
-        checkArgument(isSameDay(startTime, endTime), MESSAGE_DIFFERENT_DATE);
 
         this.schedName = schedName;
         this.startTime = startTime;
@@ -65,10 +57,6 @@ public class Schedule {
     public Schedule(String schedName, LocalDateTime startTime,
                     LocalDateTime endTime, ArrayList<String> personList) {
         requireNonNull(schedName);
-        checkArgument(isValidSchedName(schedName), MESSAGE_CONSTRAINTS);
-        checkArgument(isStartNotAfterEnd(startTime, endTime), MESSAGE_START_LATE_THAN_END);
-        checkArgument(isInTimeRange(startTime, endTime), MESSAGE_OUT_SCOPE_DATETIME);
-        checkArgument(isSameDay(startTime, endTime), MESSAGE_DIFFERENT_DATE);
 
         this.schedName = schedName;
         this.startTime = startTime;
