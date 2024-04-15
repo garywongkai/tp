@@ -158,6 +158,14 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Add Person feature 
+
+The following sequence diagram shows how an add schedule operation goes through the Logic component:
+<puml src="diagrams/AddSchedSequenceDiagram.puml" alt="AddScheduleSequenceDiagram" />
+
+The following activity diagram summarizes what happens when a user executes the addSched command:
+<puml src="diagrams/AddSchedActivityDiagram.puml" alt="AddScheduleActivityDiagram" />
+
 ### Add Schedule feature 
 
 The following sequence diagram shows how an add schedule operation goes through the Logic component:
@@ -367,7 +375,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
 
 
-#### **Use case: UC02 - Delete a contact**
+**Use case: UC02 - Delete a contact**
 
 **MSS**
 
