@@ -376,35 +376,31 @@ Potential Errors:
 
 Edit a schedule that associated with a person with new information, and optionally, you may also edit the group associated with the schedule.
 
-Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX g/EDIT_GROUP [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]`
+Format: `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]`
 
 * The PERSON_INDEX **must be a positive integer** 1, 2, 3, …​ and must be in range of the
   number of people in the address book.
 * The SCHEDULE_INDEX **must be a positive integer** 1, 2, 3 …​ and must be in range of the number of schedules in
   the schedule list for the person from PERSON_INDEX.
-* The EDIT_GROUP **must be either y or n**. Any other characters will cause an error message.
-   The input is case-insensitive.
 * The SCHEDULE_NAME **must not have any special characters** e.g. !, @, #, $, …​
 * The START_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * The END_DATETIME must be in the format of yyyy-MM-dd HH:mm in 24-hour time
 * There must be at least 1 input for SCHEDULE_NAME, START_DATETIME or END_DATETIME,
    or the command would not be accepted.
-* `find Betsy` followed by `editSched 1 schedule/2 g/y s/CCA meeting` edits the 2nd schedule from the 1st person in
+* `find Betsy` followed by `editSched 1 schedule/2 s/CCA meeting` edits the 2nd schedule from the 1st person in
   the results of the `find` command with the new schedule name `CCA meeting`, as well as the schedule for every other
   participants.
 
 Examples:
-* `editSched 1 schedule/2 g/y s/CS1101S meeting start/ 2024-02-03 12:00 end/ 2024-02-03 15:00` will
-   edit the 2nd schedule from the 1st person in the address list with the new name `CS1101S meeting` on the
-   new timing from 3rd February 2024 12pm to 3rd February 2024 3pm, as well as the schedule for every other
-   participants.
-* `editSched 1 schedule/2 g/y s/CS2040S class` will edit the 2nd schedule from the 1st person
-   in the address list with the new name `CS2040S class` as well as the schedule for every other
-   participants.
-* `editSched 1 schedule/2 g/n start/ 2024-03-05 11:00 ` will copy the 2nd schedule from the 1st person
+* `editSched 1 schedule/2 s/CS1101S meeting start/2024-02-03 12:00 end/2024-02-03 15:00` will copy the 
+   2nd schedule from the 1st person in the address list with the new name `CS1101S meeting` on the
+   new timing from 3rd February 2024 12pm to 3rd February 2024 3pm, for the 1st person only.
+* `editSched 1 schedule/2 s/CS2040S class` will copy the 2nd schedule from the 1st person 
+in the address list and create a separate schedule with the new name `CS2040S class` for the 1st person only.
+* `editSched 1 schedule/2 start/2024-03-05 11:00 ` will copy the 2nd schedule from the 1st person
    in the address list and create a separate schedule with the new starting date time of 5th March 2024 11am for the
    1st person only.
-* `editSched 1 schedule/2 g/n end/ 2024-06-12 20:00` will copy the 2nd schedule from the 1st person
+* `editSched 1 schedule/2 end/2024-06-12 20:00` will copy the 2nd schedule from the 1st person
    in the address list and create a separate schedule with the new ending date time of 12th June 2024 8pm for the 1st
    person only.
 
@@ -417,9 +413,9 @@ Expected failure outcome:
 ```
 Invalid command format!
 editSched: Edit a schedule in address book. Parameters: PERSON INDEX(S) (must be positive integer)
-schedule/TASK INDEX(S) (must be positive integer) g/EDIT ALL PARTICIPANTS (y/n)[s/ SCHEDULE NAME]
-[start/ START DATETIME (yyyy-MM-dd HH:mm)] [end/ END DATETIME (yyyy-MM-dd HH:mm)]
-Example: editSched 1 schedule/ 1, 2 g/y[s/ CS2103 weekly meeting] [start/ 2024-02-24 15:00] [end/ 2024-02-24 17:00]
+schedule/TASK INDEX(S) (must be positive integer) [start/ START DATETIME (yyyy-MM-dd HH:mm)] 
+[end/ END DATETIME (yyyy-MM-dd HH:mm)]
+Example: editSched 1 schedule/ 1, 2 [s/ CS2103 weekly meeting] [start/ 2024-02-24 15:00] [end/ 2024-02-24 17:00]
 ```
 OR
 ```
@@ -574,5 +570,5 @@ Command    | Format, Examples
 **Clear**  | `clear`
 **Add Schedule**   | `addSched INDEX [MORE_INDEX] s/SCHEDULE_NAME start/START_DATETIME end/END_DATETIME` <br> e.g. `addSched 1, 2, 3 s/CSMeeting start/2024-04-04 09:00 end/2024-04-04 17:00`
 **Delete Schedule**   | `deleteSched PERSON_INDEX schedule/SCHEDULE_INDEX` <br> e.g. `deleteSched 1 schedule/2`
-**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX g/EDIT_GROUP [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 schedule/1 g/y s/CS1101S meeting start/ 2024-04-04 12:00 end/ 2024-04-04 15:00`
+**Edit Schedule**   | `editSched PERSON_INDEX schedule/SCHEDULE_INDEX [s/SCHEDULE_NAME] [start/START_DATETIME] [end/END_DATETIME]` <br> e.g. `editSched 1 schedule/1 g/y s/CS1101S meeting start/ 2024-04-04 12:00 end/ 2024-04-04 15:00`
 **Exit**   | `exit`

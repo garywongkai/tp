@@ -26,7 +26,7 @@ public class DeleteSchedCommand extends Command {
             + "Person INDEX(S) (must be positive integer) "
             + PREFIX_SPECIFIC_SCHEDULE_INDEX + "Schedule INDEX(S) (must be positive integer) \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SPECIFIC_SCHEDULE_INDEX + " 1";
+            + PREFIX_SPECIFIC_SCHEDULE_INDEX + "1";
 
     public static final String MESSAGE_SUCCESS = "The schedule deleted: %1$s";
 
