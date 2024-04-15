@@ -163,7 +163,36 @@ public class ModelManager implements Model {
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
+        for (int i = 0; i < target.getSchedules().size(); i++) {
+            Schedule sched = target.getSchedules().get(0);
+            Schedule currentSched = new Schedule(sched.getSchedName(), sched.getStartTime(), sched.getEndTime(),
+                    sched.getPersonList());
+            ArrayList<String> curPersonList = (ArrayList<String>) currentSched.getPersonList().clone();
+            ArrayList<String> editPersonList = (ArrayList<String>) currentSched.getPersonList().clone();
+            editPersonList.remove(target.getName().toString());
+            editPersonList.add(editedPerson.getName().toString());
+            Schedule editSched = new Schedule(currentSched.getSchedName(), currentSched.getStartTime(),
+                    currentSched.getEndTime(), editPersonList);
+            System.out.println("person list: " + addressBook.getPersonList());
+            System.out.println("current schedule: " + currentSched);
+            System.out.println("editSched: " + editSched);
+            for (int personIndex = 0; personIndex < addressBook.getPersonList().size(); personIndex++) {
+                Person currentPerson = addressBook.getPersonList().get(personIndex);
+                if (currentPerson.equals(target)) {
+                    editedPerson.deleteSchedule(currentSched);
+                    editedPerson.addSchedule(editSched);
+                    currentPerson.deleteSchedule(currentSched);
+                    currentPerson.addSchedule(editSched);
+                    addressBook.setPerson(addressBook.getPersonList().get(personIndex), currentPerson);
+                } else if (curPersonList.contains(currentPerson.getName().toString())) {
+                    currentPerson.deleteSchedule(currentSched);
+                    currentPerson.addSchedule(editSched);
+                    addressBook.setPerson(addressBook.getPersonList().get(personIndex), currentPerson);
+                }
+            }
+            addressBook.setSchedule(currentSched, editSched);
+            updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        }
         addressBook.setPerson(target, editedPerson);
     }
 
